@@ -3,287 +3,88 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>手机看盘仪表盘</title>
+<title>手机看盘仪表盘 V2.0</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background: #f0f2f5;
-  color: #333;
-  font-size: 16px;
-  line-height: 1.5;
-  padding-bottom: 70px;
+  background: #f0f2f5; color: #333; font-size: 16px; line-height: 1.5; padding-bottom: 70px;
 }
-.container {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 10px;
-}
-
-/* 顶部固定导航 */
+.container { max-width: 480px; margin: 0 auto; padding: 10px; }
 .navbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  z-index: 100;
-  max-width: 480px;
-  margin: 0 auto;
-  display: flex;
+  position: fixed; top: 0; left: 0; right: 0; background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 100; max-width: 480px; margin: 0 auto; display: flex;
 }
 .nav-tab {
-  flex: 1;
-  text-align: center;
-  padding: 12px 4px;
-  font-size: 14px;
-  color: #666;
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  transition: all 0.2s;
+  flex: 1; text-align: center; padding: 12px 2px; font-size: 13px; color: #666;
+  cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s;
 }
-.nav-tab.active {
-  color: #e74c3c;
-  border-bottom-color: #e74c3c;
-  font-weight: bold;
-}
-
-/* Section 容器 */
+.nav-tab.active { color: #e74c3c; border-bottom-color: #e74c3c; font-weight: bold; }
 .section { display: none; padding-top: 56px; }
 .section.active { display: block; }
-
-/* 卡片 */
-.card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 14px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
-.card-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: #222;
-}
-.card-sub {
-  font-size: 13px;
-  color: #999;
-  margin-bottom: 10px;
-}
-
-/* 空状态 */
-.empty-card {
-  text-align: center;
-  padding: 40px 20px;
-  color: #999;
-}
+.card { background: #fff; border-radius: 8px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.card-title { font-size: 20px; font-weight: bold; margin-bottom: 8px; color: #222; }
+.card-sub { font-size: 13px; color: #999; margin-bottom: 10px; }
+.empty-card { text-align: center; padding: 40px 20px; color: #999; }
 .empty-icon { font-size: 40px; margin-bottom: 10px; }
 .empty-text { font-size: 16px; }
-
-/* 行信息 */
-.row-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid #f5f5f5;
-  font-size: 15px;
-}
+.row-info { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f5f5f5; font-size: 15px; }
 .row-info:last-child { border-bottom: none; }
 .row-label { color: #888; font-size: 14px; }
 .row-val { font-weight: bold; }
 .row-note { color: #999; font-size: 14px; padding: 8px 0; }
-
-/* 市场环境 */
-.env-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 10px 0;
-}
-.env-tag {
-  background: #eef3ff;
-  color: #3366cc;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 13px;
-}
-.temp-block {
-  margin: 12px 0;
-  text-align: center;
-}
-.temp-value {
-  font-size: 32px;
-  font-weight: bold;
-  margin: 4px 0;
-}
-.progress-bar {
-  height: 8px;
-  background: #eee;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-top: 6px;
-}
-.progress-fill {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 0.3s;
-}
-
-/* 持仓卡片 */
+.env-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.env-tag { background: #eef3ff; color: #3366cc; padding: 4px 10px; border-radius: 12px; font-size: 13px; }
+.temp-block { margin: 12px 0; text-align: center; }
+.temp-value { font-size: 32px; font-weight: bold; margin: 4px 0; }
+.progress-bar { height: 8px; background: #eee; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+.progress-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
 .pos-card { cursor: pointer; }
-.pos-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
+.pos-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .pos-name { font-size: 18px; font-weight: bold; }
 .pos-code { font-size: 13px; color: #999; margin-left: 6px; }
 .pos-price { font-size: 22px; font-weight: bold; }
-.pos-profit {
-  text-align: center;
-  padding: 10px;
-  margin: 8px 0;
-  background: #fafafa;
-  border-radius: 6px;
-}
+.pos-profit { text-align: center; padding: 10px; margin: 8px 0; background: #fafafa; border-radius: 6px; }
 .profit-amount { font-size: 24px; font-weight: bold; margin-right: 10px; }
 .profit-pct { font-size: 18px; font-weight: bold; }
-.pos-detail {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px dashed #ddd;
-}
-.detail-line {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-  font-size: 14px;
-  color: #666;
-}
+.pos-detail { margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd; }
+.detail-line { display: flex; justify-content: space-between; padding: 4px 0; font-size: 14px; color: #666; }
 .detail-sell { flex-direction: column; }
 .detail-sell span:last-child { margin-top: 4px; color: #e74c3c; }
-.detail-hint {
-  text-align: center;
-  font-size: 12px;
-  color: #ccc;
-  margin-top: 6px;
-}
-
-/* 汇总卡片 */
-.summary-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #fff;
-}
+.detail-hint { text-align: center; font-size: 12px; color: #ccc; margin-top: 6px; }
+.summary-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; }
 .summary-card .row-label { color: rgba(255,255,255,0.8); }
 .summary-card .row-val { color: #fff; }
-
-/* 标签 */
-.tag {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  margin-left: 6px;
-}
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-left: 6px; }
 .tag-warn { background: #ffeaea; color: #e74c3c; }
 .tag-strategy { background: #eef3ff; color: #3366cc; }
-
-/* 信号 */
-.sig-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-}
-.veto {
-  margin-top: 8px;
-  padding: 8px;
-  border-radius: 6px;
-  font-size: 14px;
-}
+.sig-header { display: flex; align-items: center; margin-bottom: 8px; }
+.veto { margin-top: 8px; padding: 8px; border-radius: 6px; font-size: 14px; }
 .veto-pass { background: #eaffea; color: #27ae60; }
 .veto-veto { background: #ffeaea; color: #e74c3c; }
 .veto-none { background: #f5f5f5; color: #999; }
 .veto-reason { font-size: 13px; color: #666; margin-left: 4px; }
-
-/* 板块 */
-.section-sub {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 12px 0 6px;
-  padding-left: 4px;
-}
-.sector-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid #f5f5f5;
-}
+.section-sub { font-size: 16px; font-weight: bold; margin: 12px 0 6px; padding-left: 4px; }
+.sector-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
 .sector-row:last-child { border-bottom: none; }
 .sector-name { font-size: 15px; flex: 1; }
-.sector-state {
-  font-size: 12px;
-  padding: 2px 8px;
-  border-radius: 10px;
-  margin: 0 8px;
-}
+.sector-state { font-size: 12px; padding: 2px 8px; border-radius: 10px; margin: 0 8px; }
 .sector-pct { font-size: 15px; font-weight: bold; min-width: 70px; text-align: right; }
-
-/* 交易 */
-.trade-row {
-  padding: 10px 0;
-  border-bottom: 1px solid #f0f0f0;
-}
+.trade-row { padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
 .trade-row:last-child { border-bottom: none; }
-.trade-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
-/* 风控预警 */
-.alert-row {
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 6px;
-}
+.trade-header { display: flex; align-items: center; margin-bottom: 6px; }
+.alert-row { padding: 10px; margin: 8px 0; border-radius: 6px; }
 .alert-label { font-size: 14px; font-weight: bold; }
 .alert-name { font-size: 16px; font-weight: bold; margin: 4px 0; }
 .alert-msg { font-size: 14px; color: #555; }
-
 .safe-card { text-align: center; padding: 30px; }
-
-/* 模拟盘 */
-.paper-nav {
-  text-align: center;
-  padding: 10px;
-  background: #f8f9fa;
-  border-radius: 6px;
-  margin: 8px 0;
-}
-
-/* 底部 */
-.footer {
-  text-align: center;
-  padding: 20px 10px;
-  font-size: 12px;
-  color: #999;
-}
-.footer .disclaimer {
-  margin-top: 8px;
-  padding: 8px;
-  background: #fffbe6;
-  border-radius: 4px;
-  color: #ad6800;
-}
+.paper-nav { text-align: center; padding: 10px; background: #f8f9fa; border-radius: 6px; margin: 8px 0; }
+.footer { text-align: center; padding: 20px 10px; font-size: 12px; color: #999; }
+.footer .disclaimer { margin-top: 8px; padding: 8px; background: #fffbe6; border-radius: 4px; color: #ad6800; }
 </style>
 </head>
 <body>
 <div class="container">
-
-  <!-- 顶部导航 -->
   <div class="navbar">
     <div class="nav-tab active" onclick="showTab('market',this)">市场</div>
     <div class="nav-tab" onclick="showTab('positions',this)">持仓</div>
@@ -292,45 +93,106 @@ body {
     <div class="nav-tab" onclick="showTab('trades',this)">交易</div>
     <div class="nav-tab" onclick="showTab('risk',this)">风控</div>
   </div>
+  <div id="sec-market" class="section active"><div class="card">
+<div class="card-title">大盘指数</div>
 
-  <!-- 市场 -->
-  <div id="sec-market" class="section active">
+        <div class="row-info">
+          <span class="row-label">沪深300</span>
+          <span>
+            <span style="font-weight:bold;font-size:18px">4439.14</span>
+            <span style="color:#27ae60;font-weight:bold;margin-left:8px">-1.73%</span>
+          </span>
+        </div>
+
+        <div class="row-info">
+          <span class="row-label">中证500</span>
+          <span>
+            <span style="font-weight:bold;font-size:18px">7624.07</span>
+            <span style="color:#27ae60;font-weight:bold;margin-left:8px">-2.15%</span>
+          </span>
+        </div>
+
+        <div class="row-info">
+          <span class="row-label">创业板指</span>
+          <span>
+            <span style="font-weight:bold;font-size:18px">3288.95</span>
+            <span style="color:#27ae60;font-weight:bold;margin-left:8px">-2.68%</span>
+          </span>
+        </div>
+</div>
+
     <div class="card">
+      <div class="card-title">量能对比</div>
+      <div class="row-info">
+        <span class="row-label">量能变化</span>
+        <span style="color:#27ae60;font-weight:bold">缩量 -6.02%</span>
+      </div>
+      <div class="row-info">
+        <span class="row-label">数据日期</span>
+        <span>2026-09-24</span>
+      </div>
+      <div class="row-note">指数成交量合计（沪深300+中证500+创业板），用于量能对比</div>
+    </div>
+<div class="card">
+<div class="card-title">情绪周期</div>
+
+        <div class="temp-block">
+          <div class="row-label">情绪评分</div>
+          <div class="temp-value" style="color:#e67e22">76</div>
+          <div class="row-label" style="color:#e67e22">进攻</div>
+        </div>
+<div class="row-info"><span class="row-label">连板高度</span><span class="row-val">5板</span></div>
+<div class="row-info"><span class="row-label">连板梯队</span><span style="font-size:13px">5板:1只 4板:2只 3板:5只 2板:13只 1板:72只</span></div>
+<div class="row-info"><span class="row-label">炸板率</span><span style="color:#e74c3c;font-weight:bold">50.5%（47只）</span></div>
+<div class="row-info"><span class="row-label">涨停/跌停</span><span><span style="color:#e74c3c">93</span> / <span style="color:#27ae60">2</span></span></div>
+<div class="card-sub">数据日期: 20260921</div>
+
+        <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #ddd">
+          <div class="row-info"><span class="row-label">昨日涨停今日均溢价</span><span style="color:#e74c3c;font-weight:bold">+11.36%</span></div>
+          <div class="row-info"><span class="row-label">红盘率</span><span class="row-val">100.0%</span></div>
+          <div class="row-info"><span class="row-label">跟踪样本</span><span>52/52只</span></div>
+        </div>
+</div>
+<div class="card">
 <div class="card-title">市场环境</div>
 <div class="card-sub">日期: 20260930</div>
 <div class="row-note">5环境标签暂无数据</div>
 
-        <div class="row-info">
-          <span class="row-label">涨跌家数</span>
-          <span>
-            <span style="color:#e74c3c;font-weight:bold">↑2470</span>
-            <span style="color:#ccc"> / </span>
-            <span style="color:#27ae60;font-weight:bold">↓2747</span>
-          </span>
-        </div>
+            <div class="row-info">
+              <span class="row-label">涨跌家数</span>
+              <span>
+                <span style="color:#e74c3c;font-weight:bold">↑2470</span>
+                <span style="color:#ccc"> / </span>
+                <span style="color:#27ae60;font-weight:bold">↓2747</span>
+              </span>
+            </div>
 
-        <div class="row-info">
-          <span class="row-label">涨跌停</span>
-          <span>
-            <span style="color:#e74c3c">涨停 72</span>
-            <span style="color:#ccc"> / </span>
-            <span style="color:#27ae60">跌停 16</span>
-          </span>
-        </div>
-<div class="row-info"><span class="row-label">北向净流入</span><span style="color:#e74c3c;font-weight:bold">+0.00亿</span></div>
+            <div class="row-info">
+              <span class="row-label">涨跌停</span>
+              <span>
+                <span style="color:#e74c3c">涨停 72</span>
+                <span style="color:#ccc"> / </span>
+                <span style="color:#27ae60">跌停 16</span>
+              </span>
+            </div>
+<div class="row-note">⚪ 北向资金每日净流入官方已停更（2024-08起），改参考主力资金/成交额环比</div>
 </div>
-    
-    <div class="card">
-      <div class="card-title">纪律评分</div>
-      <div class="row-info"><span class="row-label">日期</span><span>2026-09-30</span></div>
-      <div class="row-info"><span class="row-label">总分</span><span class="temp-value" style="color:#e74c3c">9.0</span></div>
-      <div class="row-info"><span class="row-label">评级</span><span>D（不及格）</span></div>
-    </div>
-  </div>
 
-  <!-- 持仓 -->
+        <div class="card summary-card">
+          <div class="card-title" style="color:#fff">账户概览</div>
+          <div class="row-info"><span class="row-label">总资产</span><span class="row-val">12.39万元</span></div>
+          <div class="row-info"><span class="row-label">仓位</span><span class="row-val">65.4%</span></div>
+          <div class="row-info"><span class="row-label">现金</span><span class="row-val">0.00元</span></div>
+          <div class="row-info"><span class="row-label">日期</span><span class="row-val">2026-10-02</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">纪律评分</div>
+          <div class="row-info"><span class="row-label">日期</span><span>2026-09-30</span></div>
+          <div class="row-info"><span class="row-label">总分</span><span class="temp-value" style="color:#e74c3c">9.0</span></div>
+          <div class="row-info"><span class="row-label">评级</span><span>D（不及格）</span></div>
+        </div></div>
   <div id="sec-positions" class="section">
-    
     <div class="card summary-card">
       <div class="row-info"><span class="row-label">持仓总市值</span><span class="row-val">8.10万元</span></div>
       <div class="row-info"><span class="row-label">浮动盈亏</span><span class="row-val" style="color:#27ae60">-9321.60元</span></div>
@@ -358,13 +220,13 @@ body {
           <span class="profit-pct">-5.39%</span>
         </div>
         <div class="row-info">
+          <span class="row-label">板块/概念</span><span style="font-size:13px">食品饮料 / 消费/莲花味精</span>
+        </div>
+        <div class="row-info">
           <span class="row-label">止损位</span><span>11.629</span>
         </div>
         <div class="row-info">
           <span class="row-label">止盈位</span><span>T1:13.75 / T2:14.5</span>
-        </div>
-        <div class="row-info">
-          <span class="row-label">持仓天数</span><span>2天</span>
         </div>
         <div class="row-info">
           <span class="row-label">止损距离</span>
@@ -373,8 +235,15 @@ body {
       </div>
       <div id="detail-0" class="pos-detail" style="display:none">
         <div class="detail-line"><span class="row-label">买入日期</span><span>20260922</span></div>
+        <div class="detail-line"><span class="row-label">持仓天数</span><span>2天</span></div>
         <div class="detail-line"><span class="row-label">战法标签</span><span>emotion</span></div>
         <div class="detail-line"><span class="row-label">区间最高</span><span>13.59</span></div>
+        <div class="detail-line"><span class="row-label">MA5位置</span><span>下方(-9.41%)</span></div>
+        <div class="detail-line"><span class="row-label">MA20</span><span>12.1</span></div>
+        <div class="detail-line"><span class="row-label">PE(TTM)</span><span>59.14</span></div>
+        <div class="detail-line"><span class="row-label">流通市值</span><span>68.5亿</span></div>
+        <div class="detail-line"><span class="row-label">换手率</span><span>--</span></div>
+        <div class="detail-line"><span class="row-label">量比</span><span>--</span></div>
         <div class="detail-line"><span class="row-label">ATR止损依据</span><span>铁律止损=成本12.113*0.96=11.629</span></div>
         <div class="detail-line detail-sell"><span class="row-label">卖出规则</span><span>单票30.7%超限，需减至15%以内；铁律止损11.629(成本*0.96)；浮盈可考虑分批止盈</span></div>
         <div class="detail-hint">点击卡片可折叠</div>
@@ -402,13 +271,13 @@ body {
           <span class="profit-pct">-14.21%</span>
         </div>
         <div class="row-info">
+          <span class="row-label">板块/概念</span><span style="font-size:13px">通信设备 / 光模块/CPO/算力</span>
+        </div>
+        <div class="row-info">
           <span class="row-label">止损位</span><span>184.508</span>
         </div>
         <div class="row-info">
           <span class="row-label">止盈位</span><span>T1:211.42 / T2:221.03</span>
-        </div>
-        <div class="row-info">
-          <span class="row-label">持仓天数</span><span>6天</span>
         </div>
         <div class="row-info">
           <span class="row-label">止损距离</span>
@@ -417,8 +286,15 @@ body {
       </div>
       <div id="detail-1" class="pos-detail" style="display:none">
         <div class="detail-line"><span class="row-label">买入日期</span><span>20260918</span></div>
+        <div class="detail-line"><span class="row-label">持仓天数</span><span>6天</span></div>
         <div class="detail-line"><span class="row-label">战法标签</span><span>S11</span></div>
         <div class="detail-line"><span class="row-label">区间最高</span><span>190.0</span></div>
+        <div class="detail-line"><span class="row-label">MA5位置</span><span>下方(-13.90%)</span></div>
+        <div class="detail-line"><span class="row-label">MA20</span><span>185.0</span></div>
+        <div class="detail-line"><span class="row-label">PE(TTM)</span><span>123.0</span></div>
+        <div class="detail-line"><span class="row-label">流通市值</span><span>149.0亿</span></div>
+        <div class="detail-line"><span class="row-label">换手率</span><span>--</span></div>
+        <div class="detail-line"><span class="row-label">量比</span><span>--</span></div>
         <div class="detail-line"><span class="row-label">ATR止损依据</span><span>真ATR14=10.216, 2×ATR=20.433</span></div>
         <div class="detail-line detail-sell"><span class="row-label">卖出规则</span><span>单票30.7%超限，需减至15%以内；PE123高估值，不加仓</span></div>
         <div class="detail-hint">点击卡片可折叠</div>
@@ -446,13 +322,13 @@ body {
           <span class="profit-pct">-11.32%</span>
         </div>
         <div class="row-info">
+          <span class="row-label">板块/概念</span><span style="font-size:13px">电子 / PCB/苹果链/消费电子</span>
+        </div>
+        <div class="row-info">
           <span class="row-label">止损位</span><span>86.112</span>
         </div>
         <div class="row-info">
           <span class="row-label">止盈位</span><span>T1:98.67 / T2:103.16</span>
-        </div>
-        <div class="row-info">
-          <span class="row-label">持仓天数</span><span>7天</span>
         </div>
         <div class="row-info">
           <span class="row-label">止损距离</span>
@@ -461,191 +337,180 @@ body {
       </div>
       <div id="detail-2" class="pos-detail" style="display:none">
         <div class="detail-line"><span class="row-label">买入日期</span><span>20260917</span></div>
+        <div class="detail-line"><span class="row-label">持仓天数</span><span>7天</span></div>
         <div class="detail-line"><span class="row-label">战法标签</span><span>S12</span></div>
         <div class="detail-line"><span class="row-label">区间最高</span><span>88.19</span></div>
+        <div class="detail-line"><span class="row-label">MA5位置</span><span>下方(-11.12%)</span></div>
+        <div class="detail-line"><span class="row-label">MA20</span><span>87.8</span></div>
+        <div class="detail-line"><span class="row-label">PE(TTM)</span><span>54.9</span></div>
+        <div class="detail-line"><span class="row-label">流通市值</span><span>185.0亿</span></div>
+        <div class="detail-line"><span class="row-label">换手率</span><span>--</span></div>
+        <div class="detail-line"><span class="row-label">量比</span><span>--</span></div>
         <div class="detail-line"><span class="row-label">ATR止损依据</span><span>真ATR14=4.619, 2×ATR=9.239</span></div>
         <div class="detail-line detail-sell"><span class="row-label">卖出规则</span><span>单票14.2%合规，持有观察；接近MA20支撑87.8</span></div>
         <div class="detail-hint">点击卡片可折叠</div>
       </div>
-    </div>
-  </div>
-
-  <!-- 信号 -->
+    </div></div>
   <div id="sec-signals" class="section">
-    
     <div class="card empty-card">
       <div class="empty-icon">📊</div>
       <div class="empty-text">今日无新信号</div>
-    </div>
-  </div>
+    </div></div>
+  <div id="sec-sectors" class="section"><div class="card">
+<div class="card-title">板块龙头</div>
+<div class="card-sub">数据日期: 20260921</div>
 
-  <!-- 板块 -->
-  <div id="sec-sectors" class="section">
-    <div class="card">
-<div class="card-title">板块强弱排行</div>
+            <div class="sector-row">
+              <span class="sector-name">化学制药 <span style="color:#999;font-size:12px">(7只涨停)</span></span>
+              <span style="font-size:14px">华北制药</span>
+              <span class="sector-pct" style="color:#333">+0.00%</span>
+            </div>
+
+            <div class="sector-row">
+              <span class="sector-name">医疗服务 <span style="color:#999;font-size:12px">(4只涨停)</span></span>
+              <span style="font-size:14px">百花医药</span>
+              <span class="sector-pct" style="color:#333">+0.00%</span>
+            </div>
+
+            <div class="sector-row">
+              <span class="sector-name">服装家纺 <span style="color:#999;font-size:12px">(4只涨停)</span></span>
+              <span style="font-size:14px">泰慕士</span>
+              <span class="sector-pct" style="color:#333">+0.00%</span>
+            </div>
+
+            <div class="sector-row">
+              <span class="sector-name">化学制品 <span style="color:#999;font-size:12px">(4只涨停)</span></span>
+              <span style="font-size:14px">北化股份</span>
+              <span class="sector-pct" style="color:#333">+0.00%</span>
+            </div>
+
+            <div class="sector-row">
+              <span class="sector-name">房地产开发 <span style="color:#999;font-size:12px">(4只涨停)</span></span>
+              <span style="font-size:14px">绿地控股</span>
+              <span class="sector-pct" style="color:#333">+0.00%</span>
+            </div>
+</div>
+<div class="card">
+<div class="card-title">行业板块强弱</div>
 <div class="card-sub">数据日期: 20260930</div>
 <div class="section-sub">🔥 最强板块 TOP5</div>
 
-        <div class="sector-row">
-          <span class="sector-name">医疗研发外包</span>
-          <span class="sector-state" style="background:#27ae6022;color:#27ae60;border:1px solid #27ae60">价涨资金进</span>
-          <span class="sector-pct" style="color:#e74c3c">+4.31%</span>
-        </div>
+                    <div class="sector-row">
+                      <span class="sector-name">医疗研发外包</span>
+                      <span class="sector-state" style="background:#27ae6022;color:#27ae60;border:1px solid #27ae60">价涨资金进</span>
+                      <span class="sector-pct" style="color:#e74c3c">+4.31%</span>
+                    </div>
 
-        <div class="sector-row">
-          <span class="sector-name">医疗服务</span>
-          <span class="sector-state" style="background:#27ae6022;color:#27ae60;border:1px solid #27ae60">价涨资金进</span>
-          <span class="sector-pct" style="color:#e74c3c">+3.86%</span>
-        </div>
+                    <div class="sector-row">
+                      <span class="sector-name">医疗服务</span>
+                      <span class="sector-state" style="background:#27ae6022;color:#27ae60;border:1px solid #27ae60">价涨资金进</span>
+                      <span class="sector-pct" style="color:#e74c3c">+3.86%</span>
+                    </div>
 
-        <div class="sector-row">
-          <span class="sector-name">生物制品</span>
-          <span class="sector-state" style="background:#27ae6022;color:#27ae60;border:1px solid #27ae60">价涨资金进</span>
-          <span class="sector-pct" style="color:#e74c3c">+4.18%</span>
-        </div>
+                    <div class="sector-row">
+                      <span class="sector-name">生物制品</span>
+                      <span class="sector-state" style="background:#27ae6022;color:#27ae60;border:1px solid #27ae60">价涨资金进</span>
+                      <span class="sector-pct" style="color:#e74c3c">+4.18%</span>
+                    </div>
 
-        <div class="sector-row">
-          <span class="sector-name">医药生物</span>
-          <span class="sector-state" style="background:#27ae6022;color:#27ae60;border:1px solid #27ae60">价涨资金进</span>
-          <span class="sector-pct" style="color:#e74c3c">+2.73%</span>
-        </div>
+                    <div class="sector-row">
+                      <span class="sector-name">医药生物</span>
+                      <span class="sector-state" style="background:#27ae6022;color:#27ae60;border:1px solid #27ae60">价涨资金进</span>
+                      <span class="sector-pct" style="color:#e74c3c">+2.73%</span>
+                    </div>
 
-        <div class="sector-row">
-          <span class="sector-name">化学制药</span>
-          <span class="sector-state" style="background:#27ae6022;color:#27ae60;border:1px solid #27ae60">价涨资金进</span>
-          <span class="sector-pct" style="color:#e74c3c">+2.79%</span>
-        </div>
+                    <div class="sector-row">
+                      <span class="sector-name">化学制药</span>
+                      <span class="sector-state" style="background:#27ae6022;color:#27ae60;border:1px solid #27ae60">价涨资金进</span>
+                      <span class="sector-pct" style="color:#e74c3c">+2.79%</span>
+                    </div>
 <div class="section-sub">❄️ 最弱板块 BOTTOM5</div>
 
-        <div class="sector-row">
-          <span class="sector-name">半导体</span>
-          <span class="sector-state" style="background:#e74c3c22;color:#e74c3c;border:1px solid #e74c3c">价跌资金出</span>
-          <span class="sector-pct" style="color:#27ae60">-2.99%</span>
-        </div>
+                    <div class="sector-row">
+                      <span class="sector-name">半导体</span>
+                      <span class="sector-state" style="background:#e74c3c22;color:#e74c3c;border:1px solid #e74c3c">价跌资金出</span>
+                      <span class="sector-pct" style="color:#27ae60">-2.99%</span>
+                    </div>
 
-        <div class="sector-row">
-          <span class="sector-name">数字芯片设计</span>
-          <span class="sector-state" style="background:#e74c3c22;color:#e74c3c;border:1px solid #e74c3c">价跌资金出</span>
-          <span class="sector-pct" style="color:#27ae60">-3.03%</span>
-        </div>
+                    <div class="sector-row">
+                      <span class="sector-name">数字芯片设计</span>
+                      <span class="sector-state" style="background:#e74c3c22;color:#e74c3c;border:1px solid #e74c3c">价跌资金出</span>
+                      <span class="sector-pct" style="color:#27ae60">-3.03%</span>
+                    </div>
 
-        <div class="sector-row">
-          <span class="sector-name">集成电路封测</span>
-          <span class="sector-state" style="background:#e74c3c22;color:#e74c3c;border:1px solid #e74c3c">价跌资金出</span>
-          <span class="sector-pct" style="color:#27ae60">-3.85%</span>
-        </div>
+                    <div class="sector-row">
+                      <span class="sector-name">集成电路封测</span>
+                      <span class="sector-state" style="background:#e74c3c22;color:#e74c3c;border:1px solid #e74c3c">价跌资金出</span>
+                      <span class="sector-pct" style="color:#27ae60">-3.85%</span>
+                    </div>
 
-        <div class="sector-row">
-          <span class="sector-name">印制电路板</span>
-          <span class="sector-state" style="background:#e74c3c22;color:#e74c3c;border:1px solid #e74c3c">价跌资金出</span>
-          <span class="sector-pct" style="color:#27ae60">-2.76%</span>
-        </div>
+                    <div class="sector-row">
+                      <span class="sector-name">印制电路板</span>
+                      <span class="sector-state" style="background:#e74c3c22;color:#e74c3c;border:1px solid #e74c3c">价跌资金出</span>
+                      <span class="sector-pct" style="color:#27ae60">-2.76%</span>
+                    </div>
 
-        <div class="sector-row">
-          <span class="sector-name">电子</span>
-          <span class="sector-state" style="background:#e74c3c22;color:#e74c3c;border:1px solid #e74c3c">价跌资金出</span>
-          <span class="sector-pct" style="color:#27ae60">-2.38%</span>
-        </div>
-</div>
-  </div>
-
-  <!-- 交易 -->
+                    <div class="sector-row">
+                      <span class="sector-name">电子</span>
+                      <span class="sector-state" style="background:#e74c3c22;color:#e74c3c;border:1px solid #e74c3c">价跌资金出</span>
+                      <span class="sector-pct" style="color:#27ae60">-2.38%</span>
+                    </div>
+</div></div>
   <div id="sec-trades" class="section">
-    
     <div class="card empty-card">
       <div class="empty-icon">📊</div>
       <div class="empty-text">今日无交易</div>
-    </div>
-  </div>
-
-  <!-- 风控 -->
-  <div id="sec-risk" class="section">
-    <div class="card">
+    </div></div>
+  <div id="sec-risk" class="section"><div class="card">
 <div class="card-title">风控预警</div>
 
-        <div class="alert-row" style="background:#ffeaea;border-left:4px solid #e74c3c">
-          <div class="alert-label" style="color:#e74c3c">止损预警</div>
-          <div class="alert-name">莲花控股 <span class="pos-code">600186</span></div>
-          <div class="alert-msg">距止损位仅 -1.47%（止损价 11.63）</div>
-        </div>
+            <div class="alert-row" style="background:#ffeaea;border-left:4px solid #e74c3c">
+              <div class="alert-label" style="color:#e74c3c">止损预警</div>
+              <div class="alert-name">莲花控股 <span class="pos-code">600186</span></div>
+              <div class="alert-msg">距止损位仅 -1.47%（止损价 11.63）</div>
+            </div>
 
-        <div class="alert-row" style="background:#eaffea;border-left:4px solid #27ae60">
-          <div class="alert-label" style="color:#27ae60">止盈预警</div>
-          <div class="alert-name">莲花控股 <span class="pos-code">600186</span></div>
-          <div class="alert-msg">接近第一止盈位 13.75（差距 19.98%）</div>
-        </div>
+            <div class="alert-row" style="background:#ffeaea;border-left:4px solid #e74c3c">
+              <div class="alert-label" style="color:#e74c3c">止损预警</div>
+              <div class="alert-name">光迅科技 <span class="pos-code">002281</span></div>
+              <div class="alert-msg">距止损位仅 -11.90%（止损价 184.51）</div>
+            </div>
 
-        <div class="alert-row" style="background:#ffeaea;border-left:4px solid #e74c3c">
-          <div class="alert-label" style="color:#e74c3c">止损预警</div>
-          <div class="alert-name">光迅科技 <span class="pos-code">002281</span></div>
-          <div class="alert-msg">距止损位仅 -11.90%（止损价 184.51）</div>
-        </div>
-
-        <div class="alert-row" style="background:#eaffea;border-left:4px solid #27ae60">
-          <div class="alert-label" style="color:#27ae60">止盈预警</div>
-          <div class="alert-name">光迅科技 <span class="pos-code">002281</span></div>
-          <div class="alert-msg">接近第一止盈位 211.42（差距 28.23%）</div>
-        </div>
-
-        <div class="alert-row" style="background:#ffeaea;border-left:4px solid #e74c3c">
-          <div class="alert-label" style="color:#e74c3c">止损预警</div>
-          <div class="alert-name">鹏鼎控股 <span class="pos-code">002938</span></div>
-          <div class="alert-msg">距止损位仅 -8.25%（止损价 86.11）</div>
-        </div>
-
-        <div class="alert-row" style="background:#eaffea;border-left:4px solid #27ae60">
-          <div class="alert-label" style="color:#27ae60">止盈预警</div>
-          <div class="alert-name">鹏鼎控股 <span class="pos-code">002938</span></div>
-          <div class="alert-msg">接近第一止盈位 98.67（差距 24.04%）</div>
-        </div>
+            <div class="alert-row" style="background:#ffeaea;border-left:4px solid #e74c3c">
+              <div class="alert-label" style="color:#e74c3c">止损预警</div>
+              <div class="alert-name">鹏鼎控股 <span class="pos-code">002938</span></div>
+              <div class="alert-msg">距止损位仅 -8.25%（止损价 86.11）</div>
+            </div>
 </div>
-    <div class="card">
+<div class="card">
 <div class="card-title">模拟盘跟踪</div>
 
-        <div class="paper-nav">
-          <div class="row-label">最新净值</div>
-          <div class="temp-value" style="color:#333">1.00000</div>
-          <div class="row-label" style="color:#333">累计收益率 +0.00%</div>
-        </div>
-</div>
-  </div>
-
-  <!-- 底部 -->
+            <div class="paper-nav">
+              <div class="row-label">最新净值</div>
+              <div class="temp-value" style="color:#333">1.00000</div>
+              <div class="row-label" style="color:#333">累计收益率 +0.00%</div>
+            </div>
+</div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-03 04:11:23</div>
-    <div>数据源: 市场环境、当前持仓、板块强弱、风控预警、模拟盘、纪律评分</div>
+    <div>数据更新时间: 2026-10-03 04:28:03</div>
+    <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分</div>
     <div class="disclaimer">⚠️ 本页面由量化系统自动生成，仅供参考，不构成投资建议。</div>
   </div>
-
 </div>
-
 <script>
 function showTab(name, el) {
-  // 切换 section
   var sections = document.querySelectorAll('.section');
-  for (var i = 0; i < sections.length; i++) {
-    sections[i].classList.remove('active');
-  }
+  for (var i = 0; i < sections.length; i++) sections[i].classList.remove('active');
   document.getElementById('sec-' + name).classList.add('active');
-
-  // 切换 tab 高亮
   var tabs = document.querySelectorAll('.nav-tab');
-  for (var j = 0; j < tabs.length; j++) {
-    tabs[j].classList.remove('active');
-  }
+  for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
   el.classList.add('active');
-
-  // 滚动到顶部
   window.scrollTo(0, 0);
 }
-
 function toggleDetail(id) {
   var el = document.getElementById(id);
-  if (el.style.display === 'none') {
-    el.style.display = 'block';
-  } else {
-    el.style.display = 'none';
-  }
+  if (el.style.display === 'none') { el.style.display = 'block'; }
+  else { el.style.display = 'none'; }
 }
 </script>
 </body>
