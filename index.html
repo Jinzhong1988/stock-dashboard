@@ -8,18 +8,18 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background: #f0f2f5; color: #333; font-size: 16px; line-height: 1.5; padding-bottom: 70px;
+  background: #f0f2f5; color: #333; font-size: 16px; line-height: 1.5; padding-bottom: 72px;
 }
 .container { max-width: 480px; margin: 0 auto; padding: 10px; }
-.navbar {
+/* Round2: 顶部标题栏 */
+.topbar {
   position: fixed; top: 0; left: 0; right: 0; background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 100; max-width: 480px; margin: 0 auto; display: flex;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 100; max-width: 480px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; padding: 10px 14px;
+  border-bottom: 2px solid #e74c3c;
 }
-.nav-tab {
-  flex: 1; text-align: center; padding: 12px 2px; font-size: 13px; color: #666;
-  cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s;
-}
-.nav-tab.active { color: #e74c3c; border-bottom-color: #e74c3c; font-weight: bold; }
+.topbar-title { font-size: 17px; font-weight: bold; color: #222; }
+.topbar-date { font-size: 12px; color: #999; }
 .section { display: none; padding-top: 56px; }
 .section.active { display: block; }
 .card { background: #fff; border-radius: 8px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
@@ -81,7 +81,6 @@ body {
 .paper-nav { text-align: center; padding: 10px; background: #f8f9fa; border-radius: 6px; margin: 8px 0; }
 .footer { text-align: center; padding: 20px 10px; font-size: 12px; color: #999; }
 .footer .disclaimer { margin-top: 8px; padding: 8px; background: #fffbe6; border-radius: 4px; color: #ad6800; }
-.nav-tab { font-size: 12px; padding: 10px 1px; }
 .ledger-summary { display: flex; justify-content: space-between; margin: 10px 0; }
 .ls-item { flex: 1; text-align: center; }
 .ls-num { font-size: 20px; font-weight: bold; }
@@ -99,29 +98,69 @@ body {
 .review-date-btn { border: 1px solid #ddd; background: #fff; color: #666; padding: 5px 12px; border-radius: 14px; font-size: 13px; }
 .review-date-btn.active { background: #667eea; color: #fff; border-color: #667eea; font-weight: bold; }
 .review-pre { white-space: pre-wrap; word-break: break-word; font-family: -apple-system, "PingFang SC", monospace; font-size: 13px; line-height: 1.6; background: #f8f9fa; border-radius: 6px; padding: 10px; color: #444; max-height: 60vh; overflow-y: auto; }
-.alert-banner { background: linear-gradient(90deg,#c0392b,#e74c3c); color: #fff; text-align: center; padding: 9px 12px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 56px; box-shadow: 0 2px 6px rgba(231,76,60,0.4); }
+.alert-banner { background: linear-gradient(90deg,#c0392b,#e74c3c); color: #fff; text-align: center; padding: 9px 12px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 54px; box-shadow: 0 2px 6px rgba(231,76,60,0.4); }
 .hit-stop { color: #e74c3c !important; font-weight: bold; animation: blink 1s infinite; }
 @keyframes blink { 50% { opacity: 0.4; } }
 .title-row { display:flex; justify-content:space-between; align-items:center; }
 .card-date-tag { font-size: 11px; color: #999; font-weight: normal; }
 .card-date-stale { font-size: 11px; color: #e67e22; font-weight: normal; background:#fff7e6; padding:1px 6px; border-radius:8px; margin-left:4px; }
+/* Round2: 底部固定navbar */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.1); z-index: 100; max-width: 480px; margin: 0 auto;
+  display: flex; border-top: 1px solid #eee;
+}
+.bn-item {
+  flex: 1; text-align: center; padding: 8px 2px 6px; cursor: pointer; color: #666;
+  border-top: 3px solid transparent; transition: all 0.15s;
+}
+.bn-item.active { color: #e74c3c; border-top-color: #e74c3c; font-weight: bold; }
+.bn-icon { font-size: 20px; display: block; line-height: 1.2; }
+.bn-label { font-size: 11px; display: block; margin-top: 2px; }
+/* 更多弹窗 */
+.more-mask {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 199; display: none;
+}
+.more-mask.show { display: block; }
+.more-panel {
+  position: fixed; bottom: 64px; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px; background: #fff; z-index: 200; display: none;
+  border-radius: 12px 12px 0 0; box-shadow: 0 -4px 16px rgba(0,0,0,0.15); padding: 8px 0;
+}
+.more-panel.show { display: block; }
+.more-item {
+  display: flex; align-items: center; padding: 12px 20px; font-size: 15px; color: #333;
+  cursor: pointer; border-bottom: 1px solid #f5f5f5;
+}
+.more-item:last-child { border-bottom: none; }
+.more-item:active { background: #f5f5f5; }
+.more-item .mi-icon { font-size: 18px; margin-right: 12px; }
+.regime-card { background: linear-gradient(135deg, #fff 0%, #f8f9fb 100%); border: 1px solid #e8e8e8; }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="navbar">
-    <div class="nav-tab active" onclick="showTab('market',this)">市场</div>
-    <div class="nav-tab" onclick="showTab('positions',this)">持仓</div>
-    <div class="nav-tab" onclick="showTab('signals',this)">信号</div>
-    <div class="nav-tab" onclick="showTab('watchlist',this)">股票池</div>
-    <div class="nav-tab" onclick="showTab('sectors',this)">板块</div>
-    <div class="nav-tab" onclick="showTab('trades',this)">交易</div>
-    <div class="nav-tab" onclick="showTab('ledger',this)">台账</div>
-    <div class="nav-tab" onclick="showTab('review',this)">复盘</div>
-    <div class="nav-tab" onclick="showTab('risk',this)">风控</div>
+  <div class="topbar">
+    <div class="topbar-title">📊 量化仪表盘</div>
+    <div class="topbar-date">2026-09-30</div>
   </div>
-  <div class="alert-banner" onclick="showTab('risk',document.querySelectorAll('.nav-tab')[8])">🚨 2只持仓击穿止损 | 纪律评分:9.0分D（不及格） | 违规8次 ▶点击查风控</div>
-  <div id="sec-market" class="section active"><div class="card">
+  <div class="alert-banner" onclick="showTab('risk',bnEl('moreBtn'))">🚨 2只持仓击穿止损 | 纪律评分:9.0分D（不及格） | 违规8次 ▶点击查风控</div>
+  <div id="sec-market" class="section active"><div class="card regime-card">
+<div class="card-title">🎯 四季择时</div>
+
+        <div style="background:#7f8c8d;color:#fff;border-radius:8px;padding:14px;text-align:center;margin:8px 0;">
+          <div style="font-size:26px;font-weight:bold;">熊市 🐻</div>
+          <div style="font-size:14px;margin-top:4px;">仓位上限0%（空仓）</div>
+        </div>
+<div class="row-info"><span class="row-label">允许战法</span><span style="font-size:14px">S02</span></div>
+<div class="row-info"><span class="row-label">建议总仓位</span><span class="row-val">0%</span></div>
+<div class="row-info"><span class="row-label">上证/MA20</span><span>3842.2 / 3925.5（20日-3.5%）</span></div>
+<div class="row-info"><span class="row-label">竞价/收盘评分</span><span>55 / 50</span></div>
+<div class="row-info"><span class="row-label">明日展望</span><span>中性</span></div>
+<div class="row-info"><span class="row-label">明日仓位</span><span>维持原仓位</span></div>
+<div class="card-sub">数据日期: 20260930</div>
+</div>
+<div class="card">
 <div class="title-row"><div class="card-title">大盘指数</div><span class="card-date-tag">📅09-30</span></div>
 
         <div class="row-info">
@@ -148,6 +187,14 @@ body {
           </span>
         </div>
 </div>
+<div class="card"><div class="row-note" style="margin:4px 0 0;font-size:12px;">上证指数分时（09/30，源:新浪HTTP）</div><svg viewBox="0 0 440 120" style="width:100%;height:auto;display:block;margin:4px 0;">
+  <line x1="30" y1="68.5" x2="432" y2="68.5" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,2"/>
+  <polyline points="30.0,45.3 38.6,40.8 47.1,31.6 55.7,34.0 64.2,18.9 72.8,24.1 81.3,21.6 89.9,24.5 98.4,36.9 107.0,37.2 115.5,37.6 124.1,42.8 132.6,57.9 141.2,56.9 149.7,38.3 158.3,26.8 166.9,27.8 175.4,30.8 184.0,36.7 192.5,36.0 201.1,33.7 209.6,36.4 218.2,34.4 226.7,37.7 235.3,42.5 243.8,38.5 252.4,45.4 260.9,42.5 269.5,41.6 278.0,29.5 286.6,16.4 295.1,13.3 303.7,16.5 312.3,18.5 320.8,12.5 329.4,23.5 337.9,21.4 346.5,16.4 355.0,22.7 363.6,25.7 372.1,25.3 380.7,20.3 389.2,19.6 397.8,15.1 406.3,24.6 414.9,27.8 423.4,30.9 432.0,33.6" fill="none" stroke="#e74c3c" stroke-width="1.4"/>
+  <rect x="28.5" y="73.0" width="3" height="31.0" fill="#27ae60" opacity="0.55"/><rect x="37.1" y="87.8" width="3" height="16.2" fill="#e74c3c" opacity="0.55"/><rect x="45.6" y="92.0" width="3" height="12.0" fill="#e74c3c" opacity="0.55"/><rect x="54.2" y="93.1" width="3" height="10.9" fill="#27ae60" opacity="0.55"/><rect x="62.7" y="95.3" width="3" height="8.7" fill="#e74c3c" opacity="0.55"/><rect x="71.3" y="95.0" width="3" height="9.0" fill="#27ae60" opacity="0.55"/><rect x="79.8" y="96.2" width="3" height="7.8" fill="#e74c3c" opacity="0.55"/><rect x="88.4" y="97.1" width="3" height="6.9" fill="#27ae60" opacity="0.55"/><rect x="96.9" y="96.3" width="3" height="7.7" fill="#27ae60" opacity="0.55"/><rect x="105.5" y="97.7" width="3" height="6.3" fill="#27ae60" opacity="0.55"/><rect x="114.0" y="99.0" width="3" height="5.0" fill="#27ae60" opacity="0.55"/><rect x="122.6" y="98.7" width="3" height="5.3" fill="#27ae60" opacity="0.55"/><rect x="131.1" y="98.3" width="3" height="5.7" fill="#27ae60" opacity="0.55"/><rect x="139.7" y="99.5" width="3" height="4.5" fill="#e74c3c" opacity="0.55"/><rect x="148.2" y="99.5" width="3" height="4.5" fill="#e74c3c" opacity="0.55"/><rect x="156.8" y="100.4" width="3" height="3.6" fill="#e74c3c" opacity="0.55"/><rect x="165.4" y="100.6" width="3" height="3.4" fill="#27ae60" opacity="0.55"/><rect x="173.9" y="100.7" width="3" height="3.3" fill="#27ae60" opacity="0.55"/><rect x="182.5" y="100.8" width="3" height="3.2" fill="#27ae60" opacity="0.55"/><rect x="191.0" y="100.5" width="3" height="3.5" fill="#e74c3c" opacity="0.55"/><rect x="199.6" y="100.7" width="3" height="3.3" fill="#e74c3c" opacity="0.55"/><rect x="208.1" y="101.2" width="3" height="2.8" fill="#27ae60" opacity="0.55"/><rect x="216.7" y="100.3" width="3" height="3.7" fill="#e74c3c" opacity="0.55"/><rect x="225.2" y="100.5" width="3" height="3.5" fill="#27ae60" opacity="0.55"/><rect x="233.8" y="98.1" width="3" height="5.9" fill="#27ae60" opacity="0.55"/><rect x="242.3" y="100.4" width="3" height="3.6" fill="#e74c3c" opacity="0.55"/><rect x="250.9" y="100.3" width="3" height="3.7" fill="#27ae60" opacity="0.55"/><rect x="259.4" y="100.2" width="3" height="3.8" fill="#e74c3c" opacity="0.55"/><rect x="268.0" y="100.6" width="3" height="3.4" fill="#e74c3c" opacity="0.55"/><rect x="276.5" y="100.2" width="3" height="3.8" fill="#e74c3c" opacity="0.55"/><rect x="285.1" y="99.2" width="3" height="4.8" fill="#e74c3c" opacity="0.55"/><rect x="293.6" y="99.5" width="3" height="4.5" fill="#e74c3c" opacity="0.55"/><rect x="302.2" y="100.6" width="3" height="3.4" fill="#27ae60" opacity="0.55"/><rect x="310.8" y="101.1" width="3" height="2.9" fill="#27ae60" opacity="0.55"/><rect x="319.3" y="101.0" width="3" height="3.0" fill="#e74c3c" opacity="0.55"/><rect x="327.9" y="100.5" width="3" height="3.5" fill="#27ae60" opacity="0.55"/><rect x="336.4" y="100.7" width="3" height="3.3" fill="#e74c3c" opacity="0.55"/><rect x="345.0" y="101.0" width="3" height="3.0" fill="#e74c3c" opacity="0.55"/><rect x="353.5" y="101.1" width="3" height="2.9" fill="#27ae60" opacity="0.55"/><rect x="362.1" y="101.0" width="3" height="3.0" fill="#27ae60" opacity="0.55"/><rect x="370.6" y="100.8" width="3" height="3.2" fill="#e74c3c" opacity="0.55"/><rect x="379.2" y="100.6" width="3" height="3.4" fill="#e74c3c" opacity="0.55"/><rect x="387.7" y="99.7" width="3" height="4.3" fill="#e74c3c" opacity="0.55"/><rect x="396.3" y="99.9" width="3" height="4.1" fill="#e74c3c" opacity="0.55"/><rect x="404.8" y="98.9" width="3" height="5.1" fill="#27ae60" opacity="0.55"/><rect x="413.4" y="97.5" width="3" height="6.5" fill="#27ae60" opacity="0.55"/><rect x="421.9" y="95.5" width="3" height="8.5" fill="#27ae60" opacity="0.55"/><rect x="430.5" y="94.9" width="3" height="9.1" fill="#27ae60" opacity="0.55"/>
+  <circle cx="432.0" cy="33.6" r="2.5" fill="#e74c3c"/>
+  <text x="432" y="30.6" font-size="9" fill="#e74c3c" text-anchor="end" font-weight="bold">3842.20 +0.31%</text>
+  <text x="30" y="117" font-size="9" fill="#999">09:35</text><text x="231.0" y="117" font-size="9" fill="#999" text-anchor="middle">13:05</text><text x="432" y="117" font-size="9" fill="#999" text-anchor="end">15:00</text>
+</svg></div>
 
     <div class="card">
       <div class="title-row"><div class="card-title">量能对比</div><span class="card-date-tag">📅09-30</span></div>
@@ -162,18 +209,16 @@ body {
       <div class="row-note">实时指数成交量合计（沪深300+中证500+创业板指），环比上一交易日2026-09-29</div>
     </div>
 <div class="card">
-<div class="title-row"><div class="card-title">情绪周期</div><span class="card-date-tag">📅20260921</span></div>
+<div class="title-row"><div class="card-title">情绪周期</div><span class="card-date-tag">📅09/21</span><span class="card-date-stale">⚠️较旧</span></div>
 
-        <div class="temp-block">
-          <div class="row-label">情绪评分</div>
-          <div class="temp-value" style="color:#e67e22">76</div>
-          <div class="row-label" style="color:#e67e22">进攻</div>
-        </div>
-<div class="row-info"><span class="row-label">连板高度</span><span class="row-val">5板</span></div>
-<div class="row-info"><span class="row-label">连板梯队</span><span style="font-size:13px">5板:1只 4板:2只 3板:5只 2板:13只 1板:72只</span></div>
-<div class="row-info"><span class="row-label">炸板率</span><span style="color:#e74c3c;font-weight:bold">50.5%（47只）</span></div>
-<div class="row-info"><span class="row-label">涨停/跌停</span><span><span style="color:#e74c3c">93</span> / <span style="color:#27ae60">2</span></span></div>
-<div class="card-sub">数据日期: 20260921</div>
+            <div class="temp-block">
+              <div class="row-label">情绪评分（竞价/收盘）</div>
+              <div class="temp-value" style="color:#e67e22">55 / 50</div>
+              <div class="row-label" style="color:#999">来自 closing_env 20260930</div>
+            </div>
+<div class="row-note" style="color:#e67e22">⚠️ 连板高度/炸板率数据待更新（最后可用: 20260921）</div>
+<div class="row-info"><span class="row-label">连板高度(旧)</span><span class="row-val">5板</span></div>
+<div class="row-info"><span class="row-label">炸板率(旧)</span><span style="color:#e74c3c">50.5%（47只）</span></div>
 
         <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #ddd">
           <div class="row-info"><span class="row-label">昨日涨停今日均溢价</span><span style="color:#e74c3c;font-weight:bold">+11.36%</span></div>
@@ -184,26 +229,31 @@ body {
 <div class="card">
 <div class="card-title">市场环境</div>
 <div class="card-sub">日期: 20260930</div>
-<div class="row-note">5环境标签暂无数据</div>
 
-            <div class="row-info">
-              <span class="row-label">涨跌家数</span>
-              <span>
-                <span style="color:#e74c3c;font-weight:bold">↑2470</span>
-                <span style="color:#ccc"> / </span>
-                <span style="color:#27ae60;font-weight:bold">↓2747</span>
-              </span>
-            </div>
-
-            <div class="row-info">
-              <span class="row-label">涨跌停</span>
-              <span>
-                <span style="color:#e74c3c">涨停 72</span>
-                <span style="color:#ccc"> / </span>
-                <span style="color:#27ae60">跌停 16</span>
-              </span>
-            </div>
+    <div style="margin:10px 0;">
+      <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;background:#eee;">
+        <div style="width:48.4%;background:#e74c3c;" title="上涨2527家"></div>
+        <div style="width:51.6%;background:#27ae60;" title="下跌2691家"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:13px;">
+        <span style="color:#e74c3c;font-weight:bold;">↑2527涨</span>
+        <span style="color:#27ae60;font-weight:bold;">涨跌比 0.94</span>
+        <span style="color:#27ae60;font-weight:bold;">2691跌↓</span>
+      </div>
+      
+    </div>
 <div class="row-note">⚪ 北向资金每日净流入官方已停更（2024-08起），改参考主力资金/成交额环比</div>
+</div>
+<div class="card">
+<div class="title-row"><div class="card-title">💰 资金流向</div></div>
+
+        <div class="row-info"><span class="row-label">大盘资金情绪(涨跌差)</span>
+          <span style="color:#27ae60;font-weight:bold">-164</span></div>
+        <div class="row-note" style="font-size:12px;color:#999">（2527涨 / 2691跌，20260930）</div>
+<div class="row-info"><span class="row-label">持仓主力净流入合计</span><span style="color:#27ae60;font-weight:bold">-1158万</span></div>
+<div class="row-info"><span class="row-label">莲花控股(600186)</span><span style="color:#27ae60;font-size:13px">-1137万</span></div>
+<div class="row-info"><span class="row-label">光迅科技(002281)</span><span style="color:#27ae60;font-size:13px">-412万</span></div>
+<div class="row-info"><span class="row-label">鹏鼎控股(002938)</span><span style="color:#e74c3c;font-size:13px">+392万</span></div>
 </div>
 
         <div class="card summary-card">
@@ -275,6 +325,30 @@ body {
         <div class="detail-line"><span class="row-label">量比</span><span>--</span></div>
         <div class="detail-line"><span class="row-label">ATR止损依据</span><span>铁律止损=成本12.113*0.96=11.629</span></div>
         <div class="detail-line detail-sell"><span class="row-label">卖出规则</span><span>单票30.7%超限，需减至15%以内；铁律止损11.629(成本*0.96)；浮盈可考虑分批止盈</span></div>
+        
+        <div class="detail-line" style="flex-direction:column;align-items:stort;padding:6px 0;background:#fafafa;border-radius:6px;margin:4px 0;">
+          <div style="display:flex;justify-content:space-between;">
+            <span class="row-label">主力净流入</span>
+            <span style="color:#27ae60;font-weight:bold;">-1137万</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-top:2px;">
+            <span>超大单 +1046万</span><span>大单 -2183万</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;">
+            <span>中单 -6100万</span><span>小单 +7238万</span>
+          </div>
+        </div>
+        <div style="margin:6px 0;">
+          <div class="row-label" style="margin-bottom:2px;">当日分时（9/30）</div>
+          <svg viewBox="0 0 400 60" style="width:100%;height:auto;display:block;margin:4px 0;">
+  <line x1="30" y1="29.3" x2="392" y2="29.3" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,2"/>
+  <polyline points="30.0,29.3 37.7,27.3 45.4,23.3 53.1,20.3 60.8,10.7 68.5,11.7 76.2,9.7 83.9,10.7 91.6,14.7 99.3,15.2 107.0,16.2 114.7,17.7 122.4,19.7 130.1,18.2 137.8,17.2 145.5,16.2 153.2,17.2 160.9,17.7 168.6,18.7 176.3,19.7 184.0,20.3 191.7,20.8 199.4,20.3 207.1,20.8 214.9,23.3 222.6,22.8 230.3,27.8 238.0,25.3 245.7,24.8 253.4,22.3 261.1,21.3 268.8,23.3 276.5,22.8 284.2,23.8 291.9,23.8 299.6,25.3 307.3,25.8 315.0,24.3 322.7,25.3 330.4,26.3 338.1,25.3 345.8,24.3 353.5,25.8 361.2,25.8 368.9,26.8 376.6,26.8 384.3,29.3 392.0,30.3" fill="none" stroke="#27ae60" stroke-width="1.4"/>
+  <rect x="28.5" y="35.4" width="3" height="8.6" fill="#27ae60" opacity="0.55"/><rect x="36.2" y="39.1" width="3" height="4.9" fill="#e74c3c" opacity="0.55"/><rect x="43.9" y="41.5" width="3" height="2.5" fill="#e74c3c" opacity="0.55"/><rect x="51.6" y="41.5" width="3" height="2.5" fill="#e74c3c" opacity="0.55"/><rect x="59.3" y="32.0" width="3" height="12.0" fill="#e74c3c" opacity="0.55"/><rect x="67.0" y="40.4" width="3" height="3.6" fill="#27ae60" opacity="0.55"/><rect x="74.7" y="41.5" width="3" height="2.5" fill="#e74c3c" opacity="0.55"/><rect x="82.4" y="38.7" width="3" height="5.3" fill="#27ae60" opacity="0.55"/><rect x="90.1" y="41.6" width="3" height="2.4" fill="#27ae60" opacity="0.55"/><rect x="97.8" y="41.5" width="3" height="2.5" fill="#27ae60" opacity="0.55"/><rect x="105.5" y="42.7" width="3" height="1.3" fill="#27ae60" opacity="0.55"/><rect x="113.2" y="41.3" width="3" height="2.7" fill="#27ae60" opacity="0.55"/><rect x="120.9" y="42.3" width="3" height="1.7" fill="#27ae60" opacity="0.55"/><rect x="128.6" y="42.5" width="3" height="1.5" fill="#e74c3c" opacity="0.55"/><rect x="136.3" y="43.2" width="3" height="0.8" fill="#e74c3c" opacity="0.55"/><rect x="144.0" y="43.3" width="3" height="0.7" fill="#e74c3c" opacity="0.55"/><rect x="151.7" y="43.5" width="3" height="0.5" fill="#27ae60" opacity="0.55"/><rect x="159.4" y="43.5" width="3" height="0.5" fill="#27ae60" opacity="0.55"/><rect x="167.1" y="43.4" width="3" height="0.6" fill="#27ae60" opacity="0.55"/><rect x="174.8" y="43.5" width="3" height="0.5" fill="#27ae60" opacity="0.55"/><rect x="182.5" y="43.5" width="3" height="0.5" fill="#27ae60" opacity="0.55"/><rect x="190.2" y="43.2" width="3" height="0.8" fill="#27ae60" opacity="0.55"/><rect x="197.9" y="43.5" width="3" height="0.5" fill="#e74c3c" opacity="0.55"/><rect x="205.6" y="43.2" width="3" height="0.8" fill="#27ae60" opacity="0.55"/><rect x="213.4" y="42.7" width="3" height="1.3" fill="#27ae60" opacity="0.55"/><rect x="221.1" y="42.9" width="3" height="1.1" fill="#e74c3c" opacity="0.55"/><rect x="228.8" y="40.8" width="3" height="3.2" fill="#27ae60" opacity="0.55"/><rect x="236.5" y="43.0" width="3" height="1.0" fill="#e74c3c" opacity="0.55"/><rect x="244.2" y="43.0" width="3" height="1.0" fill="#e74c3c" opacity="0.55"/><rect x="251.9" y="43.2" width="3" height="0.8" fill="#e74c3c" opacity="0.55"/><rect x="259.6" y="43.2" width="3" height="0.8" fill="#e74c3c" opacity="0.55"/><rect x="267.3" y="42.9" width="3" height="1.1" fill="#27ae60" opacity="0.55"/><rect x="275.0" y="43.5" width="3" height="0.5" fill="#e74c3c" opacity="0.55"/><rect x="282.7" y="43.4" width="3" height="0.6" fill="#27ae60" opacity="0.55"/><rect x="290.4" y="43.6" width="3" height="0.4" fill="#e74c3c" opacity="0.55"/><rect x="298.1" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="305.8" y="43.2" width="3" height="0.8" fill="#27ae60" opacity="0.55"/><rect x="313.5" y="43.5" width="3" height="0.5" fill="#e74c3c" opacity="0.55"/><rect x="321.2" y="43.3" width="3" height="0.7" fill="#27ae60" opacity="0.55"/><rect x="328.9" y="43.3" width="3" height="0.7" fill="#27ae60" opacity="0.55"/><rect x="336.6" y="42.8" width="3" height="1.2" fill="#e74c3c" opacity="0.55"/><rect x="344.3" y="43.5" width="3" height="0.5" fill="#e74c3c" opacity="0.55"/><rect x="352.0" y="43.0" width="3" height="1.0" fill="#27ae60" opacity="0.55"/><rect x="359.7" y="43.0" width="3" height="1.0" fill="#e74c3c" opacity="0.55"/><rect x="367.4" y="42.3" width="3" height="1.7" fill="#27ae60" opacity="0.55"/><rect x="375.1" y="41.4" width="3" height="2.6" fill="#e74c3c" opacity="0.55"/><rect x="382.8" y="39.1" width="3" height="4.9" fill="#27ae60" opacity="0.55"/><rect x="390.5" y="38.7" width="3" height="5.3" fill="#27ae60" opacity="0.55"/>
+  <circle cx="392.0" cy="30.3" r="2.5" fill="#27ae60"/>
+  <text x="392" y="27.3" font-size="9" fill="#27ae60" text-anchor="end" font-weight="bold">11.46 -0.17%</text>
+  <text x="30" y="57" font-size="9" fill="#999">09:35</text><text x="211.0" y="57" font-size="9" fill="#999" text-anchor="middle">13:05</text><text x="392" y="57" font-size="9" fill="#999" text-anchor="end">15:00</text>
+</svg>
+        </div>
         <div class="detail-hint">点击卡片可折叠</div>
       </div>
     </div>
@@ -326,6 +400,30 @@ body {
         <div class="detail-line"><span class="row-label">量比</span><span>--</span></div>
         <div class="detail-line"><span class="row-label">ATR止损依据</span><span>真ATR14=10.216, 2×ATR=20.433</span></div>
         <div class="detail-line detail-sell"><span class="row-label">卖出规则</span><span>单票30.7%超限，需减至15%以内；PE123高估值，不加仓</span></div>
+        
+        <div class="detail-line" style="flex-direction:column;align-items:stort;padding:6px 0;background:#fafafa;border-radius:6px;margin:4px 0;">
+          <div style="display:flex;justify-content:space-between;">
+            <span class="row-label">主力净流入</span>
+            <span style="color:#27ae60;font-weight:bold;">-412万</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-top:2px;">
+            <span>超大单 -8736万</span><span>大单 +8325万</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;">
+            <span>中单 +7161万</span><span>小单 -6749万</span>
+          </div>
+        </div>
+        <div style="margin:6px 0;">
+          <div class="row-label" style="margin-bottom:2px;">当日分时（9/30）</div>
+          <svg viewBox="0 0 400 60" style="width:100%;height:auto;display:block;margin:4px 0;">
+  <line x1="30" y1="13.0" x2="392" y2="13.0" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,2"/>
+  <polyline points="30.0,13.0 37.7,16.6 45.4,17.1 53.1,19.2 60.8,20.0 68.5,20.3 76.2,9.7 83.9,15.6 91.6,19.8 99.3,18.2 107.0,19.1 114.7,21.2 122.4,22.7 130.1,23.3 137.8,21.7 145.5,18.1 153.2,19.1 160.9,20.3 168.6,20.7 176.3,22.7 184.0,22.4 191.7,23.8 199.4,23.6 207.1,25.6 214.9,27.0 222.6,25.3 230.3,29.2 238.0,30.3 245.7,29.7 253.4,25.8 261.1,21.3 268.8,22.9 276.5,24.6 284.2,25.2 291.9,24.6 299.6,26.4 307.3,27.5 315.0,26.1 322.7,25.9 330.4,26.4 338.1,27.1 345.8,26.8 353.5,26.6 361.2,25.7 368.9,26.8 376.6,27.3 384.3,27.3 392.0,27.5" fill="none" stroke="#27ae60" stroke-width="1.4"/>
+  <rect x="28.5" y="32.0" width="3" height="12.0" fill="#27ae60" opacity="0.55"/><rect x="36.2" y="36.5" width="3" height="7.5" fill="#27ae60" opacity="0.55"/><rect x="43.9" y="37.9" width="3" height="6.1" fill="#27ae60" opacity="0.55"/><rect x="51.6" y="39.0" width="3" height="5.0" fill="#27ae60" opacity="0.55"/><rect x="59.3" y="40.2" width="3" height="3.8" fill="#27ae60" opacity="0.55"/><rect x="67.0" y="39.3" width="3" height="4.7" fill="#27ae60" opacity="0.55"/><rect x="74.7" y="39.0" width="3" height="5.0" fill="#e74c3c" opacity="0.55"/><rect x="82.4" y="39.8" width="3" height="4.2" fill="#27ae60" opacity="0.55"/><rect x="90.1" y="41.4" width="3" height="2.6" fill="#27ae60" opacity="0.55"/><rect x="97.8" y="41.6" width="3" height="2.4" fill="#e74c3c" opacity="0.55"/><rect x="105.5" y="42.1" width="3" height="1.9" fill="#27ae60" opacity="0.55"/><rect x="113.2" y="40.9" width="3" height="3.1" fill="#27ae60" opacity="0.55"/><rect x="120.9" y="41.5" width="3" height="2.5" fill="#27ae60" opacity="0.55"/><rect x="128.6" y="41.3" width="3" height="2.7" fill="#27ae60" opacity="0.55"/><rect x="136.3" y="42.0" width="3" height="2.0" fill="#e74c3c" opacity="0.55"/><rect x="144.0" y="42.7" width="3" height="1.3" fill="#e74c3c" opacity="0.55"/><rect x="151.7" y="42.8" width="3" height="1.2" fill="#27ae60" opacity="0.55"/><rect x="159.4" y="41.7" width="3" height="2.3" fill="#27ae60" opacity="0.55"/><rect x="167.1" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="174.8" y="43.0" width="3" height="1.0" fill="#27ae60" opacity="0.55"/><rect x="182.5" y="43.4" width="3" height="0.6" fill="#e74c3c" opacity="0.55"/><rect x="190.2" y="42.6" width="3" height="1.4" fill="#27ae60" opacity="0.55"/><rect x="197.9" y="42.9" width="3" height="1.1" fill="#e74c3c" opacity="0.55"/><rect x="205.6" y="42.2" width="3" height="1.8" fill="#27ae60" opacity="0.55"/><rect x="213.4" y="40.5" width="3" height="3.5" fill="#27ae60" opacity="0.55"/><rect x="221.1" y="42.5" width="3" height="1.5" fill="#e74c3c" opacity="0.55"/><rect x="228.8" y="41.9" width="3" height="2.1" fill="#27ae60" opacity="0.55"/><rect x="236.5" y="41.5" width="3" height="2.5" fill="#27ae60" opacity="0.55"/><rect x="244.2" y="42.9" width="3" height="1.1" fill="#e74c3c" opacity="0.55"/><rect x="251.9" y="42.6" width="3" height="1.4" fill="#e74c3c" opacity="0.55"/><rect x="259.6" y="42.5" width="3" height="1.5" fill="#e74c3c" opacity="0.55"/><rect x="267.3" y="42.3" width="3" height="1.7" fill="#27ae60" opacity="0.55"/><rect x="275.0" y="42.8" width="3" height="1.2" fill="#27ae60" opacity="0.55"/><rect x="282.7" y="43.2" width="3" height="0.8" fill="#27ae60" opacity="0.55"/><rect x="290.4" y="43.0" width="3" height="1.0" fill="#e74c3c" opacity="0.55"/><rect x="298.1" y="42.8" width="3" height="1.2" fill="#27ae60" opacity="0.55"/><rect x="305.8" y="42.4" width="3" height="1.6" fill="#27ae60" opacity="0.55"/><rect x="313.5" y="43.1" width="3" height="0.9" fill="#e74c3c" opacity="0.55"/><rect x="321.2" y="42.6" width="3" height="1.4" fill="#e74c3c" opacity="0.55"/><rect x="328.9" y="43.0" width="3" height="1.0" fill="#27ae60" opacity="0.55"/><rect x="336.6" y="42.2" width="3" height="1.8" fill="#27ae60" opacity="0.55"/><rect x="344.3" y="42.4" width="3" height="1.6" fill="#e74c3c" opacity="0.55"/><rect x="352.0" y="42.5" width="3" height="1.5" fill="#e74c3c" opacity="0.55"/><rect x="359.7" y="41.3" width="3" height="2.7" fill="#e74c3c" opacity="0.55"/><rect x="367.4" y="41.5" width="3" height="2.5" fill="#27ae60" opacity="0.55"/><rect x="375.1" y="39.5" width="3" height="4.5" fill="#27ae60" opacity="0.55"/><rect x="382.8" y="39.4" width="3" height="4.6" fill="#e74c3c" opacity="0.55"/><rect x="390.5" y="39.4" width="3" height="4.6" fill="#27ae60" opacity="0.55"/>
+  <circle cx="392.0" cy="27.5" r="2.5" fill="#27ae60"/>
+  <text x="392" y="24.5" font-size="9" fill="#27ae60" text-anchor="end" font-weight="bold">164.88 -1.77%</text>
+  <text x="30" y="57" font-size="9" fill="#999">09:35</text><text x="211.0" y="57" font-size="9" fill="#999" text-anchor="middle">13:05</text><text x="392" y="57" font-size="9" fill="#999" text-anchor="end">15:00</text>
+</svg>
+        </div>
         <div class="detail-hint">点击卡片可折叠</div>
       </div>
     </div>
@@ -377,6 +475,30 @@ body {
         <div class="detail-line"><span class="row-label">量比</span><span>--</span></div>
         <div class="detail-line"><span class="row-label">ATR止损依据</span><span>真ATR14=4.619, 2×ATR=9.239</span></div>
         <div class="detail-line detail-sell"><span class="row-label">卖出规则</span><span>单票14.2%合规，持有观察；接近MA20支撑87.8</span></div>
+        
+        <div class="detail-line" style="flex-direction:column;align-items:stort;padding:6px 0;background:#fafafa;border-radius:6px;margin:4px 0;">
+          <div style="display:flex;justify-content:space-between;">
+            <span class="row-label">主力净流入</span>
+            <span style="color:#e74c3c;font-weight:bold;">+392万</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-top:2px;">
+            <span>超大单 -65万</span><span>大单 +456万</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;">
+            <span>中单 +2890万</span><span>小单 -3281万</span>
+          </div>
+        </div>
+        <div style="margin:6px 0;">
+          <div class="row-label" style="margin-bottom:2px;">当日分时（9/30）</div>
+          <svg viewBox="0 0 400 60" style="width:100%;height:auto;display:block;margin:4px 0;">
+  <line x1="30" y1="9.7" x2="392" y2="9.7" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,2"/>
+  <polyline points="30.0,9.7 37.7,15.0 45.4,15.0 53.1,18.4 60.8,18.4 68.5,18.4 76.2,16.7 83.9,19.9 91.6,22.8 99.3,21.3 107.0,23.2 114.7,25.6 122.4,27.4 130.1,26.4 137.8,26.4 145.5,25.2 153.2,24.2 160.9,25.5 168.6,26.5 176.3,26.8 184.0,27.0 191.7,27.1 199.4,27.7 207.1,28.7 214.9,27.3 222.6,27.0 230.3,28.8 238.0,28.1 245.7,27.2 253.4,25.4 261.1,21.3 268.8,24.6 276.5,25.9 284.2,26.5 291.9,27.2 299.6,28.6 307.3,28.3 315.0,28.2 322.7,29.2 330.4,29.7 338.1,29.9 345.8,29.4 353.5,29.5 361.2,29.1 368.9,30.0 376.6,30.3 384.3,30.3 392.0,29.9" fill="none" stroke="#27ae60" stroke-width="1.4"/>
+  <rect x="28.5" y="32.0" width="3" height="12.0" fill="#27ae60" opacity="0.55"/><rect x="36.2" y="36.6" width="3" height="7.4" fill="#27ae60" opacity="0.55"/><rect x="43.9" y="40.0" width="3" height="4.0" fill="#e74c3c" opacity="0.55"/><rect x="51.6" y="41.6" width="3" height="2.4" fill="#27ae60" opacity="0.55"/><rect x="59.3" y="42.2" width="3" height="1.8" fill="#e74c3c" opacity="0.55"/><rect x="67.0" y="42.3" width="3" height="1.7" fill="#e74c3c" opacity="0.55"/><rect x="74.7" y="42.5" width="3" height="1.5" fill="#e74c3c" opacity="0.55"/><rect x="82.4" y="42.5" width="3" height="1.5" fill="#27ae60" opacity="0.55"/><rect x="90.1" y="41.2" width="3" height="2.8" fill="#27ae60" opacity="0.55"/><rect x="97.8" y="42.6" width="3" height="1.4" fill="#e74c3c" opacity="0.55"/><rect x="105.5" y="42.9" width="3" height="1.1" fill="#27ae60" opacity="0.55"/><rect x="113.2" y="42.6" width="3" height="1.4" fill="#27ae60" opacity="0.55"/><rect x="120.9" y="42.3" width="3" height="1.7" fill="#27ae60" opacity="0.55"/><rect x="128.6" y="43.1" width="3" height="0.9" fill="#e74c3c" opacity="0.55"/><rect x="136.3" y="43.3" width="3" height="0.7" fill="#e74c3c" opacity="0.55"/><rect x="144.0" y="43.4" width="3" height="0.6" fill="#e74c3c" opacity="0.55"/><rect x="151.7" y="43.3" width="3" height="0.7" fill="#e74c3c" opacity="0.55"/><rect x="159.4" y="43.3" width="3" height="0.7" fill="#27ae60" opacity="0.55"/><rect x="167.1" y="43.5" width="3" height="0.5" fill="#27ae60" opacity="0.55"/><rect x="174.8" y="43.0" width="3" height="1.0" fill="#27ae60" opacity="0.55"/><rect x="182.5" y="43.6" width="3" height="0.4" fill="#27ae60" opacity="0.55"/><rect x="190.2" y="43.4" width="3" height="0.6" fill="#27ae60" opacity="0.55"/><rect x="197.9" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="205.6" y="42.9" width="3" height="1.1" fill="#27ae60" opacity="0.55"/><rect x="213.4" y="42.0" width="3" height="2.0" fill="#e74c3c" opacity="0.55"/><rect x="221.1" y="43.4" width="3" height="0.6" fill="#e74c3c" opacity="0.55"/><rect x="228.8" y="43.4" width="3" height="0.6" fill="#27ae60" opacity="0.55"/><rect x="236.5" y="43.2" width="3" height="0.8" fill="#e74c3c" opacity="0.55"/><rect x="244.2" y="43.5" width="3" height="0.5" fill="#e74c3c" opacity="0.55"/><rect x="251.9" y="43.1" width="3" height="0.9" fill="#e74c3c" opacity="0.55"/><rect x="259.6" y="41.6" width="3" height="2.4" fill="#e74c3c" opacity="0.55"/><rect x="267.3" y="41.9" width="3" height="2.1" fill="#27ae60" opacity="0.55"/><rect x="275.0" y="43.4" width="3" height="0.6" fill="#27ae60" opacity="0.55"/><rect x="282.7" y="43.6" width="3" height="0.4" fill="#27ae60" opacity="0.55"/><rect x="290.4" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="298.1" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="305.8" y="43.2" width="3" height="0.8" fill="#e74c3c" opacity="0.55"/><rect x="313.5" y="43.6" width="3" height="0.4" fill="#e74c3c" opacity="0.55"/><rect x="321.2" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="328.9" y="42.9" width="3" height="1.1" fill="#27ae60" opacity="0.55"/><rect x="336.6" y="43.2" width="3" height="0.8" fill="#27ae60" opacity="0.55"/><rect x="344.3" y="43.4" width="3" height="0.6" fill="#e74c3c" opacity="0.55"/><rect x="352.0" y="43.3" width="3" height="0.7" fill="#27ae60" opacity="0.55"/><rect x="359.7" y="43.4" width="3" height="0.6" fill="#e74c3c" opacity="0.55"/><rect x="367.4" y="42.8" width="3" height="1.2" fill="#27ae60" opacity="0.55"/><rect x="375.1" y="42.3" width="3" height="1.7" fill="#27ae60" opacity="0.55"/><rect x="382.8" y="42.0" width="3" height="2.0" fill="#e74c3c" opacity="0.55"/><rect x="390.5" y="42.8" width="3" height="1.2" fill="#e74c3c" opacity="0.55"/>
+  <circle cx="392.0" cy="29.9" r="2.5" fill="#27ae60"/>
+  <text x="392" y="26.9" font-size="9" fill="#27ae60" text-anchor="end" font-weight="bold">79.55 -3.98%</text>
+  <text x="30" y="57" font-size="9" fill="#999">09:35</text><text x="211.0" y="57" font-size="9" fill="#999" text-anchor="middle">13:05</text><text x="392" y="57" font-size="9" fill="#999" text-anchor="end">15:00</text>
+</svg>
+        </div>
         <div class="detail-hint">点击卡片可折叠</div>
       </div>
     </div></div>
@@ -398,17 +520,17 @@ body {
 <div class="card">
 <div class="card-title">核心池（当前持仓）</div>
 
-            <div class="row-info" style="cursor:pointer" onclick="showTab('positions',document.querySelectorAll('.nav-tab')[1])">
+            <div class="row-info" style="cursor:pointer" onclick="showTab('positions',bnEl('positions'))">
               <span class="row-label">莲花控股 <span class="pos-code">600186</span></span>
               <span style="color:#27ae60;font-weight:bold">-5.39%</span>
             </div>
 
-            <div class="row-info" style="cursor:pointer" onclick="showTab('positions',document.querySelectorAll('.nav-tab')[1])">
+            <div class="row-info" style="cursor:pointer" onclick="showTab('positions',bnEl('positions'))">
               <span class="row-label">光迅科技 <span class="pos-code">002281</span></span>
               <span style="color:#27ae60;font-weight:bold">-14.21%</span>
             </div>
 
-            <div class="row-info" style="cursor:pointer" onclick="showTab('positions',document.querySelectorAll('.nav-tab')[1])">
+            <div class="row-info" style="cursor:pointer" onclick="showTab('positions',bnEl('positions'))">
               <span class="row-label">鹏鼎控股 <span class="pos-code">002938</span></span>
               <span style="color:#27ae60;font-weight:bold">-11.32%</span>
             </div>
@@ -1071,21 +1193,55 @@ body {
             </div>
 </div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-03 05:23:03</div>
+    <div>数据更新时间: 2026-10-03 05:43:37</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分</div>
     <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
+    <div>推荐部署节奏: 盘前8:50 / 开盘9:35 / 午盘11:25 / 尾盘14:45 / 盘后17:20</div>
     <div class="disclaimer">⚠️ 本页面由量化系统自动生成，仅供参考，不构成投资建议。</div>
   </div>
 </div>
+<!-- Round2: 底部固定navbar -->
+<div class="bottom-nav">
+  <div class="bn-item active" data-tab="market" onclick="showTab('market',this)"><span class="bn-icon">🏠</span><span class="bn-label">市场</span></div>
+  <div class="bn-item" data-tab="positions" onclick="showTab('positions',this)"><span class="bn-icon">💼</span><span class="bn-label">持仓</span></div>
+  <div class="bn-item" data-tab="signals" onclick="showTab('signals',this)"><span class="bn-icon">🎯</span><span class="bn-label">信号</span></div>
+  <div class="bn-item" data-tab="ledger" onclick="showTab('ledger',this)"><span class="bn-icon">📚</span><span class="bn-label">台账</span></div>
+  <div class="bn-item" id="moreBtn" onclick="toggleMore(true)"><span class="bn-icon">⚙️</span><span class="bn-label">更多</span></div>
+</div>
+<div class="more-mask" id="moreMask" onclick="toggleMore(false)"></div>
+<div class="more-panel" id="morePanel">
+  <div class="more-item" onclick="showTab('watchlist',bnEl('watchlist'));toggleMore(false)"><span class="mi-icon">📋</span>股票池</div>
+  <div class="more-item" onclick="showTab('sectors',bnEl('sectors'));toggleMore(false)"><span class="mi-icon">🧩</span>板块</div>
+  <div class="more-item" onclick="showTab('trades',bnEl('trades'));toggleMore(false)"><span class="mi-icon">🔄</span>交易</div>
+  <div class="more-item" onclick="showTab('review',bnEl('review'));toggleMore(false)"><span class="mi-icon">📝</span>复盘</div>
+  <div class="more-item" onclick="showTab('risk',bnEl('risk'));toggleMore(false)"><span class="mi-icon">🛡️</span>风控</div>
+</div>
 <script>
+function bnEl(name) {
+  var items = document.querySelectorAll('.bn-item');
+  for (var i=0;i<items.length;i++){
+    if (items[i].getAttribute('data-tab')===name) return items[i];
+  }
+  return null;
+}
 function showTab(name, el) {
   var sections = document.querySelectorAll('.section');
   for (var i = 0; i < sections.length; i++) sections[i].classList.remove('active');
-  document.getElementById('sec-' + name).classList.add('active');
-  var tabs = document.querySelectorAll('.nav-tab');
+  var sec = document.getElementById('sec-' + name);
+  if (sec) sec.classList.add('active');
+  var tabs = document.querySelectorAll('.bn-item');
   for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
-  el.classList.add('active');
+  if (el) el.classList.add('active');
+  // 风控/复盘等从更多弹窗进入时，高亮"更多"按钮
+  if (!el || !el.classList.contains('bn-item')) {
+    var mb = document.getElementById('moreBtn');
+    if (mb) mb.classList.add('active');
+  }
   window.scrollTo(0, 0);
+}
+function toggleMore(show) {
+  document.getElementById('morePanel').classList.toggle('show', show);
+  document.getElementById('moreMask').classList.toggle('show', show);
 }
 function toggleDetail(id) {
   var el = document.getElementById(id);
