@@ -81,6 +81,30 @@ body {
 .paper-nav { text-align: center; padding: 10px; background: #f8f9fa; border-radius: 6px; margin: 8px 0; }
 .footer { text-align: center; padding: 20px 10px; font-size: 12px; color: #999; }
 .footer .disclaimer { margin-top: 8px; padding: 8px; background: #fffbe6; border-radius: 4px; color: #ad6800; }
+.nav-tab { font-size: 12px; padding: 10px 1px; }
+.ledger-summary { display: flex; justify-content: space-between; margin: 10px 0; }
+.ls-item { flex: 1; text-align: center; }
+.ls-num { font-size: 20px; font-weight: bold; }
+.ls-label { font-size: 12px; color: #999; margin-top: 2px; }
+.sort-bar { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
+.sort-btn { border: 1px solid #ddd; background: #fff; color: #666; padding: 4px 10px; border-radius: 12px; font-size: 12px; }
+.sort-btn.active { background: #e74c3c; color: #fff; border-color: #e74c3c; }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -14px; }
+.ledger-table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 13px; }
+.ledger-table th, .ledger-table td { padding: 7px 6px; text-align: right; border-bottom: 1px solid #f0f0f0; white-space: nowrap; }
+.ledger-table th { background: #fafafa; color: #888; font-weight: normal; position: sticky; top: 0; }
+.ledger-table td.td-name { text-align: left; font-weight: bold; }
+.ledger-table .td-code { font-size: 11px; color: #999; font-weight: normal; }
+.review-dates { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
+.review-date-btn { border: 1px solid #ddd; background: #fff; color: #666; padding: 5px 12px; border-radius: 14px; font-size: 13px; }
+.review-date-btn.active { background: #667eea; color: #fff; border-color: #667eea; font-weight: bold; }
+.review-pre { white-space: pre-wrap; word-break: break-word; font-family: -apple-system, "PingFang SC", monospace; font-size: 13px; line-height: 1.6; background: #f8f9fa; border-radius: 6px; padding: 10px; color: #444; max-height: 60vh; overflow-y: auto; }
+.alert-banner { background: linear-gradient(90deg,#c0392b,#e74c3c); color: #fff; text-align: center; padding: 9px 12px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 56px; box-shadow: 0 2px 6px rgba(231,76,60,0.4); }
+.hit-stop { color: #e74c3c !important; font-weight: bold; animation: blink 1s infinite; }
+@keyframes blink { 50% { opacity: 0.4; } }
+.title-row { display:flex; justify-content:space-between; align-items:center; }
+.card-date-tag { font-size: 11px; color: #999; font-weight: normal; }
+.card-date-stale { font-size: 11px; color: #e67e22; font-weight: normal; background:#fff7e6; padding:1px 6px; border-radius:8px; margin-left:4px; }
 </style>
 </head>
 <body>
@@ -89,52 +113,56 @@ body {
     <div class="nav-tab active" onclick="showTab('market',this)">市场</div>
     <div class="nav-tab" onclick="showTab('positions',this)">持仓</div>
     <div class="nav-tab" onclick="showTab('signals',this)">信号</div>
+    <div class="nav-tab" onclick="showTab('watchlist',this)">股票池</div>
     <div class="nav-tab" onclick="showTab('sectors',this)">板块</div>
     <div class="nav-tab" onclick="showTab('trades',this)">交易</div>
+    <div class="nav-tab" onclick="showTab('ledger',this)">台账</div>
+    <div class="nav-tab" onclick="showTab('review',this)">复盘</div>
     <div class="nav-tab" onclick="showTab('risk',this)">风控</div>
   </div>
+  <div class="alert-banner" onclick="showTab('risk',document.querySelectorAll('.nav-tab')[8])">🚨 2只持仓击穿止损 | 纪律评分:9.0分D（不及格） | 违规8次 ▶点击查风控</div>
   <div id="sec-market" class="section active"><div class="card">
-<div class="card-title">大盘指数</div>
+<div class="title-row"><div class="card-title">大盘指数</div><span class="card-date-tag">📅09-30</span></div>
 
         <div class="row-info">
           <span class="row-label">沪深300</span>
           <span>
-            <span style="font-weight:bold;font-size:18px">4439.14</span>
-            <span style="color:#27ae60;font-weight:bold;margin-left:8px">-1.73%</span>
+            <span style="font-weight:bold;font-size:18px">4357.62</span>
+            <span style="color:#e74c3c;font-weight:bold;margin-left:8px">+0.29%</span>
           </span>
         </div>
 
         <div class="row-info">
           <span class="row-label">中证500</span>
           <span>
-            <span style="font-weight:bold;font-size:18px">7624.07</span>
-            <span style="color:#27ae60;font-weight:bold;margin-left:8px">-2.15%</span>
+            <span style="font-weight:bold;font-size:18px">7435.16</span>
+            <span style="color:#27ae60;font-weight:bold;margin-left:8px">-0.06%</span>
           </span>
         </div>
 
         <div class="row-info">
           <span class="row-label">创业板指</span>
           <span>
-            <span style="font-weight:bold;font-size:18px">3288.95</span>
-            <span style="color:#27ae60;font-weight:bold;margin-left:8px">-2.68%</span>
+            <span style="font-weight:bold;font-size:18px">3135.28</span>
+            <span style="color:#27ae60;font-weight:bold;margin-left:8px">-0.23%</span>
           </span>
         </div>
 </div>
 
     <div class="card">
-      <div class="card-title">量能对比</div>
+      <div class="title-row"><div class="card-title">量能对比</div><span class="card-date-tag">📅09-30</span></div>
       <div class="row-info">
         <span class="row-label">量能变化</span>
-        <span style="color:#27ae60;font-weight:bold">缩量 -6.02%</span>
+        <span style="color:#e74c3c;font-weight:bold">放量 +4.59%</span>
       </div>
       <div class="row-info">
         <span class="row-label">数据日期</span>
-        <span>2026-09-24</span>
+        <span>2026-09-30</span>
       </div>
-      <div class="row-note">指数成交量合计（沪深300+中证500+创业板），用于量能对比</div>
+      <div class="row-note">实时指数成交量合计（沪深300+中证500+创业板指），环比上一交易日2026-09-29</div>
     </div>
 <div class="card">
-<div class="card-title">情绪周期</div>
+<div class="title-row"><div class="card-title">情绪周期</div><span class="card-date-tag">📅20260921</span></div>
 
         <div class="temp-block">
           <div class="row-label">情绪评分</div>
@@ -181,9 +209,10 @@ body {
         <div class="card summary-card">
           <div class="card-title" style="color:#fff">账户概览</div>
           <div class="row-info"><span class="row-label">总资产</span><span class="row-val">12.39万元</span></div>
-          <div class="row-info"><span class="row-label">仓位</span><span class="row-val">65.4%</span></div>
-          <div class="row-info"><span class="row-label">现金</span><span class="row-val">0.00元</span></div>
-          <div class="row-info"><span class="row-label">日期</span><span class="row-val">2026-10-02</span></div>
+          <div class="row-info"><span class="row-label">仓位(市值/总资产)</span><span class="row-val">65.4%</span></div>
+          <div class="row-info"><span class="row-label">持仓市值</span><span class="row-val">8.10万元</span></div>
+          <div class="row-info"><span class="row-label">现金</span><span class="row-val">4.29万元 <span class="tag" style="background:rgba(255,255,255,0.25);color:#fff">估算</span></span></div>
+          <div class="row-note" style="color:rgba(255,255,255,0.75)">账户权益截至2026-10-02，持仓市值截至2026-09-30收盘（现金为估算口径）</div>
         </div>
 
         <div class="card">
@@ -230,12 +259,12 @@ body {
         </div>
         <div class="row-info">
           <span class="row-label">止损距离</span>
-          <span style="color:#27ae60">-1.47%</span>
+          <span class="hit-stop">⚠️已击穿，立即卖出(-1.5%)</span>
         </div>
       </div>
-      <div id="detail-0" class="pos-detail" style="display:none">
+      <div id="detail-0" class="pos-detail" style="display:block">
         <div class="detail-line"><span class="row-label">买入日期</span><span>20260922</span></div>
-        <div class="detail-line"><span class="row-label">持仓天数</span><span>2天</span></div>
+        <div class="detail-line"><span class="row-label">持仓天数</span><span>8天</span></div>
         <div class="detail-line"><span class="row-label">战法标签</span><span>emotion</span></div>
         <div class="detail-line"><span class="row-label">区间最高</span><span>13.59</span></div>
         <div class="detail-line"><span class="row-label">MA5位置</span><span>下方(-9.41%)</span></div>
@@ -281,12 +310,12 @@ body {
         </div>
         <div class="row-info">
           <span class="row-label">止损距离</span>
-          <span style="color:#27ae60">-11.90%</span>
+          <span class="hit-stop">⚠️已击穿，立即卖出(-10.6%)</span>
         </div>
       </div>
-      <div id="detail-1" class="pos-detail" style="display:none">
+      <div id="detail-1" class="pos-detail" style="display:block">
         <div class="detail-line"><span class="row-label">买入日期</span><span>20260918</span></div>
-        <div class="detail-line"><span class="row-label">持仓天数</span><span>6天</span></div>
+        <div class="detail-line"><span class="row-label">持仓天数</span><span>12天</span></div>
         <div class="detail-line"><span class="row-label">战法标签</span><span>S11</span></div>
         <div class="detail-line"><span class="row-label">区间最高</span><span>190.0</span></div>
         <div class="detail-line"><span class="row-label">MA5位置</span><span>下方(-13.90%)</span></div>
@@ -332,12 +361,12 @@ body {
         </div>
         <div class="row-info">
           <span class="row-label">止损距离</span>
-          <span style="color:#27ae60">-8.25%</span>
+          <span class="hit-stop">⚠️已击穿，立即卖出(-7.6%)</span>
         </div>
       </div>
       <div id="detail-2" class="pos-detail" style="display:none">
         <div class="detail-line"><span class="row-label">买入日期</span><span>20260917</span></div>
-        <div class="detail-line"><span class="row-label">持仓天数</span><span>7天</span></div>
+        <div class="detail-line"><span class="row-label">持仓天数</span><span>13天</span></div>
         <div class="detail-line"><span class="row-label">战法标签</span><span>S12</span></div>
         <div class="detail-line"><span class="row-label">区间最高</span><span>88.19</span></div>
         <div class="detail-line"><span class="row-label">MA5位置</span><span>下方(-11.12%)</span></div>
@@ -356,6 +385,162 @@ body {
       <div class="empty-icon">📊</div>
       <div class="empty-text">今日无新信号</div>
     </div></div>
+  <div id="sec-watchlist" class="section">
+    <div class="card summary-card">
+      <div class="card-title" style="color:#fff">股票池总览</div>
+      <div class="ledger-summary" style="margin:6px 0">
+        <div class="ls-item"><div class="ls-num">60</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">观察池</div></div>
+        <div class="ls-item"><div class="ls-num">3</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">核心池(持仓)</div></div>
+        <div class="ls-item"><div class="ls-num">0</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">候选池(信号)</div></div>
+        <div class="ls-item"><div class="ls-num">6</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">高分≥80</div></div>
+      </div>
+    </div>
+<div class="card">
+<div class="card-title">核心池（当前持仓）</div>
+
+            <div class="row-info" style="cursor:pointer" onclick="showTab('positions',document.querySelectorAll('.nav-tab')[1])">
+              <span class="row-label">莲花控股 <span class="pos-code">600186</span></span>
+              <span style="color:#27ae60;font-weight:bold">-5.39%</span>
+            </div>
+
+            <div class="row-info" style="cursor:pointer" onclick="showTab('positions',document.querySelectorAll('.nav-tab')[1])">
+              <span class="row-label">光迅科技 <span class="pos-code">002281</span></span>
+              <span style="color:#27ae60;font-weight:bold">-14.21%</span>
+            </div>
+
+            <div class="row-info" style="cursor:pointer" onclick="showTab('positions',document.querySelectorAll('.nav-tab')[1])">
+              <span class="row-label">鹏鼎控股 <span class="pos-code">002938</span></span>
+              <span style="color:#27ae60;font-weight:bold">-11.32%</span>
+            </div>
+</div>
+<div class="card">
+<div class="card-title">候选池（今日信号）</div>
+<div class="row-note">暂无候选（今日无信号）</div>
+</div>
+<div class="card">
+<div class="card-title">⭐ 高分股（评分≥80）</div>
+<div class="env-tags">
+<span class="env-tag" style="background:#eaffea;color:#27ae60">德明利 95</span>
+<span class="env-tag" style="background:#eaffea;color:#27ae60">学大教育 95</span>
+<span class="env-tag" style="background:#eaffea;color:#27ae60">嘉立创 90</span>
+<span class="env-tag" style="background:#eaffea;color:#27ae60">登康口腔 80</span>
+<span class="env-tag" style="background:#eaffea;color:#27ae60">中材科技 80</span>
+<span class="env-tag" style="background:#eaffea;color:#27ae60">燕京啤酒 80</span>
+</div></div>
+<div class="card">
+<div class="title-row"><div class="card-title">观察池（60只，按评分降序）</div><span class="card-date-tag">📅10-03</span></div>
+<div class="table-wrap"><table class="ledger-table" id="watchlistTable">
+<thead><tr><th>代码</th><th>名称</th><th>行业</th><th>评分</th><th>ROE%</th><th>ROA%</th><th>加入日期</th></tr></thead>
+<tbody id="wl-body">
+<tr><td class="td-code" style="text-align:left">001309.SZ</td><td style="text-align:left;font-weight:bold">德明利</td><td>半导体</td><td style="color:#27ae60;font-weight:bold">95</td><td>92.24</td><td>32.64</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000526.SZ</td><td style="text-align:left;font-weight:bold">学大教育</td><td>教育</td><td style="color:#27ae60;font-weight:bold">95</td><td>27.51</td><td>9.56</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">001232.SZ</td><td style="text-align:left;font-weight:bold">嘉立创</td><td>元件</td><td style="color:#27ae60;font-weight:bold">90</td><td>13.37</td><td>10.27</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">001328.SZ</td><td style="text-align:left;font-weight:bold">登康口腔</td><td>个护用品</td><td style="color:#27ae60;font-weight:bold">80</td><td>6.81</td><td>5.54</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002080.SZ</td><td style="text-align:left;font-weight:bold">中材科技</td><td>玻璃玻纤</td><td style="color:#27ae60;font-weight:bold">80</td><td>5.99</td><td>2.83</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000729.SZ</td><td style="text-align:left;font-weight:bold">燕京啤酒</td><td>非白酒</td><td style="color:#27ae60;font-weight:bold">80</td><td>8.65</td><td>7.40</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002049.SZ</td><td style="text-align:left;font-weight:bold">紫光国微</td><td>半导体</td><td style="color:#f39c12;font-weight:bold">75</td><td>5.68</td><td>4.41</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002511.SZ</td><td style="text-align:left;font-weight:bold">中顺洁柔</td><td>个护用品</td><td style="color:#f39c12;font-weight:bold">70</td><td>4.10</td><td>3.67</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000681.SZ</td><td style="text-align:left;font-weight:bold">视觉中国</td><td>数字媒体</td><td style="color:#f39c12;font-weight:bold">70</td><td>2.78</td><td>2.48</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002095.SZ</td><td style="text-align:left;font-weight:bold">生意宝</td><td>数字媒体</td><td style="color:#f39c12;font-weight:bold">70</td><td>0.35</td><td>0.20</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">300295.SZ</td><td style="text-align:left;font-weight:bold">*ST三六</td><td>数字媒体</td><td style="color:#f39c12;font-weight:bold">70</td><td>0.24</td><td>0.09</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002127.SZ</td><td style="text-align:left;font-weight:bold">南极电商</td><td>互联网电商</td><td style="color:#f39c12;font-weight:bold">70</td><td>1.35</td><td>1.26</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002077.SZ</td><td style="text-align:left;font-weight:bold">大港股份</td><td>半导体</td><td style="color:#f39c12;font-weight:bold">70</td><td>1.62</td><td>1.74</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002041.SZ</td><td style="text-align:left;font-weight:bold">登海种业</td><td>种植业</td><td style="color:#f39c12;font-weight:bold">70</td><td>1.34</td><td>0.64</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000636.SZ</td><td style="text-align:left;font-weight:bold">风华高科</td><td>元件</td><td style="color:#f39c12;font-weight:bold">70</td><td>2.31</td><td>1.70</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000793.SZ</td><td style="text-align:left;font-weight:bold">ST华闻</td><td>出版</td><td style="color:#f39c12;font-weight:bold">70</td><td>4.30</td><td>2.79</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000560.SZ</td><td style="text-align:left;font-weight:bold">我爱我家</td><td>房地产服务</td><td style="color:#f39c12;font-weight:bold">70</td><td>0.87</td><td>0.99</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000736.SZ</td><td style="text-align:left;font-weight:bold">中交发展</td><td>房地产服务</td><td style="color:#f39c12;font-weight:bold">70</td><td>1.50</td><td>1.41</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">001326.SZ</td><td style="text-align:left;font-weight:bold">联域股份</td><td>照明设备Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>1.59</td><td>1.12</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">301071.SZ</td><td style="text-align:left;font-weight:bold">力量钻石</td><td>非金属材料Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>1.69</td><td>1.63</td><td>10-03</td></tr>
+</tbody>
+<tbody id="wl-more" style="display:none">
+<tr><td class="td-code" style="text-align:left">000519.SZ</td><td style="text-align:left;font-weight:bold">中兵红箭</td><td>地面兵装Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>0.36</td><td>0.18</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002519.SZ</td><td style="text-align:left;font-weight:bold">银河电子</td><td>地面兵装Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>0.25</td><td>0.03</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002584.SZ</td><td style="text-align:left;font-weight:bold">西陇科学</td><td>电子化学品Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>1.80</td><td>1.42</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002741.SZ</td><td style="text-align:left;font-weight:bold">光华科技</td><td>电子化学品Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>4.81</td><td>2.88</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000404.SZ</td><td style="text-align:left;font-weight:bold">长虹华意</td><td>家电零部件Ⅱ</td><td style="color:#f39c12;font-weight:bold">65</td><td>5.81</td><td>2.51</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002011.SZ</td><td style="text-align:left;font-weight:bold">盾安环境</td><td>家电零部件Ⅱ</td><td style="color:#f39c12;font-weight:bold">65</td><td>6.83</td><td>4.01</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002315.SZ</td><td style="text-align:left;font-weight:bold">焦点科技</td><td>互联网电商</td><td style="color:#f39c12;font-weight:bold">65</td><td>9.45</td><td>5.17</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">603579.SH</td><td style="text-align:left;font-weight:bold">荣泰健康</td><td>其他家电Ⅱ</td><td style="color:#f39c12;font-weight:bold">65</td><td>4.05</td><td>2.89</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">001207.SZ</td><td style="text-align:left;font-weight:bold">联科科技</td><td>橡胶</td><td style="color:#f39c12;font-weight:bold">65</td><td>6.67</td><td>5.50</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002607.SZ</td><td style="text-align:left;font-weight:bold">中公教育</td><td>教育</td><td style="color:#f39c12;font-weight:bold">65</td><td>9.22</td><td>3.11</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002679.SZ</td><td style="text-align:left;font-weight:bold">福建金森</td><td>林业Ⅱ</td><td style="color:#f39c12;font-weight:bold">60</td><td>-1.80</td><td>0.26</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000802.SZ</td><td style="text-align:left;font-weight:bold">北京文化</td><td>影视院线</td><td style="color:#f39c12;font-weight:bold">60</td><td>-6.41</td><td>-1.69</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">001330.SZ</td><td style="text-align:left;font-weight:bold">博纳影业</td><td>影视院线</td><td style="color:#f39c12;font-weight:bold">60</td><td>-4.49</td><td>-0.67</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002201.SZ</td><td style="text-align:left;font-weight:bold">九鼎新材</td><td>玻璃玻纤</td><td style="color:#999;font-weight:bold">55</td><td>3.59</td><td>1.94</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000752.SZ</td><td style="text-align:left;font-weight:bold">*ST西发</td><td>非白酒</td><td style="color:#999;font-weight:bold">55</td><td>3.55</td><td>3.75</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000713.SZ</td><td style="text-align:left;font-weight:bold">国投丰乐</td><td>种植业</td><td style="color:#999;font-weight:bold">55</td><td>-1.00</td><td>-0.77</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000823.SZ</td><td style="text-align:left;font-weight:bold">超声电子</td><td>元件</td><td style="color:#999;font-weight:bold">55</td><td>2.17</td><td>1.80</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">300247.SZ</td><td style="text-align:left;font-weight:bold">融捷健康</td><td>其他家电Ⅱ</td><td style="color:#999;font-weight:bold">55</td><td>3.82</td><td>5.81</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002068.SZ</td><td style="text-align:left;font-weight:bold">黑猫股份</td><td>橡胶</td><td style="color:#999;font-weight:bold">55</td><td>-4.35</td><td>-0.64</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000719.SZ</td><td style="text-align:left;font-weight:bold">中原传媒</td><td>出版</td><td style="color:#999;font-weight:bold">55</td><td>4.15</td><td>2.51</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000056.SZ</td><td style="text-align:left;font-weight:bold">*ST皇庭</td><td>房地产服务</td><td style="color:#999;font-weight:bold">55</td><td>-</td><td>-5.82</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000576.SZ</td><td style="text-align:left;font-weight:bold">甘化科工</td><td>地面兵装Ⅱ</td><td style="color:#999;font-weight:bold">55</td><td>2.14</td><td>2.21</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002643.SZ</td><td style="text-align:left;font-weight:bold">万润股份</td><td>电子化学品Ⅱ</td><td style="color:#999;font-weight:bold">55</td><td>2.49</td><td>2.13</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">001206.SZ</td><td style="text-align:left;font-weight:bold">依依股份</td><td>个护用品</td><td style="color:#999;font-weight:bold">50</td><td>2.95</td><td>3.19</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000869.SZ</td><td style="text-align:left;font-weight:bold">张裕Ａ</td><td>非白酒</td><td style="color:#999;font-weight:bold">50</td><td>1.36</td><td>1.77</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002024.SZ</td><td style="text-align:left;font-weight:bold">ST易购</td><td>互联网电商</td><td style="color:#999;font-weight:bold">50</td><td>1.02</td><td>2.04</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">001325.SZ</td><td style="text-align:left;font-weight:bold">元创股份</td><td>橡胶</td><td style="color:#999;font-weight:bold">50</td><td>2.92</td><td>2.56</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000541.SZ</td><td style="text-align:left;font-weight:bold">佛山照明</td><td>照明设备Ⅱ</td><td style="color:#999;font-weight:bold">50</td><td>0.61</td><td>0.09</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">001296.SZ</td><td style="text-align:left;font-weight:bold">长江材料</td><td>非金属材料Ⅱ</td><td style="color:#999;font-weight:bold">50</td><td>3.04</td><td>2.62</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">301595.SZ</td><td style="text-align:left;font-weight:bold">太力科技</td><td>非金属材料Ⅱ</td><td style="color:#999;font-weight:bold">50</td><td>2.29</td><td>2.01</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">001268.SZ</td><td style="text-align:left;font-weight:bold">联合精密</td><td>家电零部件Ⅱ</td><td style="color:#999;font-weight:bold">40</td><td>-1.09</td><td>-0.65</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000592.SZ</td><td style="text-align:left;font-weight:bold">平潭发展</td><td>林业Ⅱ</td><td style="color:#999;font-weight:bold">40</td><td>-3.99</td><td>-5.28</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000663.SZ</td><td style="text-align:left;font-weight:bold">永安林业</td><td>林业Ⅱ</td><td style="color:#999;font-weight:bold">40</td><td>-2.10</td><td>-1.35</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000012.SZ</td><td style="text-align:left;font-weight:bold">南玻Ａ</td><td>玻璃玻纤</td><td style="color:#999;font-weight:bold">40</td><td>-3.27</td><td>-1.25</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000998.SZ</td><td style="text-align:left;font-weight:bold">隆平高科</td><td>种植业</td><td style="color:#999;font-weight:bold">40</td><td>-4.11</td><td>-1.30</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002614.SZ</td><td style="text-align:left;font-weight:bold">奥佳华</td><td>其他家电Ⅱ</td><td style="color:#999;font-weight:bold">40</td><td>-1.72</td><td>-0.86</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002181.SZ</td><td style="text-align:left;font-weight:bold">粤传媒</td><td>出版</td><td style="color:#999;font-weight:bold">40</td><td>-0.82</td><td>-0.74</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002076.SZ</td><td style="text-align:left;font-weight:bold">星光股份</td><td>照明设备Ⅱ</td><td style="color:#999;font-weight:bold">40</td><td>-5.25</td><td>-2.50</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">002093.SZ</td><td style="text-align:left;font-weight:bold">国脉科技</td><td>教育</td><td style="color:#999;font-weight:bold">40</td><td>-1.09</td><td>-1.36</td><td>10-03</td></tr>
+<tr><td class="td-code" style="text-align:left">000892.SZ</td><td style="text-align:left;font-weight:bold">欢瑞世纪</td><td>影视院线</td><td style="color:#999;font-weight:bold">15</td><td>-25.20</td><td>-11.68</td><td>10-03</td></tr>
+</tbody>
+</table></div>
+<button class="sort-btn" id="wl-toggle" style="margin-top:8px" onclick="toggleWatchlist()">展开全部（共60只）▼</button>
+</div>
+<div class="card">
+<div class="card-title">行业分布 TOP5</div>
+
+                <div class="row-info">
+                  <span class="row-label">半导体</span>
+                  <span style="font-size:13px">3只
+                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
+                    <span style="display:block;width:100%;height:6px;background:#3366cc;border-radius:3px"></span>
+                  </span></span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">教育</span>
+                  <span style="font-size:13px">3只
+                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
+                    <span style="display:block;width:100%;height:6px;background:#3366cc;border-radius:3px"></span>
+                  </span></span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">元件</span>
+                  <span style="font-size:13px">3只
+                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
+                    <span style="display:block;width:100%;height:6px;background:#3366cc;border-radius:3px"></span>
+                  </span></span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">个护用品</span>
+                  <span style="font-size:13px">3只
+                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
+                    <span style="display:block;width:100%;height:6px;background:#3366cc;border-radius:3px"></span>
+                  </span></span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">玻璃玻纤</span>
+                  <span style="font-size:13px">3只
+                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
+                    <span style="display:block;width:100%;height:6px;background:#3366cc;border-radius:3px"></span>
+                  </span></span>
+                </div>
+</div></div>
   <div id="sec-sectors" class="section"><div class="card">
 <div class="card-title">板块龙头</div>
 <div class="card-sub">数据日期: 20260921</div>
@@ -461,8 +646,402 @@ body {
       <div class="empty-icon">📊</div>
       <div class="empty-text">今日无交易</div>
     </div></div>
+  <div id="sec-ledger" class="section"><div class="card">
+<div class="card-title">交易台账（已平仓）</div>
+<div class="card-sub">共 11 笔 · 胜率基于 10 个有盈亏%样本</div>
+
+    <div class="ledger-summary">
+      <div class="ls-item"><div class="ls-num">11</div><div class="ls-label">总交易数</div></div>
+      <div class="ls-item"><div class="ls-num" style="color:#e74c3c">20%</div><div class="ls-label">胜率</div></div>
+      <div class="ls-item"><div class="ls-num" style="color:#27ae60">-3.1%</div><div class="ls-label">平均盈亏</div></div>
+      <div class="ls-item"><div class="ls-num" style="color:#999">--</div><div class="ls-label">累计盈亏</div></div>
+    </div>
+
+    <div class="sort-bar">
+      <span class="row-label">排序：</span>
+      <button class="sort-btn active" id="btn-sort-date" onclick="sortLedger('date')">按卖出日期</button>
+      <button class="sort-btn" id="btn-sort-pnl" onclick="sortLedger('pnl')">按盈亏%</button>
+    </div>
+<div class="table-wrap">
+<table class="ledger-table" id="ledgerTable">
+      <thead><tr>
+        <th>股票</th><th>买入</th><th>卖出</th><th>天</th><th>买价</th><th>卖价</th>
+        <th>盈亏%</th><th>战法</th><th>卖出原因</th><th>错误类型</th>
+      </tr></thead><tbody>
+
+        <tr data-pct="0.0451" data-date="20260929.0">
+          <td class="td-name">黄河旋风<div class="td-code">600172.SH</div></td>
+          <td>09-22</td><td>09-29</td><td>4</td>
+          <td>15.3</td><td>15.99</td>
+          <td style="color:#e74c3c;font-weight:bold">+4.5%</td>
+          <td>REAL</td><td>止损</td><td>-</td>
+        </tr>
+
+        <tr data-pct="-0.0356" data-date="20260929.0">
+          <td class="td-name">莲花控股<div class="td-code">600186.SH</div></td>
+          <td>09-22</td><td>09-29</td><td>4</td>
+          <td>12.184</td><td>11.75</td>
+          <td style="color:#27ae60;font-weight:bold">-3.6%</td>
+          <td>REAL</td><td>止损</td><td>-</td>
+        </tr>
+
+        <tr data-pct="-0.1121" data-date="20260928.0">
+          <td class="td-name">豫能控股<div class="td-code">001896.SZ</div></td>
+          <td>09-22</td><td>09-28</td><td>3</td>
+          <td>12.22</td><td>10.85</td>
+          <td style="color:#27ae60;font-weight:bold">-11.2%</td>
+          <td>REAL</td><td>止损</td><td>-</td>
+        </tr>
+
+        <tr data-pct="-9999" data-date="20260923.0">
+          <td class="td-name">百合花<div class="td-code">603823.SH</div></td>
+          <td>-</td><td>09-23</td><td>-</td>
+          <td>-</td><td>51.35</td>
+          <td style="color:#999;font-weight:bold">-</td>
+          <td>-</td><td>止损</td><td>-</td>
+        </tr>
+
+        <tr data-pct="-0.0617" data-date="20260918.0">
+          <td class="td-name">中视传媒<div class="td-code">600088.SH</div></td>
+          <td>09-15</td><td>09-18</td><td>3</td>
+          <td>16.2</td><td>15.2</td>
+          <td style="color:#27ae60;font-weight:bold">-6.2%</td>
+          <td>second_board</td><td>止损</td><td>-</td>
+        </tr>
+
+        <tr data-pct="-0.0797" data-date="20260918.0">
+          <td class="td-name">启明信息<div class="td-code">002232.SZ</div></td>
+          <td>09-15</td><td>09-18</td><td>3</td>
+          <td>16.81</td><td>15.47</td>
+          <td style="color:#27ae60;font-weight:bold">-8.0%</td>
+          <td>box_breakout</td><td>止损</td><td>-</td>
+        </tr>
+
+        <tr data-pct="-0.0148" data-date="20260918.0">
+          <td class="td-name">电科网安<div class="td-code">002268.SZ</div></td>
+          <td>09-15</td><td>09-18</td><td>3</td>
+          <td>14.89</td><td>14.67</td>
+          <td style="color:#27ae60;font-weight:bold">-1.5%</td>
+          <td>box_breakout</td><td>其他</td><td>-</td>
+        </tr>
+
+        <tr data-pct="0.0039" data-date="20260918.0">
+          <td class="td-name">宁沪高速<div class="td-code">600377.SH</div></td>
+          <td>09-15</td><td>09-18</td><td>3</td>
+          <td>12.73</td><td>12.78</td>
+          <td style="color:#e74c3c;font-weight:bold">+0.4%</td>
+          <td>box_breakout</td><td>其他</td><td>-</td>
+        </tr>
+
+        <tr data-pct="-0.0187" data-date="20260918.0">
+          <td class="td-name">洪城环境<div class="td-code">600461.SH</div></td>
+          <td>09-15</td><td>09-18</td><td>3</td>
+          <td>9.11</td><td>8.94</td>
+          <td style="color:#27ae60;font-weight:bold">-1.9%</td>
+          <td>box_breakout</td><td>其他</td><td>-</td>
+        </tr>
+
+        <tr data-pct="-0.0264" data-date="20260918.0">
+          <td class="td-name">富维股份<div class="td-code">600742.SH</div></td>
+          <td>09-15</td><td>09-18</td><td>3</td>
+          <td>7.96</td><td>7.75</td>
+          <td style="color:#27ae60;font-weight:bold">-2.6%</td>
+          <td>box_breakout</td><td>其他</td><td>-</td>
+        </tr>
+
+        <tr data-pct="-0.0118" data-date="20260918.0">
+          <td class="td-name">交通银行<div class="td-code">601328.SH</div></td>
+          <td>09-15</td><td>09-18</td><td>3</td>
+          <td>7.62</td><td>7.53</td>
+          <td style="color:#27ae60;font-weight:bold">-1.2%</td>
+          <td>box_breakout</td><td>其他</td><td>-</td>
+        </tr>
+</tbody></table></div>
+</div></div>
+  <div id="sec-review" class="section"><div class="card">
+<div class="card-title">每日复盘</div>
+<div class="review-dates">
+<button class="review-date-btn" onclick="showReview(0,this)">09-28</button>
+<button class="review-date-btn" onclick="showReview(1,this)">09-29</button>
+<button class="review-date-btn active" onclick="showReview(2,this)">09-30</button>
+</div>
+
+        <div id="rev-0" style="display:none">
+          <div class="card-sub">复盘日期: 2026-09-28</div>
+          <pre class="review-pre"># 每日复盘报告 2026-09-28
+
+## 一、当日交易总结
+
+| 指标 | 数值 |
+|---|---|
+| 交易笔数 | 0 |
+| 盈利笔数 | 0 |
+| 亏损笔数 | 0 |
+| 胜率 | 0.0% |
+| 当日盈亏 | +0.00元 |
+
+## 二、交易明细
+
+当日无交易记录
+
+## 三、当前持仓
+
+| 股票 | 成本 | 现价 | 盈亏% | 持仓天数 | 止损价 |
+|---|---|---|---|---|---|
+空仓
+
+## 四、信号执行率
+
+| 指标 | 数值 |
+|---|---|
+| 当日信号数 | 0 |
+| 实际买入数 | 0 |
+| 执行率 | 0.0% |
+
+## 五、风控指标
+
+| 指标 | 数值 | 状态 |
+|---|---|---|
+| 持仓数量 | 0 | ✅ |
+| 单票最大仓位 | 0.0% | ✅ |
+| 当日回撤 | 待计算 | - |
+
+## 六、市场环境定调（实战高手团优化项4）
+
+**情绪温度**: -1 偏冷
+
+| 维度 | 得分 | 说明 |
+|---|---|---|
+| 涨停家数 | -1 | 涨停40家 |
+| 连板晋级率 | -2 | 涨停/跌停比 |
+| 炸板率 | -2 | 涨跌比0.2 |
+| 板块持续性 | 0 | 待完善 |
+| 北向资金 | 1 | 净流入+24亿 |
+
+**次日大方向**: 防守
+**仓位建议**: 降低仓位，谨慎操作
+
+## 七、次日展望
+
+- 市场环境：-1 偏冷 → 防守
+- 关注信号：0只
+- 操作计划：降低仓位，谨慎操作
+- 风险提示：关注隔夜外盘变化和持仓股公告
+
+## 八、改进点
+
+- 待复盘后填写
+
+---
+*报告生成时间：2026-09-28 23:17:27*
+</pre>
+        </div>
+
+        <div id="rev-1" style="display:none">
+          <div class="card-sub">复盘日期: 2026-09-29</div>
+          <pre class="review-pre"># 每日复盘报告 2026-09-29
+
+## 一、当日交易总结
+
+| 指标 | 数值 |
+|---|---|
+| 交易笔数 | 0 |
+| 盈利笔数 | 0 |
+| 亏损笔数 | 0 |
+| 胜率 | 0.0% |
+| 当日盈亏 | +0.00元 |
+
+## 二、交易明细
+
+当日无交易记录
+
+## 三、当前持仓
+
+| 股票 | 成本 | 现价 | 盈亏% | 持仓天数 | 止损价 |
+|---|---|---|---|---|---|
+| 莲花控股(600186) | 12.11 | 13.59 | -4.48% | 2 | 12.54 |
+| 光迅科技(002281) | 192.20 | 190.00 | -13.16% | 6 | 171.76 |
+| 鹏鼎控股(002938) | 89.70 | 88.19 | -10.87% | 7 | 80.46 |
+
+## 四、信号执行率
+
+| 指标 | 数值 |
+|---|---|
+| 当日信号数 | 0 |
+| 实际买入数 | 0 |
+| 执行率 | 0.0% |
+
+## 五、风控指标
+
+| 指标 | 数值 | 状态 |
+|---|---|---|
+| 持仓数量 | 3 | ✅ |
+| 单票最大仓位 | 0.0% | ✅ |
+| 当日回撤 | 待计算 | - |
+
+## 六、市场环境定调（实战高手团优化项4）
+
+**情绪温度**: 0 中性
+
+| 维度 | 得分 | 说明 |
+|---|---|---|
+| 涨停家数 | 1 | 涨停82家 |
+| 连板晋级率 | 0 | 涨停/跌停比 |
+| 炸板率 | 1 | 涨跌比1.79 |
+| 板块持续性 | 0 | 待完善 |
+| 北向资金 | 0 | 净流入+0亿 |
+
+**次日大方向**: 震荡
+**仓位建议**: 维持原仓位
+
+## 七、次日展望
+
+- 市场环境：0 中性 → 震荡
+- 关注信号：0只
+- 操作计划：维持原仓位
+- 风险提示：关注隔夜外盘变化和持仓股公告
+
+## 八、改进点
+
+- 待复盘后填写
+
+---
+*报告生成时间：2026-09-29 17:20:56*
+</pre>
+        </div>
+
+        <div id="rev-2" style="display:block">
+          <div class="card-sub">复盘日期: 2026-09-30</div>
+          <pre class="review-pre"># 每日复盘报告 2026-09-30
+
+## 一、当日交易总结
+
+| 指标 | 数值 |
+|---|---|
+| 交易笔数 | 0 |
+| 盈利笔数 | 0 |
+| 亏损笔数 | 0 |
+| 胜率 | 0.0% |
+| 当日盈亏 | +0.00元 |
+
+## 二、交易明细
+
+当日无交易记录
+
+## 三、当前持仓
+
+| 股票 | 股数 | 成本 | 现价(收盘) | 盈亏% | 盈亏额(元) | 铁律止损(成本×0.96) | 持仓天数 |
+|---|---|---|---|---|---|---|---|
+| 莲花控股(600186) | 2800 | 12.113 | 11.46 | -5.39% | -1828.40 | 11.628 | 2 |
+| 光迅科技(002281) | 200 | 192.196 | 164.88 | -14.21% | -5463.20 | 184.508 | 6 |
+| 鹏鼎控股(002938) | 200 | 89.700 | 79.55 | -11.32% | -2030.00 | 86.112 | 7 |
+
+## 四、纪律违规检查
+
+**纪律评分：9/100 — D（不及格）**
+
+&gt; 🔴 其中 **VIOLATION（止损逾期未执行）3 条**：止损信号触发后超过1个交易日仍未卖出，浮亏被动放大，10/8开盘必须执行。
+
+**状态：🚨 发现 8 条违规**
+
+| # | 类型 | 说明 |
+|---|---|---|
+| 1 | 破止损未卖 | 莲花控股(600186) 现价11.46 &lt; 铁律止损11.63（已破1.4%）应卖出未卖 |
+| 2 | 单票超仓 | 莲花控股(600186) 仓位26.1% &gt; 上限15% |
+| 3 | 破止损未卖 | 光迅科技(002281) 现价164.88 &lt; 铁律止损184.51（已破10.6%）应卖出未卖 |
+| 4 | 单票超仓 | 光迅科技(002281) 仓位26.8% &gt; 上限15% |
+| 5 | 破止损未卖 | 鹏鼎控股(002938) 现价79.55 &lt; 铁律止损86.11（已破7.6%）应卖出未卖 |
+| 6 | 🔴VIOLATION·止损逾期未执行 | 莲花控股(600186) 止损11.629 于2026-09-29触发，现价11.46 浮亏-5.39%，已逾期3个交易日仍未卖出 |
+| 7 | 🔴VIOLATION·止损逾期未执行 | 光迅科技(002281) 止损184.508 于2026-09-25触发，现价164.88 浮亏-14.21%，已逾期4个交易日仍未卖出 |
+| 8 | 🔴VIOLATION·止损逾期未执行 | 鹏鼎控股(002938) 止损86.112 于2026-09-25触发，现价79.55 浮亏-11.32%，已逾期4个交易日仍未卖出 |
+
+- 总仓位：65.8%（总资产123027元）
+- 检查项：止损逾期未执行(VIOLATION) / 破止损未卖 / 单票超15% / 总仓位&gt;80% / 非计划操作
+
+## 五、信号执行率
+
+| 指标 | 数值 |
+|---|---|
+| 当日信号数 | 0 |
+| 实际买入数 | 0 |
+| 执行率 | 0.0% |
+
+## 六、风控指标
+
+| 指标 | 数值 | 状态 |
+|---|---|---|
+| 持仓数量 | 3 | ✅ |
+| 单票最大仓位 | 26.8% | ⚠️ |
+| 总仓位 | 65.8% | ✅ |
+
+## 七、主线板块（当日涨幅前5）
+
+&gt; 数据日期：20260929（目标日20260930无数据时自动回退最近交易日）
+
+| 排名 | 板块(申万) | 当日涨幅 |
+|---|---|---|
+| 1 | 出版 | +16.96% |
+| 2 | 元件 | +14.83% |
+| 3 | 房地产服务 | +12.92% |
+| 4 | 其他家电Ⅱ | +12.22% |
+| 5 | 林业Ⅱ | +12.02% |
+
+## 八、市场环境定调
+
+**情绪温度**: 0 中性
+
+| 维度 | 得分 | 说明 |
+|---|---|---|
+| 涨停家数 | 1 | 涨停72家 |
+| 连板晋级率 | 0 | 涨停/跌停比 |
+| 炸板率 | -1 | 涨跌比0.9 |
+| 板块持续性 | 0 | 见上方主线板块 |
+| 成交额环比 | 0 | 今日14501亿 vs 昨日14216亿，环比+2.0% |
+
+&gt; **北向资金说明**：沪深港通自2024-08-18起官方取消每日净流入披露，改为季度披露持股，本报告不再展示北向当日净流入，情绪打分以「成交额环比」替代。
+
+**次日大方向**: 震荡
+**仓位建议**: 维持原仓位
+
+## 九、次日展望
+
+- 市场环境：0 中性 → 震荡
+- 关注信号：0只
+- 操作计划：维持原仓位
+- ⚠️ 优先处理：先处置 8 条纪律违规（破止损/超仓），再谈新开仓
+- 风险提示：关注隔夜外盘变化和持仓股公告
+
+## 十、改进点
+
+- 待复盘后填写
+
+---
+*报告生成时间：2026-10-02 22:25:23*</pre>
+        </div>
+</div>
+<div class="card">
+<div class="card-title">纪律评分（复盘联动）</div>
+<div class="row-info"><span class="row-label">日期</span><span>2026-09-30</span></div>
+<div class="row-info"><span class="row-label">总分/评级</span><span style="color:#e74c3c;font-weight:bold">9.0分 · D（不及格）</span></div>
+<div class="row-note" style="color:#e74c3c">🔴 止损逾期未执行 3 只，需优先处理：</div>
+<div class="row-info"><span class="row-label">莲花控股(600186)</span><span style="color:#e74c3c">逾期3天 · 浮亏-5.39%</span></div>
+<div class="row-info"><span class="row-label">光迅科技(002281)</span><span style="color:#e74c3c">逾期4天 · 浮亏-14.21%</span></div>
+<div class="row-info"><span class="row-label">鹏鼎控股(002938)</span><span style="color:#e74c3c">逾期4天 · 浮亏-11.32%</span></div>
+</div></div>
   <div id="sec-risk" class="section"><div class="card">
 <div class="card-title">风控预警</div>
+
+            <div class="alert-row" style="background:#fff3e0;border-left:4px solid #e67e22">
+              <div class="alert-label" style="color:#e67e22">仓位超限</div>
+              <div class="alert-name">莲花控股 <span class="pos-code">600186</span></div>
+              <div class="alert-msg">莲花控股仓位25.9%，超限73%，建议减仓至15%以内</div>
+            </div>
+
+            <div class="alert-row" style="background:#fff3e0;border-left:4px solid #e67e22">
+              <div class="alert-label" style="color:#e67e22">仓位超限</div>
+              <div class="alert-name">光迅科技 <span class="pos-code">002281</span></div>
+              <div class="alert-msg">光迅科技仓位26.6%，超限77%，建议减仓至15%以内</div>
+            </div>
 
             <div class="alert-row" style="background:#ffeaea;border-left:4px solid #e74c3c">
               <div class="alert-label" style="color:#e74c3c">止损预警</div>
@@ -492,8 +1071,9 @@ body {
             </div>
 </div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-03 04:28:03</div>
+    <div>数据更新时间: 2026-10-03 05:23:03</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分</div>
+    <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
     <div class="disclaimer">⚠️ 本页面由量化系统自动生成，仅供参考，不构成投资建议。</div>
   </div>
 </div>
@@ -511,6 +1091,42 @@ function toggleDetail(id) {
   var el = document.getElementById(id);
   if (el.style.display === 'none') { el.style.display = 'block'; }
   else { el.style.display = 'none'; }
+}
+function sortLedger(mode) {
+  var table = document.getElementById('ledgerTable');
+  if (!table) return;
+  var tbody = table.querySelector('tbody');
+  var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+  var key = (mode === 'pnl') ? 'data-pct' : 'data-date';
+  rows.sort(function(a, b) {
+    var va = parseFloat(a.getAttribute(key)) || -999999;
+    var vb = parseFloat(b.getAttribute(key)) || -999999;
+    return vb - va;
+  });
+  rows.forEach(function(r) { tbody.appendChild(r); });
+  document.getElementById('btn-sort-date').classList.toggle('active', mode === 'date');
+  document.getElementById('btn-sort-pnl').classList.toggle('active', mode === 'pnl');
+}
+function showReview(i, el) {
+  var revs = document.querySelectorAll('[id^="rev-"]');
+  for (var k = 0; k < revs.length; k++) revs[k].style.display = 'none';
+  var tgt = document.getElementById('rev-' + i);
+  if (tgt) tgt.style.display = 'block';
+  var btns = document.querySelectorAll('.review-date-btn');
+  for (var j = 0; j < btns.length; j++) btns[j].classList.remove('active');
+  if (el) el.classList.add('active');
+}
+function toggleWatchlist() {
+  var more = document.getElementById('wl-more');
+  var btn = document.getElementById('wl-toggle');
+  if (!more) return;
+  if (more.style.display === 'none') {
+    more.style.display = 'table-row-group';
+    if (btn) btn.textContent = '收起 ▲';
+  } else {
+    more.style.display = 'none';
+    if (btn) btn.textContent = '展开全部 ▼';
+  }
 }
 </script>
 </body>
