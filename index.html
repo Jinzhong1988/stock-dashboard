@@ -8,7 +8,7 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background: #f0f2f5; color: #333; font-size: 16px; line-height: 1.5; padding-bottom: 72px;
+  background: #f0f2f5; color: #333; font-size: 16px; line-height: 1.5;
 }
 .container { max-width: 480px; margin: 0 auto; padding: 10px; }
 /* Round2: 顶部标题栏 */
@@ -20,7 +20,7 @@ body {
 }
 .topbar-title { font-size: 17px; font-weight: bold; color: #222; }
 .topbar-date { font-size: 12px; color: #999; }
-.section { display: none; padding-top: 56px; }
+.section { display: none; padding-top: 82px; }
 .section.active { display: block; }
 .card { background: #fff; border-radius: 8px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 .card-title { font-size: 20px; font-weight: bold; margin-bottom: 8px; color: #222; }
@@ -104,37 +104,20 @@ body {
 .title-row { display:flex; justify-content:space-between; align-items:center; }
 .card-date-tag { font-size: 11px; color: #999; font-weight: normal; }
 .card-date-stale { font-size: 11px; color: #e67e22; font-weight: normal; background:#fff7e6; padding:1px 6px; border-radius:8px; margin-left:4px; }
-/* Round2: 底部固定navbar */
-.bottom-nav {
-  position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.1); z-index: 100; max-width: 480px; margin: 0 auto;
-  display: flex; border-top: 1px solid #eee;
+/* 顶部横向滚动tab */
+.top-tabs {
+  position: fixed; top: 42px; left: 0; right: 0; background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06); z-index: 99; max-width: 480px; margin: 0 auto;
+  display: flex; overflow-x: auto; white-space: nowrap;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
 }
-.bn-item {
-  flex: 1; text-align: center; padding: 8px 2px 6px; cursor: pointer; color: #666;
-  border-top: 3px solid transparent; transition: all 0.15s;
+.top-tabs::-webkit-scrollbar { display: none; }
+.tab-item {
+  flex-shrink: 0; text-align: center; padding: 10px 14px 8px; cursor: pointer; color: #666;
+  border-bottom: 3px solid transparent; transition: all 0.15s; font-size: 13px;
 }
-.bn-item.active { color: #e74c3c; border-top-color: #e74c3c; font-weight: bold; }
-.bn-icon { font-size: 20px; display: block; line-height: 1.2; }
-.bn-label { font-size: 11px; display: block; margin-top: 2px; }
-/* 更多弹窗 */
-.more-mask {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 199; display: none;
-}
-.more-mask.show { display: block; }
-.more-panel {
-  position: fixed; bottom: 64px; left: 50%; transform: translateX(-50%);
-  width: 100%; max-width: 480px; background: #fff; z-index: 200; display: none;
-  border-radius: 12px 12px 0 0; box-shadow: 0 -4px 16px rgba(0,0,0,0.15); padding: 8px 0;
-}
-.more-panel.show { display: block; }
-.more-item {
-  display: flex; align-items: center; padding: 12px 20px; font-size: 15px; color: #333;
-  cursor: pointer; border-bottom: 1px solid #f5f5f5;
-}
-.more-item:last-child { border-bottom: none; }
-.more-item:active { background: #f5f5f5; }
-.more-item .mi-icon { font-size: 18px; margin-right: 12px; }
+.tab-item.active { color: #e74c3c; border-bottom-color: #e74c3c; font-weight: bold; }
+.tab-icon { font-size: 16px; margin-right: 3px; }
 .regime-card { background: linear-gradient(135deg, #fff 0%, #f8f9fb 100%); border: 1px solid #e8e8e8; }
 </style>
 </head>
@@ -143,6 +126,17 @@ body {
   <div class="topbar">
     <div class="topbar-title">📊 量化仪表盘</div>
     <div class="topbar-date">2026-09-30</div>
+  </div>
+  <div class="top-tabs">
+    <div class="tab-item active" data-tab="market" onclick="showTab('market',this)"><span class="tab-icon">🏠</span>市场</div>
+    <div class="tab-item" data-tab="positions" onclick="showTab('positions',this)"><span class="tab-icon">💼</span>持仓</div>
+    <div class="tab-item" data-tab="signals" onclick="showTab('signals',this)"><span class="tab-icon">🎯</span>信号</div>
+    <div class="tab-item" data-tab="watchlist" onclick="showTab('watchlist',this)"><span class="tab-icon">📋</span>股票池</div>
+    <div class="tab-item" data-tab="sectors" onclick="showTab('sectors',this)"><span class="tab-icon">🧩</span>板块</div>
+    <div class="tab-item" data-tab="trades" onclick="showTab('trades',this)"><span class="tab-icon">🔄</span>交易</div>
+    <div class="tab-item" data-tab="ledger" onclick="showTab('ledger',this)"><span class="tab-icon">📚</span>台账</div>
+    <div class="tab-item" data-tab="review" onclick="showTab('review',this)"><span class="tab-icon">📝</span>复盘</div>
+    <div class="tab-item" data-tab="risk" onclick="showTab('risk',this)"><span class="tab-icon">🛡️</span>风控</div>
   </div>
   <div class="alert-banner" onclick="showTab('risk',bnEl('moreBtn'))">🚨 2只持仓击穿止损 | 纪律评分:9.0分D（不及格） | 违规8次 ▶点击查风控</div>
   <div id="sec-market" class="section active"><div class="card regime-card">
@@ -1189,55 +1183,23 @@ body {
             </div>
 </div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-03 09:58:54</div>
+    <div>数据更新时间: 2026-10-03 10:11:29</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分</div>
     <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
     <div>推荐部署节奏: 盘前8:50 / 开盘9:35 / 午盘11:25 / 尾盘14:45 / 盘后17:20</div>
     <div class="disclaimer">⚠️ 本页面由量化系统自动生成，仅供参考，不构成投资建议。</div>
   </div>
 </div>
-<!-- Round2: 底部固定navbar -->
-<div class="bottom-nav">
-  <div class="bn-item active" data-tab="market" onclick="showTab('market',this)"><span class="bn-icon">🏠</span><span class="bn-label">市场</span></div>
-  <div class="bn-item" data-tab="positions" onclick="showTab('positions',this)"><span class="bn-icon">💼</span><span class="bn-label">持仓</span></div>
-  <div class="bn-item" data-tab="signals" onclick="showTab('signals',this)"><span class="bn-icon">🎯</span><span class="bn-label">信号</span></div>
-  <div class="bn-item" data-tab="ledger" onclick="showTab('ledger',this)"><span class="bn-icon">📚</span><span class="bn-label">台账</span></div>
-  <div class="bn-item" id="moreBtn" onclick="toggleMore(true)"><span class="bn-icon">⚙️</span><span class="bn-label">更多</span></div>
-</div>
-<div class="more-mask" id="moreMask" onclick="toggleMore(false)"></div>
-<div class="more-panel" id="morePanel">
-  <div class="more-item" onclick="showTab('watchlist',bnEl('watchlist'));toggleMore(false)"><span class="mi-icon">📋</span>股票池</div>
-  <div class="more-item" onclick="showTab('sectors',bnEl('sectors'));toggleMore(false)"><span class="mi-icon">🧩</span>板块</div>
-  <div class="more-item" onclick="showTab('trades',bnEl('trades'));toggleMore(false)"><span class="mi-icon">🔄</span>交易</div>
-  <div class="more-item" onclick="showTab('review',bnEl('review'));toggleMore(false)"><span class="mi-icon">📝</span>复盘</div>
-  <div class="more-item" onclick="showTab('risk',bnEl('risk'));toggleMore(false)"><span class="mi-icon">🛡️</span>风控</div>
-</div>
 <script>
-function bnEl(name) {
-  var items = document.querySelectorAll('.bn-item');
-  for (var i=0;i<items.length;i++){
-    if (items[i].getAttribute('data-tab')===name) return items[i];
-  }
-  return null;
-}
 function showTab(name, el) {
   var sections = document.querySelectorAll('.section');
   for (var i = 0; i < sections.length; i++) sections[i].classList.remove('active');
   var sec = document.getElementById('sec-' + name);
   if (sec) sec.classList.add('active');
-  var tabs = document.querySelectorAll('.bn-item');
+  var tabs = document.querySelectorAll('.tab-item');
   for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
   if (el) el.classList.add('active');
-  // 风控/复盘等从更多弹窗进入时，高亮"更多"按钮
-  if (!el || !el.classList.contains('bn-item')) {
-    var mb = document.getElementById('moreBtn');
-    if (mb) mb.classList.add('active');
-  }
   window.scrollTo(0, 0);
-}
-function toggleMore(show) {
-  document.getElementById('morePanel').classList.toggle('show', show);
-  document.getElementById('moreMask').classList.toggle('show', show);
 }
 function toggleDetail(id) {
   var el = document.getElementById(id);
