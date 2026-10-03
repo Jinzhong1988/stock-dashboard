@@ -98,7 +98,7 @@ body {
 .review-date-btn { border: 1px solid #ddd; background: #fff; color: #666; padding: 5px 12px; border-radius: 14px; font-size: 13px; }
 .review-date-btn.active { background: #667eea; color: #fff; border-color: #667eea; font-weight: bold; }
 .review-pre { white-space: pre-wrap; word-break: break-word; font-family: -apple-system, "PingFang SC", monospace; font-size: 13px; line-height: 1.6; background: #f8f9fa; border-radius: 6px; padding: 10px; color: #444; max-height: 60vh; overflow-y: auto; }
-.alert-banner { background: linear-gradient(90deg,#c0392b,#e74c3c); color: #fff; text-align: center; padding: 9px 12px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 54px; box-shadow: 0 2px 6px rgba(231,76,60,0.4); }
+.alert-banner { background: linear-gradient(90deg,#c0392b,#e74c3c); color: #fff; text-align: center; padding: 9px 12px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 82px; box-shadow: 0 2px 6px rgba(231,76,60,0.4); }
 .hit-stop { color: #e74c3c !important; font-weight: bold; animation: blink 1s infinite; }
 @keyframes blink { 50% { opacity: 0.4; } }
 .title-row { display:flex; justify-content:space-between; align-items:center; }
@@ -138,7 +138,7 @@ body {
     <div class="tab-item" data-tab="review" onclick="showTab('review',this)"><span class="tab-icon">📝</span>复盘</div>
     <div class="tab-item" data-tab="risk" onclick="showTab('risk',this)"><span class="tab-icon">🛡️</span>风控</div>
   </div>
-  <div class="alert-banner" onclick="showTab('risk',bnEl('moreBtn'))">🚨 2只持仓击穿止损 | 纪律评分:9.0分D（不及格） | 违规8次 ▶点击查风控</div>
+  <div class="alert-banner" onclick="showTab('risk', document.querySelector('.tab-item[data-tab=risk]'))">🚨 2只持仓击穿止损 | 纪律评分:9.0分D（不及格） | 违规8次 ▶点击查风控</div>
   <div id="sec-market" class="section active"><div class="card regime-card">
 <div class="card-title">🎯 四季择时</div>
 
@@ -1183,7 +1183,7 @@ body {
             </div>
 </div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-03 10:11:29</div>
+    <div>数据更新时间: 2026-10-03 10:43:26</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分</div>
     <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
     <div>推荐部署节奏: 盘前8:50 / 开盘9:35 / 午盘11:25 / 尾盘14:45 / 盘后17:20</div>
