@@ -128,13 +128,12 @@ body {
     <div class="topbar-date">2026-09-30</div>
   </div>
   <div class="top-tabs">
-    <div class="tab-item active" data-tab="market" onclick="showTab('market',this)"><span class="tab-icon">🏠</span>市场</div>
+    <div class="tab-item active" data-tab="market" onclick="showTab('market',this)"><span class="tab-icon">🏠</span>总览</div>
     <div class="tab-item" data-tab="positions" onclick="showTab('positions',this)"><span class="tab-icon">💼</span>持仓</div>
+    <div class="tab-item" data-tab="sectors" onclick="showTab('sectors',this)"><span class="tab-icon">🧩</span>板块</div>
     <div class="tab-item" data-tab="signals" onclick="showTab('signals',this)"><span class="tab-icon">🎯</span>信号</div>
     <div class="tab-item" data-tab="watchlist" onclick="showTab('watchlist',this)"><span class="tab-icon">📋</span>股票池</div>
-    <div class="tab-item" data-tab="sectors" onclick="showTab('sectors',this)"><span class="tab-icon">🧩</span>板块</div>
-    <div class="tab-item" data-tab="trades" onclick="showTab('trades',this)"><span class="tab-icon">🔄</span>交易</div>
-    <div class="tab-item" data-tab="ledger" onclick="showTab('ledger',this)"><span class="tab-icon">📚</span>台账</div>
+    <div class="tab-item" data-tab="trades" onclick="showTab('trades',this)"><span class="tab-icon">📚</span>交易</div>
     <div class="tab-item" data-tab="review" onclick="showTab('review',this)"><span class="tab-icon">📝</span>复盘</div>
     <div class="tab-item" data-tab="risk" onclick="showTab('risk',this)"><span class="tab-icon">🛡️</span>风控</div>
   </div>
@@ -498,135 +497,6 @@ body {
         <div class="detail-hint">点击卡片可折叠</div>
       </div>
     </div></div>
-  <div id="sec-signals" class="section">
-    <div class="card empty-card">
-      <div class="empty-icon">📊</div>
-      <div class="empty-text">今日无新信号</div>
-    </div></div>
-  <div id="sec-watchlist" class="section">
-    <div class="card summary-card">
-      <div class="card-title" style="color:#fff">股票池总览（5道门槛入池+5天未买出池）</div>
-      <div class="ledger-summary" style="margin:6px 0">
-        <div class="ls-item"><div class="ls-num">28</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">观察池总计</div></div>
-        <div class="ls-item"><div class="ls-num" style="color:#ff6b6b">0</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">信号命中池</div></div>
-        <div class="ls-item"><div class="ls-num" style="color:#4ecdc4">28</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">行业龙头池</div></div>
-        <div class="ls-item"><div class="ls-num" style="color:#f39c12">0</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">即将出池⚠️</div></div>
-      </div>
-    </div>
-<div class="card">
-<div class="card-title">核心池（当前持仓）</div>
-
-            <div class="row-info" style="cursor:pointer" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
-              <span class="row-label">莲花控股 <span class="pos-code">600186</span></span>
-              <span style="color:#27ae60;font-weight:bold">-5.39%</span>
-            </div>
-
-            <div class="row-info" style="cursor:pointer" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
-              <span class="row-label">光迅科技 <span class="pos-code">002281</span></span>
-              <span style="color:#27ae60;font-weight:bold">-14.21%</span>
-            </div>
-
-            <div class="row-info" style="cursor:pointer" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
-              <span class="row-label">鹏鼎控股 <span class="pos-code">002938</span></span>
-              <span style="color:#27ae60;font-weight:bold">-11.32%</span>
-            </div>
-</div>
-<div class="card">
-<div class="card-title">候选池（今日信号）</div>
-<div class="row-note">暂无候选（今日无信号）</div>
-</div>
-<div class="card">
-<div class="card-title">⭐ 高分股（评分≥80）</div>
-<div class="env-tags">
-<span class="env-tag" style="background:#eaffea;color:#27ae60">德明利 95</span>
-<span class="env-tag" style="background:#eaffea;color:#27ae60">学大教育 95</span>
-<span class="env-tag" style="background:#eaffea;color:#27ae60">嘉立创 90</span>
-<span class="env-tag" style="background:#eaffea;color:#27ae60">登康口腔 80</span>
-<span class="env-tag" style="background:#eaffea;color:#27ae60">中材科技 80</span>
-<span class="env-tag" style="background:#eaffea;color:#27ae60">燕京啤酒 80</span>
-</div></div>
-<div class="card">
-<div class="title-row"><div class="card-title">观察池（28只，按评分降序）</div><span class="card-date-tag">📅09-26</span></div>
-<div class="table-wrap"><table class="ledger-table" id="watchlistTable">
-<thead><tr><th>代码</th><th>名称</th><th>类型</th><th>行业</th><th>评分</th><th>入池天数</th><th>加入日期</th></tr></thead>
-<tbody id="wl-body">
-<tr><td class="td-code" style="text-align:left">001309.SZ</td><td style="text-align:left;font-weight:bold">德明利</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>半导体</td><td style="color:#27ae60;font-weight:bold">95</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">000526.SZ</td><td style="text-align:left;font-weight:bold">学大教育</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>教育</td><td style="color:#27ae60;font-weight:bold">95</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">001232.SZ</td><td style="text-align:left;font-weight:bold">嘉立创</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>元件</td><td style="color:#27ae60;font-weight:bold">90</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">001328.SZ</td><td style="text-align:left;font-weight:bold">登康口腔</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>个护用品</td><td style="color:#27ae60;font-weight:bold">80</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002080.SZ</td><td style="text-align:left;font-weight:bold">中材科技</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>玻璃玻纤</td><td style="color:#27ae60;font-weight:bold">80</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">000729.SZ</td><td style="text-align:left;font-weight:bold">燕京啤酒</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>非白酒</td><td style="color:#27ae60;font-weight:bold">80</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002049.SZ</td><td style="text-align:left;font-weight:bold">紫光国微</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>半导体</td><td style="color:#f39c12;font-weight:bold">75</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002511.SZ</td><td style="text-align:left;font-weight:bold">中顺洁柔</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>个护用品</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">000681.SZ</td><td style="text-align:left;font-weight:bold">视觉中国</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>数字媒体</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002095.SZ</td><td style="text-align:left;font-weight:bold">生意宝</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>数字媒体</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002127.SZ</td><td style="text-align:left;font-weight:bold">南极电商</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>互联网电商</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002077.SZ</td><td style="text-align:left;font-weight:bold">大港股份</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>半导体</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002041.SZ</td><td style="text-align:left;font-weight:bold">登海种业</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>种植业</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">000636.SZ</td><td style="text-align:left;font-weight:bold">风华高科</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>元件</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">000560.SZ</td><td style="text-align:left;font-weight:bold">我爱我家</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>房地产服务</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">000736.SZ</td><td style="text-align:left;font-weight:bold">中交发展</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>房地产服务</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">001326.SZ</td><td style="text-align:left;font-weight:bold">联域股份</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>照明设备Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">301071.SZ</td><td style="text-align:left;font-weight:bold">力量钻石</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>非金属材料Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">000519.SZ</td><td style="text-align:left;font-weight:bold">中兵红箭</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>地面兵装Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002519.SZ</td><td style="text-align:left;font-weight:bold">银河电子</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>地面兵装Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-</tbody>
-<tbody id="wl-more" style="display:none">
-<tr><td class="td-code" style="text-align:left">002584.SZ</td><td style="text-align:left;font-weight:bold">西陇科学</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>电子化学品Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002741.SZ</td><td style="text-align:left;font-weight:bold">光华科技</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>电子化学品Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">000404.SZ</td><td style="text-align:left;font-weight:bold">长虹华意</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>家电零部件Ⅱ</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002011.SZ</td><td style="text-align:left;font-weight:bold">盾安环境</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>家电零部件Ⅱ</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002315.SZ</td><td style="text-align:left;font-weight:bold">焦点科技</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>互联网电商</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">603579.SH</td><td style="text-align:left;font-weight:bold">荣泰健康</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>其他家电Ⅱ</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">001207.SZ</td><td style="text-align:left;font-weight:bold">联科科技</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>橡胶</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
-<tr><td class="td-code" style="text-align:left">002607.SZ</td><td style="text-align:left;font-weight:bold">中公教育</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>教育</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
-</tbody>
-</table></div>
-<button class="sort-btn" id="wl-toggle" style="margin-top:8px" onclick="toggleWatchlist()">展开全部（共28只）▼</button>
-</div>
-<div class="card">
-<div class="card-title">行业分布 TOP5</div>
-
-                <div class="row-info">
-                  <span class="row-label">半导体</span>
-                  <span style="font-size:13px">3只
-                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
-                    <span style="display:block;width:100%;height:6px;background:#3366cc;border-radius:3px"></span>
-                  </span></span>
-                </div>
-
-                <div class="row-info">
-                  <span class="row-label">教育</span>
-                  <span style="font-size:13px">2只
-                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
-                    <span style="display:block;width:67%;height:6px;background:#3366cc;border-radius:3px"></span>
-                  </span></span>
-                </div>
-
-                <div class="row-info">
-                  <span class="row-label">元件</span>
-                  <span style="font-size:13px">2只
-                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
-                    <span style="display:block;width:67%;height:6px;background:#3366cc;border-radius:3px"></span>
-                  </span></span>
-                </div>
-
-                <div class="row-info">
-                  <span class="row-label">个护用品</span>
-                  <span style="font-size:13px">2只
-                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
-                    <span style="display:block;width:67%;height:6px;background:#3366cc;border-radius:3px"></span>
-                  </span></span>
-                </div>
-
-                <div class="row-info">
-                  <span class="row-label">数字媒体</span>
-                  <span style="font-size:13px">2只
-                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
-                    <span style="display:block;width:67%;height:6px;background:#3366cc;border-radius:3px"></span>
-                  </span></span>
-                </div>
-</div></div>
   <div id="sec-sectors" class="section"><div class="card">
 <div class="card-title">行业板块强弱</div>
 <div class="card-sub">数据日期: 20260930</div>
@@ -916,66 +786,202 @@ body {
                   <span class="sector-pct" style="color:#e74c3c">+4.29%</span>
                 </div>
 </div></div>
+  <div id="sec-signals" class="section">
+    <div class="card empty-card">
+      <div class="empty-icon">📊</div>
+      <div class="empty-text">今日无新信号</div>
+    </div></div>
+  <div id="sec-watchlist" class="section">
+    <div class="card summary-card">
+      <div class="card-title" style="color:#fff">股票池总览（5道门槛入池+5天未买出池）</div>
+      <div class="ledger-summary" style="margin:6px 0">
+        <div class="ls-item"><div class="ls-num">28</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">观察池总计</div></div>
+        <div class="ls-item"><div class="ls-num" style="color:#ff6b6b">0</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">信号命中池</div></div>
+        <div class="ls-item"><div class="ls-num" style="color:#4ecdc4">28</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">行业龙头池</div></div>
+        <div class="ls-item"><div class="ls-num" style="color:#f39c12">0</div><div class="ls-label" style="color:rgba(255,255,255,0.8)">即将出池⚠️</div></div>
+      </div>
+    </div>
+<div class="card">
+<div class="card-title">核心池（当前持仓）</div>
+
+            <div class="row-info" style="cursor:pointer" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
+              <span class="row-label">莲花控股 <span class="pos-code">600186</span></span>
+              <span style="color:#27ae60;font-weight:bold">-5.39%</span>
+            </div>
+
+            <div class="row-info" style="cursor:pointer" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
+              <span class="row-label">光迅科技 <span class="pos-code">002281</span></span>
+              <span style="color:#27ae60;font-weight:bold">-14.21%</span>
+            </div>
+
+            <div class="row-info" style="cursor:pointer" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
+              <span class="row-label">鹏鼎控股 <span class="pos-code">002938</span></span>
+              <span style="color:#27ae60;font-weight:bold">-11.32%</span>
+            </div>
+</div>
+<div class="card">
+<div class="card-title">候选池（今日信号）</div>
+<div class="row-note">暂无候选（今日无信号）</div>
+</div>
+<div class="card">
+<div class="card-title">⭐ 高分股（评分≥80）</div>
+<div class="env-tags">
+<span class="env-tag" style="background:#eaffea;color:#27ae60">德明利 95</span>
+<span class="env-tag" style="background:#eaffea;color:#27ae60">学大教育 95</span>
+<span class="env-tag" style="background:#eaffea;color:#27ae60">嘉立创 90</span>
+<span class="env-tag" style="background:#eaffea;color:#27ae60">登康口腔 80</span>
+<span class="env-tag" style="background:#eaffea;color:#27ae60">中材科技 80</span>
+<span class="env-tag" style="background:#eaffea;color:#27ae60">燕京啤酒 80</span>
+</div></div>
+<div class="card">
+<div class="title-row"><div class="card-title">观察池（28只，按评分降序）</div><span class="card-date-tag">📅09-26</span></div>
+<div class="table-wrap"><table class="ledger-table" id="watchlistTable">
+<thead><tr><th>代码</th><th>名称</th><th>类型</th><th>行业</th><th>评分</th><th>入池天数</th><th>加入日期</th></tr></thead>
+<tbody id="wl-body">
+<tr><td class="td-code" style="text-align:left">001309.SZ</td><td style="text-align:left;font-weight:bold">德明利</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>半导体</td><td style="color:#27ae60;font-weight:bold">95</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">000526.SZ</td><td style="text-align:left;font-weight:bold">学大教育</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>教育</td><td style="color:#27ae60;font-weight:bold">95</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">001232.SZ</td><td style="text-align:left;font-weight:bold">嘉立创</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>元件</td><td style="color:#27ae60;font-weight:bold">90</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">001328.SZ</td><td style="text-align:left;font-weight:bold">登康口腔</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>个护用品</td><td style="color:#27ae60;font-weight:bold">80</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002080.SZ</td><td style="text-align:left;font-weight:bold">中材科技</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>玻璃玻纤</td><td style="color:#27ae60;font-weight:bold">80</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">000729.SZ</td><td style="text-align:left;font-weight:bold">燕京啤酒</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>非白酒</td><td style="color:#27ae60;font-weight:bold">80</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002049.SZ</td><td style="text-align:left;font-weight:bold">紫光国微</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>半导体</td><td style="color:#f39c12;font-weight:bold">75</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002511.SZ</td><td style="text-align:left;font-weight:bold">中顺洁柔</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>个护用品</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">000681.SZ</td><td style="text-align:left;font-weight:bold">视觉中国</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>数字媒体</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002095.SZ</td><td style="text-align:left;font-weight:bold">生意宝</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>数字媒体</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002127.SZ</td><td style="text-align:left;font-weight:bold">南极电商</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>互联网电商</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002077.SZ</td><td style="text-align:left;font-weight:bold">大港股份</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>半导体</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002041.SZ</td><td style="text-align:left;font-weight:bold">登海种业</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>种植业</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">000636.SZ</td><td style="text-align:left;font-weight:bold">风华高科</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>元件</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">000560.SZ</td><td style="text-align:left;font-weight:bold">我爱我家</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>房地产服务</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">000736.SZ</td><td style="text-align:left;font-weight:bold">中交发展</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>房地产服务</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">001326.SZ</td><td style="text-align:left;font-weight:bold">联域股份</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>照明设备Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">301071.SZ</td><td style="text-align:left;font-weight:bold">力量钻石</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>非金属材料Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">000519.SZ</td><td style="text-align:left;font-weight:bold">中兵红箭</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>地面兵装Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002519.SZ</td><td style="text-align:left;font-weight:bold">银河电子</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>地面兵装Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+</tbody>
+<tbody id="wl-more" style="display:none">
+<tr><td class="td-code" style="text-align:left">002584.SZ</td><td style="text-align:left;font-weight:bold">西陇科学</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>电子化学品Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002741.SZ</td><td style="text-align:left;font-weight:bold">光华科技</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>电子化学品Ⅱ</td><td style="color:#f39c12;font-weight:bold">70</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">000404.SZ</td><td style="text-align:left;font-weight:bold">长虹华意</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>家电零部件Ⅱ</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002011.SZ</td><td style="text-align:left;font-weight:bold">盾安环境</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>家电零部件Ⅱ</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002315.SZ</td><td style="text-align:left;font-weight:bold">焦点科技</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>互联网电商</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">603579.SH</td><td style="text-align:left;font-weight:bold">荣泰健康</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>其他家电Ⅱ</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">001207.SZ</td><td style="text-align:left;font-weight:bold">联科科技</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>橡胶</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
+<tr><td class="td-code" style="text-align:left">002607.SZ</td><td style="text-align:left;font-weight:bold">中公教育</td><td><span style="background:#e3f2fd;color:#1976d2;padding:1px 6px;border-radius:3px;font-size:11px">龙头</span></td><td>教育</td><td style="color:#f39c12;font-weight:bold">65</td><td>7天</td><td>09-26</td></tr>
+</tbody>
+</table></div>
+<button class="sort-btn" id="wl-toggle" style="margin-top:8px" onclick="toggleWatchlist()">展开全部（共28只）▼</button>
+</div>
+<div class="card">
+<div class="card-title">行业分布 TOP5</div>
+
+                <div class="row-info">
+                  <span class="row-label">半导体</span>
+                  <span style="font-size:13px">3只
+                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
+                    <span style="display:block;width:100%;height:6px;background:#3366cc;border-radius:3px"></span>
+                  </span></span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">教育</span>
+                  <span style="font-size:13px">2只
+                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
+                    <span style="display:block;width:67%;height:6px;background:#3366cc;border-radius:3px"></span>
+                  </span></span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">元件</span>
+                  <span style="font-size:13px">2只
+                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
+                    <span style="display:block;width:67%;height:6px;background:#3366cc;border-radius:3px"></span>
+                  </span></span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">个护用品</span>
+                  <span style="font-size:13px">2只
+                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
+                    <span style="display:block;width:67%;height:6px;background:#3366cc;border-radius:3px"></span>
+                  </span></span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">数字媒体</span>
+                  <span style="font-size:13px">2只
+                  <span style="display:inline-block;width:60px;height:6px;background:#eef3ff;border-radius:3px;vertical-align:middle;margin-left:6px">
+                    <span style="display:block;width:67%;height:6px;background:#3366cc;border-radius:3px"></span>
+                  </span></span>
+                </div>
+</div></div>
   <div id="sec-trades" class="section">
     <div class="card empty-card">
       <div class="empty-icon">📊</div>
       <div class="empty-text">今日无交易</div>
-    </div></div>
-  <div id="sec-ledger" class="section"><div class="card">
-<div class="card-title">实盘交易台账（已平仓）</div>
-<div class="card-sub">共 4 笔 · 胜率基于 3 个有盈亏%样本 · 仅实盘交割单</div>
-
-    <div class="ledger-summary">
-      <div class="ls-item"><div class="ls-num">4</div><div class="ls-label">总交易数</div></div>
-      <div class="ls-item"><div class="ls-num" style="color:#e74c3c">33%</div><div class="ls-label">胜率</div></div>
-      <div class="ls-item"><div class="ls-num" style="color:#27ae60">-3.4%</div><div class="ls-label">平均盈亏</div></div>
-      <div class="ls-item"><div class="ls-num" style="color:#999">--</div><div class="ls-label">累计盈亏</div></div>
     </div>
+<div class="card">
+<div class="card-title">实盘台账（已平仓）</div>
+<div class="card-sub">共 4 笔 · 胜率 33% · 平均盈亏 -3.4%</div>
 
-    <div class="sort-bar">
-      <span class="row-label">排序：</span>
-      <button class="sort-btn active" id="btn-sort-date" onclick="sortLedger('date')">按卖出日期</button>
-      <button class="sort-btn" id="btn-sort-pnl" onclick="sortLedger('pnl')">按盈亏%</button>
-    </div>
-<div class="table-wrap">
-<table class="ledger-table" id="ledgerTable">
-      <thead><tr>
-        <th>股票</th><th>买入</th><th>卖出</th><th>天</th><th>买价</th><th>卖价</th>
-        <th>盈亏%</th><th>战法</th><th>卖出原因</th><th>错误类型</th>
-      </tr></thead><tbody>
-
-        <tr data-pct="0.0451" data-date="20260929.0">
-          <td class="td-name">黄河旋风<div class="td-code">600172.SH</div></td>
-          <td>09-22</td><td>09-29</td><td>4</td>
-          <td>15.3</td><td>15.99</td>
-          <td style="color:#e74c3c;font-weight:bold">+4.5%</td>
-          <td>REAL</td><td>止损</td><td>-</td>
-        </tr>
-
-        <tr data-pct="-0.0356" data-date="20260929.0">
-          <td class="td-name">莲花控股<div class="td-code">600186.SH</div></td>
-          <td>09-22</td><td>09-29</td><td>4</td>
-          <td>12.184</td><td>11.75</td>
-          <td style="color:#27ae60;font-weight:bold">-3.6%</td>
-          <td>REAL</td><td>止损</td><td>-</td>
-        </tr>
-
-        <tr data-pct="-0.1121" data-date="20260928.0">
-          <td class="td-name">豫能控股<div class="td-code">001896.SZ</div></td>
-          <td>09-22</td><td>09-28</td><td>3</td>
-          <td>12.22</td><td>10.85</td>
-          <td style="color:#27ae60;font-weight:bold">-11.2%</td>
-          <td>REAL</td><td>止损</td><td>-</td>
-        </tr>
-
-        <tr data-pct="-9999" data-date="20260923.0">
-          <td class="td-name">百合花<div class="td-code">603823.SH</div></td>
-          <td>-</td><td>09-23</td><td>-</td>
-          <td>-</td><td>51.35</td>
-          <td style="color:#999;font-weight:bold">-</td>
-          <td>-</td><td>止损</td><td>-</td>
-        </tr>
+        <div class="ledger-summary">
+          <div class="ls-item"><div class="ls-num">4</div><div class="ls-label">总交易</div></div>
+          <div class="ls-item"><div class="ls-num" style="color:#e74c3c">33%</div><div class="ls-label">胜率</div></div>
+          <div class="ls-item"><div class="ls-num" style="color:#27ae60">-3.4%</div><div class="ls-label">平均盈亏</div></div>
+          <div class="ls-item"><div class="ls-num" style="color:#999">--</div><div class="ls-label">累计盈亏</div></div>
+        </div>
+<div class="table-wrap"><table class="ledger-table"><thead><tr><th>股票</th><th>买价</th><th>卖价</th><th>盈亏%</th><th>战法</th></tr></thead><tbody>
+<tr><td><span class="pos-name">黄河旋风</span><span class="pos-code">600172.SH</span></td><td>15.3</td><td>15.99</td><td style="color:#e74c3c;font-weight:bold">+4.5%</td><td>REAL</td></tr>
+<tr><td><span class="pos-name">莲花控股</span><span class="pos-code">600186.SH</span></td><td>12.184</td><td>11.75</td><td style="color:#27ae60;font-weight:bold">-3.6%</td><td>REAL</td></tr>
+<tr><td><span class="pos-name">豫能控股</span><span class="pos-code">001896.SZ</span></td><td>12.22</td><td>10.85</td><td style="color:#27ae60;font-weight:bold">-11.2%</td><td>REAL</td></tr>
+<tr><td><span class="pos-name">百合花</span><span class="pos-code">603823.SH</span></td><td>数据缺失</td><td>51.35</td><td style="color:#333;font-weight:bold">--</td><td></td></tr>
 </tbody></table></div>
+</div>
+<div class="card">
+<div class="card-title">模拟盘跟踪</div>
+
+            <div class="paper-nav">
+              <div class="row-label">最新净值</div>
+              <div class="temp-value" style="color:#333">1.00000</div>
+              <div class="row-label" style="color:#333">累计收益率 +0.00%</div>
+            </div>
+<div class="row-label" style="margin:8px 0;color:#999">模拟盘当前空仓</div>
+<div class="row-label" style="margin:12px 0 4px;font-weight:600">模拟盘已平仓（7笔）</div>
+
+                <div class="row-info">
+                  <span class="row-label">中视传媒 (600088.SH)</span>
+                  <span style="color:#666">买16.2→卖15.2</span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">启明信息 (002232.SZ)</span>
+                  <span style="color:#666">买16.81→卖15.47</span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">电科网安 (002268.SZ)</span>
+                  <span style="color:#666">买14.89→卖14.67</span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">宁沪高速 (600377.SH)</span>
+                  <span style="color:#666">买12.73→卖12.78</span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">洪城环境 (600461.SH)</span>
+                  <span style="color:#666">买9.11→卖8.94</span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">富维股份 (600742.SH)</span>
+                  <span style="color:#666">买7.96→卖7.75</span>
+                </div>
+
+                <div class="row-info">
+                  <span class="row-label">交通银行 (601328.SH)</span>
+                  <span style="color:#666">买7.62→卖7.53</span>
+                </div>
 </div></div>
   <div id="sec-review" class="section"><div class="card">
 <div class="card-title">每日复盘</div>
@@ -1279,55 +1285,9 @@ body {
               <div class="alert-name">鹏鼎控股 <span class="pos-code">002938</span></div>
               <div class="alert-msg">距止损位仅 -8.25%（止损价 86.11）</div>
             </div>
-</div>
-<div class="card">
-<div class="card-title">模拟盘跟踪</div>
-
-            <div class="paper-nav">
-              <div class="row-label">最新净值</div>
-              <div class="temp-value" style="color:#333">1.00000</div>
-              <div class="row-label" style="color:#333">累计收益率 +0.00%</div>
-            </div>
-<div class="row-label" style="margin:8px 0;color:#999">模拟盘当前空仓</div>
-<div class="row-label" style="margin:12px 0 4px;font-weight:600">模拟盘已平仓（7笔）</div>
-
-                <div class="row-info">
-                  <span class="row-label">中视传媒 (600088.SH)</span>
-                  <span style="color:#666">买16.2→卖15.2</span>
-                </div>
-
-                <div class="row-info">
-                  <span class="row-label">启明信息 (002232.SZ)</span>
-                  <span style="color:#666">买16.81→卖15.47</span>
-                </div>
-
-                <div class="row-info">
-                  <span class="row-label">电科网安 (002268.SZ)</span>
-                  <span style="color:#666">买14.89→卖14.67</span>
-                </div>
-
-                <div class="row-info">
-                  <span class="row-label">宁沪高速 (600377.SH)</span>
-                  <span style="color:#666">买12.73→卖12.78</span>
-                </div>
-
-                <div class="row-info">
-                  <span class="row-label">洪城环境 (600461.SH)</span>
-                  <span style="color:#666">买9.11→卖8.94</span>
-                </div>
-
-                <div class="row-info">
-                  <span class="row-label">富维股份 (600742.SH)</span>
-                  <span style="color:#666">买7.96→卖7.75</span>
-                </div>
-
-                <div class="row-info">
-                  <span class="row-label">交通银行 (601328.SH)</span>
-                  <span style="color:#666">买7.62→卖7.53</span>
-                </div>
 </div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-03 12:30:05</div>
+    <div>数据更新时间: 2026-10-03 12:39:06</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分</div>
     <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
     <div>推荐部署节奏: 盘前8:50 / 开盘9:35 / 午盘11:25 / 尾盘14:45 / 盘后17:20</div>
