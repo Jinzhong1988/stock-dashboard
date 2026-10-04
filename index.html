@@ -5,108 +5,160 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>手机看盘仪表盘 V2.0</title>
 <style>
+/* ============================================================
+   Design System v1.0 — A股量化仪表盘（红涨绿跌）
+   变量层 / 基础层 / 组件层 / 扩展组件层 / 动画层 / 响应式层
+   ============================================================ */
+/* ---------- 1. CSS 变量体系（:root） ---------- */
+:root {
+  /* 涨跌色（A股红涨绿跌） */
+  --color-up: #e74c3c;
+  --color-down: #27ae60;
+  /* 语义色 */
+  --color-warn: #f39c12;
+  --color-info: #3498db;
+  --color-danger: #c0392b;
+  /* 中性灰阶 */
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #555;
+  --color-text-muted: #999;
+  --color-text-faint: #ccc;
+  /* 背景色 */
+  --color-bg: #f0f2f5;
+  --color-card: #ffffff;
+  --color-bg-subtle: #f8f9fa;
+  --color-border: #f0f0f0;
+  /* 品牌色 */
+  --color-primary: #e74c3c;
+  /* 字号 */
+  --font-size-xs: 10px;
+  --font-size-sm: 11px;
+  --font-size-base: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 22px;
+  --font-size-3xl: 28px;
+  /* 间距 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+  /* 阴影 */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.1);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* ---------- 2. 基础层（保留全部既有类，变量化重写） ---------- */
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background: #f0f2f5; color: #333; font-size: 16px; line-height: 1.5;
+  background: var(--color-bg); color: #333; font-size: var(--font-size-lg); line-height: 1.5;
 }
 .container { max-width: 480px; margin: 0 auto; padding: 10px; }
 /* Round2: 顶部标题栏 */
 .topbar {
-  position: fixed; top: 0; left: 0; right: 0; background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 100; max-width: 480px; margin: 0 auto;
+  position: fixed; top: 0; left: 0; right: 0; background: var(--color-card);
+  box-shadow: var(--shadow-md); z-index: 100; max-width: 480px; margin: 0 auto;
   display: flex; justify-content: space-between; align-items: center; padding: 10px 14px;
-  border-bottom: 2px solid #e74c3c;
+  border-bottom: 2px solid var(--color-up);
 }
 .topbar-title { font-size: 17px; font-weight: bold; color: #222; }
-.topbar-date { font-size: 12px; color: #999; }
+.topbar-date { font-size: 12px; color: var(--color-text-muted); }
 .section { display: none; padding-top: 82px; }
 .section.active { display: block; }
-.card { background: #fff; border-radius: 8px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-.card-title { font-size: 20px; font-weight: bold; margin-bottom: 8px; color: #222; }
-.card-sub { font-size: 13px; color: #999; margin-bottom: 10px; }
-.empty-card { text-align: center; padding: 40px 20px; color: #999; }
+.card { background: var(--color-card); border-radius: var(--radius-md); padding: 14px; margin-bottom: 10px; box-shadow: var(--shadow-sm); }
+.card-title { font-size: 20px; font-weight: bold; margin-bottom: var(--space-sm); color: #222; }
+.card-sub { font-size: var(--font-size-base); color: var(--color-text-muted); margin-bottom: 10px; }
+.empty-card { text-align: center; padding: 40px 20px; color: var(--color-text-muted); }
 .empty-icon { font-size: 40px; margin-bottom: 10px; }
-.empty-text { font-size: 16px; }
+.empty-text { font-size: var(--font-size-lg); }
 .row-info { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f5f5f5; font-size: 15px; }
 .row-info:last-child { border-bottom: none; }
-.row-label { color: #888; font-size: 14px; }
+.row-label { color: #888; font-size: var(--font-size-md); }
 .row-val { font-weight: bold; }
-.row-note { color: #999; font-size: 14px; padding: 8px 0; }
+.row-note { color: var(--color-text-muted); font-size: var(--font-size-md); padding: var(--space-sm) 0; }
 .env-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
-.env-tag { background: #eef3ff; color: #3366cc; padding: 4px 10px; border-radius: 12px; font-size: 13px; }
-.temp-block { margin: 12px 0; text-align: center; }
-.temp-value { font-size: 32px; font-weight: bold; margin: 4px 0; }
-.progress-bar { height: 8px; background: #eee; border-radius: 4px; overflow: hidden; margin-top: 6px; }
-.progress-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
-.pos-card { cursor: pointer; }
-.pos-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.pos-name { font-size: 18px; font-weight: bold; }
-.pos-code { font-size: 13px; color: #999; margin-left: 6px; }
-.pos-price { font-size: 22px; font-weight: bold; }
+.env-tag { background: #eef3ff; color: #3366cc; padding: var(--space-xs) 10px; border-radius: var(--radius-lg); font-size: var(--font-size-base); transition: all 0.15s ease; }
+.temp-block { margin: var(--space-md) 0; text-align: center; }
+.temp-value { font-size: 32px; font-weight: bold; margin: var(--space-xs) 0; }
+.progress-bar { height: 8px; background: #eee; border-radius: var(--radius-sm); overflow: hidden; margin-top: 6px; }
+.progress-fill { height: 100%; border-radius: var(--radius-sm); transition: width 0.3s; }
+.pos-card { cursor: pointer; transition: all 0.15s ease; }
+.pos-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); }
+.pos-name { font-size: var(--font-size-xl); font-weight: bold; }
+.pos-code { font-size: var(--font-size-base); color: var(--color-text-muted); margin-left: 6px; }
+.pos-price { font-size: var(--font-size-2xl); font-weight: bold; }
 .pos-profit { text-align: center; padding: 10px; margin: 8px 0; background: #fafafa; border-radius: 6px; }
 .profit-amount { font-size: 24px; font-weight: bold; margin-right: 10px; }
-.profit-pct { font-size: 18px; font-weight: bold; }
-.pos-detail { margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd; }
-.detail-line { display: flex; justify-content: space-between; padding: 4px 0; font-size: 14px; color: #666; }
+.profit-pct { font-size: var(--font-size-xl); font-weight: bold; }
+.pos-detail { margin-top: var(--space-sm); padding-top: var(--space-sm); border-top: 1px dashed #ddd; }
+.detail-line { display: flex; justify-content: space-between; padding: var(--space-xs) 0; font-size: var(--font-size-md); color: #666; }
 .detail-sell { flex-direction: column; }
-.detail-sell span:last-child { margin-top: 4px; color: #e74c3c; }
-.detail-hint { text-align: center; font-size: 12px; color: #ccc; margin-top: 6px; }
+.detail-sell span:last-child { margin-top: var(--space-xs); color: var(--color-up); }
+.detail-hint { text-align: center; font-size: 12px; color: var(--color-text-faint); margin-top: 6px; }
 .summary-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; }
 .summary-card .row-label { color: rgba(255,255,255,0.8); }
 .summary-card .row-val { color: #fff; }
-.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-left: 6px; }
-.tag-warn { background: #ffeaea; color: #e74c3c; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: var(--radius-sm); font-size: 12px; margin-left: 6px; }
+.tag-warn { background: #ffeaea; color: var(--color-up); }
 .tag-strategy { background: #eef3ff; color: #3366cc; }
-.sig-header { display: flex; align-items: center; margin-bottom: 8px; }
-.veto { margin-top: 8px; padding: 8px; border-radius: 6px; font-size: 14px; }
-.veto-pass { background: #eaffea; color: #27ae60; }
-.veto-veto { background: #ffeaea; color: #e74c3c; }
-.veto-none { background: #f5f5f5; color: #999; }
-.veto-reason { font-size: 13px; color: #666; margin-left: 4px; }
-.section-sub { font-size: 16px; font-weight: bold; margin: 12px 0 6px; padding-left: 4px; }
-.sector-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+.sig-header { display: flex; align-items: center; margin-bottom: var(--space-sm); }
+.veto { margin-top: var(--space-sm); padding: var(--space-sm); border-radius: 6px; font-size: var(--font-size-md); }
+.veto-pass { background: #eaffea; color: var(--color-down); }
+.veto-veto { background: #ffeaea; color: var(--color-up); }
+.veto-none { background: #f5f5f5; color: var(--color-text-muted); }
+.veto-reason { font-size: var(--font-size-base); color: #666; margin-left: var(--space-xs); }
+.section-sub { font-size: var(--font-size-lg); font-weight: bold; margin: var(--space-md) 0 6px; padding-left: var(--space-xs); }
+.sector-row { display: flex; align-items: center; justify-content: space-between; padding: var(--space-sm) 0; border-bottom: 1px solid #f5f5f5; }
 .sector-row:last-child { border-bottom: none; }
 .sector-name { font-size: 15px; flex: 1; }
 .sector-state { font-size: 12px; padding: 2px 8px; border-radius: 10px; margin: 0 8px; }
 .sector-pct { font-size: 15px; font-weight: bold; min-width: 70px; text-align: right; }
-.trade-row { padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+.trade-row { padding: 10px 0; border-bottom: 1px solid var(--color-border); }
 .trade-row:last-child { border-bottom: none; }
 .trade-header { display: flex; align-items: center; margin-bottom: 6px; }
 .alert-row { padding: 10px; margin: 8px 0; border-radius: 6px; }
-.alert-label { font-size: 14px; font-weight: bold; }
-.alert-name { font-size: 16px; font-weight: bold; margin: 4px 0; }
-.alert-msg { font-size: 14px; color: #555; }
+.alert-label { font-size: var(--font-size-md); font-weight: bold; }
+.alert-name { font-size: var(--font-size-lg); font-weight: bold; margin: var(--space-xs) 0; }
+.alert-msg { font-size: var(--font-size-md); color: var(--color-text-secondary); }
 .safe-card { text-align: center; padding: 30px; }
-.paper-nav { text-align: center; padding: 10px; background: #f8f9fa; border-radius: 6px; margin: 8px 0; }
-.footer { text-align: center; padding: 20px 10px; font-size: 12px; color: #999; }
-.footer .disclaimer { margin-top: 8px; padding: 8px; background: #fffbe6; border-radius: 4px; color: #ad6800; }
+.paper-nav { text-align: center; padding: 10px; background: var(--color-bg-subtle); border-radius: 6px; margin: 8px 0; }
+.footer { text-align: center; padding: 20px 10px; font-size: 12px; color: var(--color-text-muted); }
+.footer .disclaimer { margin-top: var(--space-sm); padding: var(--space-sm); background: #fffbe6; border-radius: var(--radius-sm); color: #ad6800; }
 .ledger-summary { display: flex; justify-content: space-between; margin: 10px 0; }
 .ls-item { flex: 1; text-align: center; }
 .ls-num { font-size: 20px; font-weight: bold; }
-.ls-label { font-size: 12px; color: #999; margin-top: 2px; }
-.sort-bar { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
-.sort-btn { border: 1px solid #ddd; background: #fff; color: #666; padding: 4px 10px; border-radius: 12px; font-size: 12px; }
-.sort-btn.active { background: #e74c3c; color: #fff; border-color: #e74c3c; }
+.ls-label { font-size: 12px; color: var(--color-text-muted); margin-top: 2px; }
+.sort-bar { display: flex; align-items: center; gap: var(--space-sm); margin: 10px 0; }
+.sort-btn { border: 1px solid #ddd; background: var(--color-card); color: #666; padding: var(--space-xs) 10px; border-radius: var(--radius-lg); font-size: 12px; transition: all 0.15s ease; cursor: pointer; }
+.sort-btn.active { background: var(--color-up); color: #fff; border-color: var(--color-up); }
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -14px; }
-.ledger-table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 13px; }
-.ledger-table th, .ledger-table td { padding: 7px 6px; text-align: right; border-bottom: 1px solid #f0f0f0; white-space: nowrap; }
+.ledger-table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: var(--font-size-base); }
+.ledger-table th, .ledger-table td { padding: 7px 6px; text-align: right; border-bottom: 1px solid var(--color-border); white-space: nowrap; }
 .ledger-table th { background: #fafafa; color: #888; font-weight: normal; position: sticky; top: 0; }
 .ledger-table td.td-name { text-align: left; font-weight: bold; }
-.ledger-table .td-code { font-size: 11px; color: #999; font-weight: normal; }
+.ledger-table .td-code { font-size: var(--font-size-sm); color: var(--color-text-muted); font-weight: normal; }
 .review-dates { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
-.review-date-btn { border: 1px solid #ddd; background: #fff; color: #666; padding: 5px 12px; border-radius: 14px; font-size: 13px; }
+.review-date-btn { border: 1px solid #ddd; background: var(--color-card); color: #666; padding: 5px 12px; border-radius: 14px; font-size: var(--font-size-base); transition: all 0.15s ease; cursor: pointer; }
 .review-date-btn.active { background: #667eea; color: #fff; border-color: #667eea; font-weight: bold; }
-.review-pre { white-space: pre-wrap; word-break: break-word; font-family: -apple-system, "PingFang SC", monospace; font-size: 13px; line-height: 1.6; background: #f8f9fa; border-radius: 6px; padding: 10px; color: #444; max-height: 60vh; overflow-y: auto; }
-.alert-banner { background: linear-gradient(90deg,#c0392b,#e74c3c); color: #fff; text-align: center; padding: 9px 12px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 82px; box-shadow: 0 2px 6px rgba(231,76,60,0.4); }
-.hit-stop { color: #e74c3c !important; font-weight: bold; animation: blink 1s infinite; }
+.review-pre { white-space: pre-wrap; word-break: break-word; font-family: -apple-system, "PingFang SC", monospace; font-size: var(--font-size-base); line-height: 1.6; background: var(--color-bg-subtle); border-radius: 6px; padding: 10px; color: #444; max-height: 60vh; overflow-y: auto; }
+.alert-banner { background: linear-gradient(90deg, var(--color-danger), var(--color-up)); color: #fff; text-align: center; padding: 9px 12px; font-size: var(--font-size-base); font-weight: bold; cursor: pointer; margin-top: 82px; box-shadow: 0 2px 6px rgba(231,76,60,0.4); transition: all 0.15s ease; }
+.hit-stop { color: var(--color-up) !important; font-weight: bold; animation: blink 1s infinite; }
 @keyframes blink { 50% { opacity: 0.4; } }
 .title-row { display:flex; justify-content:space-between; align-items:center; }
-.card-date-tag { font-size: 11px; color: #999; font-weight: normal; }
-.card-date-stale { font-size: 11px; color: #e67e22; font-weight: normal; background:#fff7e6; padding:1px 6px; border-radius:8px; margin-left:4px; }
+.card-date-tag { font-size: var(--font-size-sm); color: var(--color-text-muted); font-weight: normal; }
+.card-date-stale { font-size: var(--font-size-sm); color: #e67e22; font-weight: normal; background:#fff7e6; padding:1px 6px; border-radius:8px; margin-left:4px; }
 /* 顶部横向滚动tab */
 .top-tabs {
-  position: fixed; top: 42px; left: 0; right: 0; background: #fff;
+  position: fixed; top: 42px; left: 0; right: 0; background: var(--color-card);
   box-shadow: 0 2px 4px rgba(0,0,0,0.06); z-index: 99; max-width: 480px; margin: 0 auto;
   display: flex; overflow-x: auto; white-space: nowrap;
   -webkit-overflow-scrolling: touch; scrollbar-width: none;
@@ -114,14 +166,165 @@ body {
 .top-tabs::-webkit-scrollbar { display: none; }
 .tab-item {
   flex-shrink: 0; text-align: center; padding: 10px 14px 8px; cursor: pointer; color: #666;
-  border-bottom: 3px solid transparent; transition: all 0.15s; font-size: 13px;
+  border-bottom: 3px solid transparent; transition: all 0.15s ease; font-size: var(--font-size-base);
 }
-.tab-item.active { color: #e74c3c; border-bottom-color: #e74c3c; font-weight: bold; }
-.tab-icon { font-size: 16px; margin-right: 3px; }
+.tab-item.active { color: var(--color-up); border-bottom-color: var(--color-up); font-weight: bold; }
+.tab-icon { font-size: var(--font-size-lg); margin-right: 3px; }
 .regime-card { background: linear-gradient(135deg, #fff 0%, #f8f9fb 100%); border: 1px solid #e8e8e8; }
+
+/* ---------- 3. 新增：专业数据表格 ---------- */
+.data-table { border-collapse: collapse; width: 100%; font-size: var(--font-size-base); }
+.data-table th { background: #2c3e50; color: #fff; padding: var(--space-sm); font-weight: 600; text-align: left; }
+.data-table td { padding: var(--space-sm); border-bottom: 1px solid var(--color-border); vertical-align: middle; }
+.data-table tr:nth-child(even) { background: #fafafa; }
+.data-table tr:hover { background: #f0f7ff; }
+.data-table .num { text-align: right; font-family: "SF Mono", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+.data-table .text-up { color: var(--color-up); font-weight: bold; }
+.data-table .text-down { color: var(--color-down); font-weight: bold; }
+
+/* ---------- 4. 新增：卡片变体 ---------- */
+.card-urgent { border-left: 3px solid var(--color-up); background: #fff5f5; animation: pulse-urgent 2s ease-in-out infinite; }
+.card-success { border-left: 3px solid var(--color-down); }
+.card-warning { border-left: 3px solid var(--color-warn); }
+.card-highlight { border: 2px solid var(--color-primary); background: linear-gradient(135deg, #fff 0%, #fff5f5 100%); box-shadow: var(--shadow-md); }
+
+/* ---------- 5. 新增：关键指标展示 ---------- */
+.metric-hero { font-size: var(--font-size-3xl); font-weight: bold; text-align: center; line-height: 1.2; }
+.metric-label { font-size: var(--font-size-sm); color: var(--color-text-muted); text-align: center; margin-top: var(--space-xs); }
+.metric-row { display: flex; justify-content: space-around; align-items: center; }
+.star-rating { display: inline-flex; gap: 2px; letter-spacing: 2px; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: var(--radius-pill); font-size: var(--font-size-sm); }
+.badge-up { background: #ffeaea; color: var(--color-up); }
+.badge-down { background: #eaffea; color: var(--color-down); }
+.badge-warn { background: #fff7e6; color: var(--color-warn); }
+.badge-info { background: #e8f4fd; color: var(--color-info); }
+
+/* ---------- 6. 新增：底部固定导航（移动端预留，默认隐藏） ---------- */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; background: var(--color-card);
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.1); max-width: 480px; margin: 0 auto; z-index: 100;
+  display: none; justify-content: space-around;
+}
+.bottom-nav.visible { display: flex; }
+.bottom-nav-item { flex: 1; text-align: center; padding: 8px 4px; font-size: var(--font-size-xs); color: var(--color-text-muted); cursor: pointer; transition: all 0.15s ease; }
+.bottom-nav-item.active { color: var(--color-primary); font-weight: bold; }
+.bottom-nav-icon { font-size: 20px; display: block; margin-bottom: 2px; }
+
+/* ---------- 7. 动画与交互 ---------- */
+@keyframes pulse-urgent {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(231,76,60,0.35); }
+  50% { box-shadow: 0 0 0 7px rgba(231,76,60,0); }
+}
+@keyframes slide-up {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.animate-pulse { animation: pulse-urgent 2s ease-in-out infinite; }
+.animate-slide-up { animation: slide-up 0.3s ease-out; }
+
+/* ---------- 8. 响应式优化 ---------- */
+@media (max-width: 360px) {
+  body { font-size: var(--font-size-md); }
+  .card { padding: 10px; }
+  .card-title { font-size: 18px; }
+  .metric-hero { font-size: 24px; }
+  .container { padding: 8px; }
+}
+.table-wrap { -webkit-overflow-scrolling: touch; }
+
+/* ============================================================
+   专家组B追加：5决策tab语义化工具类（不修改专家A已定义类）
+   ============================================================ */
+/* 全局涨跌色（.data-table 内已有更具体同名规则，此处供非表格场景使用） */
+.text-up { color: var(--color-up); font-weight: bold; }
+.text-down { color: var(--color-down); font-weight: bold; }
+.text-muted-sm { color: var(--color-text-muted); font-size: var(--font-size-sm); }
+.text-faint-xs { color: var(--color-text-faint); font-size: var(--font-size-xs); }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.info-block { padding: 8px 10px; background: var(--color-bg-subtle); border-radius: 6px; }
+/* 三价语义色：止损红 / 止盈·目标绿 / 买入蓝 */
+.price-stop { color: var(--color-up); font-weight: bold; }
+.price-target { color: var(--color-down); font-weight: bold; }
+.price-buy { color: var(--color-info); font-weight: bold; }
+/* 持仓卡片：盈亏英雄数字 */
+.pos-profit-hero { text-align: center; padding: 10px; margin: 8px 0; background: var(--color-bg-subtle); border-radius: 6px; }
+.pos-profit-hero .profit-amount { font-size: var(--font-size-3xl); }
+/* 仓位占比徽标 */
+.weight-badge { display: inline-block; padding: 1px 8px; border-radius: var(--radius-pill); font-size: var(--font-size-sm); font-weight: bold; }
+.weight-ok { background: #e8f4fd; color: var(--color-info); }
+.weight-warn { background: #ffeaea; color: var(--color-up); }
+/* 主力资金流向块（强调色用 --mf-accent 覆盖） */
+.mf-block { border-left: 3px solid var(--mf-accent, var(--color-info)); background: var(--color-bg-subtle); border-radius: 0 6px 6px 0; padding: 8px 10px; margin: 4px 0; }
+.mf-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.mf-sub { display: flex; justify-content: space-between; font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: 2px; }
+.mf-interpret { font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.5; border-top: 1px dashed var(--color-border); padding-top: 4px; }
+.mf-advice { font-size: var(--font-size-sm); font-weight: bold; margin-top: 2px; color: var(--mf-accent, var(--color-info)); }
+.mf-note { font-size: var(--font-size-xs); color: var(--color-text-faint); margin-top: 2px; }
+/* 分时图自适应（480px 宽度内不溢出） */
+.mini-chart { width: 100%; }
+.mini-chart img, .mini-chart svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+/* 信号星级评分 */
+.score-stars { letter-spacing: 2px; }
+/* 触控友好：可点击行最小高度 */
+.clickable-row { min-height: 44px; cursor: pointer; }
+/* 告警块（风控/公告通用） */
+.alert-block { padding: 8px 10px; border-radius: 6px; font-weight: bold; }
+.alert-block-danger { background: #fff5f5; color: var(--color-up); border-left: 3px solid var(--color-up); }
+.alert-block-ok { background: #eaffea; color: var(--color-down); border-left: 3px solid var(--color-down); }
+.alert-block-warn { background: #fff7e6; color: var(--color-warn); border-left: 3px solid var(--color-warn); }
+
+/* ============================================================
+   专家组C追加：移动端体验 + 数据可视化工具类（不修改专家A/B1已定义类）
+   ============================================================ */
+/* 全局触控优化 */
+body { -webkit-tap-highlight-color: transparent; }
+body.has-bottom-nav { padding-bottom: 60px; }
+
+/* 汇总统计条（替代重复的 display:flex;justify-content:space-around;padding:8px;background:#f8f9fa） */
+.summary-bar { display: flex; justify-content: space-around; align-items: center; padding: 10px 8px; background: var(--color-bg-subtle); border-radius: 6px; margin: 6px 0; }
+.stat-item { text-align: center; flex: 1; }
+.stat-num { font-size: 18px; font-weight: bold; line-height: 1.2; }
+.stat-num-lg { font-size: 22px; font-weight: bold; line-height: 1.2; }
+.stat-label { font-size: var(--font-size-sm); color: var(--color-text-muted); margin-top: 2px; }
+
+/* 大号强调数字（指数点数/成交额/主力净流入等核心指标） */
+.num-hero { font-size: var(--font-size-2xl); font-weight: bold; line-height: 1.2; }
+.num-hero-sm { font-size: 18px; font-weight: bold; line-height: 1.2; }
+
+/* 排名徽章（板块轮动/龙虎榜排名） */
+.rank-badge { display: inline-block; min-width: 20px; text-align: center; padding: 1px 6px; border-radius: var(--radius-pill); background: #eef0f2; color: #666; font-size: var(--font-size-sm); font-weight: bold; }
+.rank-badge-top { background: var(--color-up); color: #fff; }
+
+/* 分时图标题/来源行 */
+.chart-caption { display: flex; justify-content: space-between; align-items: baseline; margin: 4px 0 0; padding-bottom: 2px; border-bottom: 1px solid var(--color-border); }
+.chart-title { font-size: var(--font-size-base); font-weight: bold; color: #333; }
+.mini-chart-empty { font-size: var(--font-size-sm); color: var(--color-text-muted); text-align: center; padding: 10px; border: 1px dashed #ddd; border-radius: 6px; margin: 6px 0; }
+
+/* 交易行：买入红边框 / 卖出绿边框 */
+.trade-row-buy { border-left: 3px solid var(--color-up); padding-left: 8px; border-radius: 0 6px 6px 0; }
+.trade-row-sell { border-left: 3px solid var(--color-down); padding-left: 8px; border-radius: 0 6px 6px 0; }
+
+/* 可点击行触控最小高度 */
+.clickable-row, .sector-row, .trade-row, .row-info[onclick] { min-height: 44px; }
+
+/* 按钮触控友好 */
+.sort-btn, .review-date-btn, .paper-nav, .bottom-nav-item { min-height: 36px; display: inline-flex; align-items: center; justify-content: center; }
+.bottom-nav-item { display: flex; flex-direction: column; justify-content: center; }
+
+/* 顶部tab触控优化 */
+.tab-item { min-width: 60px; padding: 10px 12px; display: inline-flex; align-items: center; justify-content: center; }
+
+/* 告警横幅脉冲动画 */
+.alert-banner { font-size: var(--font-size-base); animation: pulse-urgent 2s ease-in-out infinite; }
+
+/* 台账表格专业化：复用data-table时保留横向滚动 */
+.table-wrap table { min-width: 640px; }
+
+/* 复盘日期按钮active统一为品牌色（覆盖专家A的紫色） */
+.review-date-btn.active { background: var(--color-primary); border-color: var(--color-primary); }
 </style>
 </head>
-<body>
+<body class="has-bottom-nav">
 <div class="container">
   <div class="topbar">
     <div class="topbar-title">📊 量化仪表盘</div>
@@ -140,48 +343,49 @@ body {
     <div class="tab-item" data-tab="longhubang" onclick="showTab('longhubang',this)"><span class="tab-icon">🐉</span>龙虎榜</div>
   </div>
   <div class="alert-banner" onclick="showTab('risk', document.querySelector('.tab-item[data-tab=risk]'))">🚨 2只持仓击穿止损 | 纪律评分:9.0分D（不及格） | 违规8次 ▶点击查风控</div>
-  <div id="sec-overview" class="section active"><div class="card">
+  <div id="sec-overview" class="section active"><div class="card card-highlight">
 <div class="card-title">🌍 大盘环境速览</div>
-<div class="row-info"><span class="row-label">当前环境</span><span style="font-weight:bold;color:#3366cc">bear · 次日:中性</span></div>
+<div class="metric-hero">bear</div>
+<div class="metric-label">次日展望：中性</div>
 
     <div style="margin:10px 0;">
       <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;background:#eee;">
-        <div style="width:47.3%;background:#e74c3c;" title="上涨2470家"></div>
-        <div style="width:52.7%;background:#27ae60;" title="下跌2747家"></div>
+        <div style="width:47.3%;background:var(--color-up);" title="上涨2470家"></div>
+        <div style="width:52.7%;background:var(--color-down);" title="下跌2747家"></div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:13px;">
-        <span style="color:#e74c3c;font-weight:bold;">↑2470涨</span>
-        <span style="color:#27ae60;font-weight:bold;">涨跌比 0.90<span class="tag" style="background:#eaffea;color:#27ae60;font-size:10px;margin-left:6px">收盘最终</span></span>
-        <span style="color:#27ae60;font-weight:bold;">2747跌↓</span>
+        <span class="text-up">↑2470涨</span>
+        <span style="color:var(--color-down);font-weight:bold;">涨跌比 0.90<span class="tag" style="background:#eaffea;color:#27ae60;font-size:10px;margin-left:6px">收盘最终</span></span>
+        <span class="text-down">2747跌↓</span>
       </div>
-      <div style="margin-top:6px;font-size:12px;color:#666;"><span style="color:#e74c3c">涨停 72家</span> / <span style="color:#27ae60">跌停 16家</span></div>
+      <div style="margin-top:6px;font-size:12px;color:#666;"><span class="text-up">涨停 72家</span> / <span class="text-down">跌停 16家</span></div>
     </div>
-<div class="row-note" onclick="showTab('market', document.querySelector('.tab-item[data-tab=market]'))" style="color:#3366cc;cursor:pointer">▶ 查看大盘详情（指数/量能/资金/涨跌停）</div>
+<div class="row-note" onclick="showTab('market', document.querySelector('.tab-item[data-tab=market]'))" style="color:var(--color-info);cursor:pointer;display:flex;align-items:center;min-height:44px">▶ 查看大盘详情（指数/量能/资金/涨跌停）</div>
 </div>
 
     <div class="card summary-card">
       <div class="card-title" style="color:#fff">💼 持仓速览</div>
       <div class="row-info"><span class="row-label">持仓数量</span><span class="row-val">3只</span></div>
       <div class="row-info"><span class="row-label">持仓总市值</span><span class="row-val">8.10万元</span></div>
-      <div class="row-info"><span class="row-label">浮动盈亏</span><span class="row-val" style="color:#27ae60">-9321.60元</span></div>
-      <div class="row-info"><span class="row-label">主力净流入合计</span><span style="color:#27ae60;font-weight:bold">-1158万</span></div>
-      <div class="row-note" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))" style="color:rgba(255,255,255,0.85);cursor:pointer">▶ 查看持仓全景卡片</div>
+      <div class="row-info"><span class="row-label">浮动盈亏</span><span class="row-val" style="color:#27ae60;font-size:22px">-9321.60元</span></div>
+      <div class="row-info"><span class="row-label">主力净流入合计</span><span style="color:var(--color-down);font-weight:bold">-1158万</span></div>
+      <div class="row-note" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))" style="color:rgba(255,255,255,0.85);cursor:pointer;display:flex;align-items:center;min-height:44px">▶ 查看持仓全景卡片</div>
     </div>
 
     <div class="card">
       <div class="card-title">🎯 信号速览</div>
-      <div class="row-info"><span class="row-label">今日信号</span><span class="row-val">0只 · 通过0只</span></div>
-      <div class="row-note" onclick="showTab('signals', document.querySelector('.tab-item[data-tab=signals]'))" style="color:#3366cc;cursor:pointer">▶ 查看信号全景卡片</div>
+      <div class="row-info"><span class="row-label">今日信号</span>
+        <span style="display:flex;gap:6px;align-items:center"><span class="badge badge-info">0只</span><span class="badge badge-down">通过 0</span><span class="badge badge-up">否决 0</span></span>
+      </div>
+      <div class="row-note" onclick="showTab('signals', document.querySelector('.tab-item[data-tab=signals]'))" style="color:var(--color-info);cursor:pointer;display:flex;align-items:center;min-height:44px">▶ 查看信号全景卡片</div>
     </div>
 
-        <div class="card">
+        <div class="card card-urgent">
           <div class="card-title">📰 公告排雷速览</div>
-          <div style="padding:8px 10px;background:#ffeaea;border-radius:6px;color:#e74c3c;font-weight:bold;font-size:14px">
-            🚨 晚间利空0条 · 持仓公告已逐只核对
-          </div>
-          <div class="row-note" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))" style="color:#3366cc;cursor:pointer">▶ 个股公告/龙虎榜详见持仓卡片</div>
+          <div class="alert-block alert-block-danger">🚨 晚间利空0条 · 持仓公告已逐只核对</div>
+          <div class="row-note" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))" style="color:var(--color-info);cursor:pointer;display:flex;align-items:center;min-height:44px">▶ 个股公告/龙虎榜详见持仓卡片</div>
         </div></div>
-  <div id="sec-market" class="section"><div class="card regime-card">
+  <div id="sec-market" class="section"><div class="card regime-card card-highlight">
 <div class="card-title">🎯 5环境择时（多指数+宽度+板块联动）</div>
 
         <div style="background:#7f8c8d;color:#fff;border-radius:8px;padding:14px;text-align:center;margin:8px 0;">
@@ -210,45 +414,46 @@ body {
         <div class="row-info">
           <span class="row-label">沪深300</span>
           <span>
-            <span style="font-weight:bold;font-size:18px">4357.62</span>
-            <span style="color:#e74c3c;font-weight:bold;margin-left:8px">+0.29%</span>
+            <span class="num-hero-sm">4357.62</span>
+            <span class="text-up" style="margin-left:8px">+0.29%</span>
           </span>
         </div>
 
         <div class="row-info">
           <span class="row-label">中证500</span>
           <span>
-            <span style="font-weight:bold;font-size:18px">7435.16</span>
-            <span style="color:#27ae60;font-weight:bold;margin-left:8px">-0.06%</span>
+            <span class="num-hero-sm">7435.16</span>
+            <span class="text-down" style="margin-left:8px">-0.06%</span>
           </span>
         </div>
 
         <div class="row-info">
           <span class="row-label">创业板指</span>
           <span>
-            <span style="font-weight:bold;font-size:18px">3135.28</span>
-            <span style="color:#27ae60;font-weight:bold;margin-left:8px">-0.23%</span>
+            <span class="num-hero-sm">3135.28</span>
+            <span class="text-down" style="margin-left:8px">-0.23%</span>
           </span>
         </div>
 </div>
-<div class="card"><div class="row-note" style="margin:4px 0 0;font-size:12px;">上证指数分时（09/30，源:新浪HTTP）</div><svg viewBox="0 0 440 120" style="width:100%;height:auto;display:block;margin:4px 0;">
+<div class="card"><div class="chart-caption"><span class="chart-title">上证指数分时</span><span class="text-muted-sm">09/30 · 源:新浪HTTP</span></div><div class="mini-chart"><svg viewBox="0 0 440 120" style="width:100%;height:auto;display:block;margin:4px 0;">
   <line x1="30" y1="68.5" x2="432" y2="68.5" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,2"/>
-  <polyline points="30.0,45.3 38.6,40.8 47.1,31.6 55.7,34.0 64.2,18.9 72.8,24.1 81.3,21.6 89.9,24.5 98.4,36.9 107.0,37.2 115.5,37.6 124.1,42.8 132.6,57.9 141.2,56.9 149.7,38.3 158.3,26.8 166.9,27.8 175.4,30.8 184.0,36.7 192.5,36.0 201.1,33.7 209.6,36.4 218.2,34.4 226.7,37.7 235.3,42.5 243.8,38.5 252.4,45.4 260.9,42.5 269.5,41.6 278.0,29.5 286.6,16.4 295.1,13.3 303.7,16.5 312.3,18.5 320.8,12.5 329.4,23.5 337.9,21.4 346.5,16.4 355.0,22.7 363.6,25.7 372.1,25.3 380.7,20.3 389.2,19.6 397.8,15.1 406.3,24.6 414.9,27.8 423.4,30.9 432.0,33.6" fill="none" stroke="#e74c3c" stroke-width="1.4"/>
-  <rect x="28.5" y="73.0" width="3" height="31.0" fill="#27ae60" opacity="0.55"/><rect x="37.1" y="87.8" width="3" height="16.2" fill="#e74c3c" opacity="0.55"/><rect x="45.6" y="92.0" width="3" height="12.0" fill="#e74c3c" opacity="0.55"/><rect x="54.2" y="93.1" width="3" height="10.9" fill="#27ae60" opacity="0.55"/><rect x="62.7" y="95.3" width="3" height="8.7" fill="#e74c3c" opacity="0.55"/><rect x="71.3" y="95.0" width="3" height="9.0" fill="#27ae60" opacity="0.55"/><rect x="79.8" y="96.2" width="3" height="7.8" fill="#e74c3c" opacity="0.55"/><rect x="88.4" y="97.1" width="3" height="6.9" fill="#27ae60" opacity="0.55"/><rect x="96.9" y="96.3" width="3" height="7.7" fill="#27ae60" opacity="0.55"/><rect x="105.5" y="97.7" width="3" height="6.3" fill="#27ae60" opacity="0.55"/><rect x="114.0" y="99.0" width="3" height="5.0" fill="#27ae60" opacity="0.55"/><rect x="122.6" y="98.7" width="3" height="5.3" fill="#27ae60" opacity="0.55"/><rect x="131.1" y="98.3" width="3" height="5.7" fill="#27ae60" opacity="0.55"/><rect x="139.7" y="99.5" width="3" height="4.5" fill="#e74c3c" opacity="0.55"/><rect x="148.2" y="99.5" width="3" height="4.5" fill="#e74c3c" opacity="0.55"/><rect x="156.8" y="100.4" width="3" height="3.6" fill="#e74c3c" opacity="0.55"/><rect x="165.4" y="100.6" width="3" height="3.4" fill="#27ae60" opacity="0.55"/><rect x="173.9" y="100.7" width="3" height="3.3" fill="#27ae60" opacity="0.55"/><rect x="182.5" y="100.8" width="3" height="3.2" fill="#27ae60" opacity="0.55"/><rect x="191.0" y="100.5" width="3" height="3.5" fill="#e74c3c" opacity="0.55"/><rect x="199.6" y="100.7" width="3" height="3.3" fill="#e74c3c" opacity="0.55"/><rect x="208.1" y="101.2" width="3" height="2.8" fill="#27ae60" opacity="0.55"/><rect x="216.7" y="100.3" width="3" height="3.7" fill="#e74c3c" opacity="0.55"/><rect x="225.2" y="100.5" width="3" height="3.5" fill="#27ae60" opacity="0.55"/><rect x="233.8" y="98.1" width="3" height="5.9" fill="#27ae60" opacity="0.55"/><rect x="242.3" y="100.4" width="3" height="3.6" fill="#e74c3c" opacity="0.55"/><rect x="250.9" y="100.3" width="3" height="3.7" fill="#27ae60" opacity="0.55"/><rect x="259.4" y="100.2" width="3" height="3.8" fill="#e74c3c" opacity="0.55"/><rect x="268.0" y="100.6" width="3" height="3.4" fill="#e74c3c" opacity="0.55"/><rect x="276.5" y="100.2" width="3" height="3.8" fill="#e74c3c" opacity="0.55"/><rect x="285.1" y="99.2" width="3" height="4.8" fill="#e74c3c" opacity="0.55"/><rect x="293.6" y="99.5" width="3" height="4.5" fill="#e74c3c" opacity="0.55"/><rect x="302.2" y="100.6" width="3" height="3.4" fill="#27ae60" opacity="0.55"/><rect x="310.8" y="101.1" width="3" height="2.9" fill="#27ae60" opacity="0.55"/><rect x="319.3" y="101.0" width="3" height="3.0" fill="#e74c3c" opacity="0.55"/><rect x="327.9" y="100.5" width="3" height="3.5" fill="#27ae60" opacity="0.55"/><rect x="336.4" y="100.7" width="3" height="3.3" fill="#e74c3c" opacity="0.55"/><rect x="345.0" y="101.0" width="3" height="3.0" fill="#e74c3c" opacity="0.55"/><rect x="353.5" y="101.1" width="3" height="2.9" fill="#27ae60" opacity="0.55"/><rect x="362.1" y="101.0" width="3" height="3.0" fill="#27ae60" opacity="0.55"/><rect x="370.6" y="100.8" width="3" height="3.2" fill="#e74c3c" opacity="0.55"/><rect x="379.2" y="100.6" width="3" height="3.4" fill="#e74c3c" opacity="0.55"/><rect x="387.7" y="99.7" width="3" height="4.3" fill="#e74c3c" opacity="0.55"/><rect x="396.3" y="99.9" width="3" height="4.1" fill="#e74c3c" opacity="0.55"/><rect x="404.8" y="98.9" width="3" height="5.1" fill="#27ae60" opacity="0.55"/><rect x="413.4" y="97.5" width="3" height="6.5" fill="#27ae60" opacity="0.55"/><rect x="421.9" y="95.5" width="3" height="8.5" fill="#27ae60" opacity="0.55"/><rect x="430.5" y="94.9" width="3" height="9.1" fill="#27ae60" opacity="0.55"/>
-  <circle cx="432.0" cy="33.6" r="2.5" fill="#e74c3c"/>
-  <text x="432" y="30.6" font-size="9" fill="#e74c3c" text-anchor="end" font-weight="bold">3842.20 +0.31%</text>
-  <text x="30" y="117" font-size="9" fill="#999">09:35</text><text x="231.0" y="117" font-size="9" fill="#999" text-anchor="middle">13:05</text><text x="432" y="117" font-size="9" fill="#999" text-anchor="end">15:00</text>
-</svg></div>
+  
+  <polyline points="30.0,45.3 38.6,40.8 47.1,31.6 55.7,34.0 64.2,18.9 72.8,24.1 81.3,21.6 89.9,24.5 98.4,36.9 107.0,37.2 115.5,37.6 124.1,42.8 132.6,57.9 141.2,56.9 149.7,38.3 158.3,26.8 166.9,27.8 175.4,30.8 184.0,36.7 192.5,36.0 201.1,33.7 209.6,36.4 218.2,34.4 226.7,37.7 235.3,42.5 243.8,38.5 252.4,45.4 260.9,42.5 269.5,41.6 278.0,29.5 286.6,16.4 295.1,13.3 303.7,16.5 312.3,18.5 320.8,12.5 329.4,23.5 337.9,21.4 346.5,16.4 355.0,22.7 363.6,25.7 372.1,25.3 380.7,20.3 389.2,19.6 397.8,15.1 406.3,24.6 414.9,27.8 423.4,30.9 432.0,33.6" fill="none" style="stroke:var(--color-up)" stroke-width="1.4"/>
+  <rect x="28.5" y="73.0" width="3" height="31.0" style="fill:var(--color-down)" opacity="0.5"/><rect x="37.1" y="87.8" width="3" height="16.2" style="fill:var(--color-up)" opacity="0.5"/><rect x="45.6" y="92.0" width="3" height="12.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="54.2" y="93.1" width="3" height="10.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="62.7" y="95.3" width="3" height="8.7" style="fill:var(--color-up)" opacity="0.5"/><rect x="71.3" y="95.0" width="3" height="9.0" style="fill:var(--color-down)" opacity="0.5"/><rect x="79.8" y="96.2" width="3" height="7.8" style="fill:var(--color-up)" opacity="0.5"/><rect x="88.4" y="97.1" width="3" height="6.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="96.9" y="96.3" width="3" height="7.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="105.5" y="97.7" width="3" height="6.3" style="fill:var(--color-down)" opacity="0.5"/><rect x="114.0" y="99.0" width="3" height="5.0" style="fill:var(--color-down)" opacity="0.5"/><rect x="122.6" y="98.7" width="3" height="5.3" style="fill:var(--color-down)" opacity="0.5"/><rect x="131.1" y="98.3" width="3" height="5.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="139.7" y="99.5" width="3" height="4.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="148.2" y="99.5" width="3" height="4.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="156.8" y="100.4" width="3" height="3.6" style="fill:var(--color-up)" opacity="0.5"/><rect x="165.4" y="100.6" width="3" height="3.4" style="fill:var(--color-down)" opacity="0.5"/><rect x="173.9" y="100.7" width="3" height="3.3" style="fill:var(--color-down)" opacity="0.5"/><rect x="182.5" y="100.8" width="3" height="3.2" style="fill:var(--color-down)" opacity="0.5"/><rect x="191.0" y="100.5" width="3" height="3.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="199.6" y="100.7" width="3" height="3.3" style="fill:var(--color-up)" opacity="0.5"/><rect x="208.1" y="101.2" width="3" height="2.8" style="fill:var(--color-down)" opacity="0.5"/><rect x="216.7" y="100.3" width="3" height="3.7" style="fill:var(--color-up)" opacity="0.5"/><rect x="225.2" y="100.5" width="3" height="3.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="233.8" y="98.1" width="3" height="5.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="242.3" y="100.4" width="3" height="3.6" style="fill:var(--color-up)" opacity="0.5"/><rect x="250.9" y="100.3" width="3" height="3.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="259.4" y="100.2" width="3" height="3.8" style="fill:var(--color-up)" opacity="0.5"/><rect x="268.0" y="100.6" width="3" height="3.4" style="fill:var(--color-up)" opacity="0.5"/><rect x="276.5" y="100.2" width="3" height="3.8" style="fill:var(--color-up)" opacity="0.5"/><rect x="285.1" y="99.2" width="3" height="4.8" style="fill:var(--color-up)" opacity="0.5"/><rect x="293.6" y="99.5" width="3" height="4.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="302.2" y="100.6" width="3" height="3.4" style="fill:var(--color-down)" opacity="0.5"/><rect x="310.8" y="101.1" width="3" height="2.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="319.3" y="101.0" width="3" height="3.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="327.9" y="100.5" width="3" height="3.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="336.4" y="100.7" width="3" height="3.3" style="fill:var(--color-up)" opacity="0.5"/><rect x="345.0" y="101.0" width="3" height="3.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="353.5" y="101.1" width="3" height="2.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="362.1" y="101.0" width="3" height="3.0" style="fill:var(--color-down)" opacity="0.5"/><rect x="370.6" y="100.8" width="3" height="3.2" style="fill:var(--color-up)" opacity="0.5"/><rect x="379.2" y="100.6" width="3" height="3.4" style="fill:var(--color-up)" opacity="0.5"/><rect x="387.7" y="99.7" width="3" height="4.3" style="fill:var(--color-up)" opacity="0.5"/><rect x="396.3" y="99.9" width="3" height="4.1" style="fill:var(--color-up)" opacity="0.5"/><rect x="404.8" y="98.9" width="3" height="5.1" style="fill:var(--color-down)" opacity="0.5"/><rect x="413.4" y="97.5" width="3" height="6.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="421.9" y="95.5" width="3" height="8.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="430.5" y="94.9" width="3" height="9.1" style="fill:var(--color-down)" opacity="0.5"/>
+  <circle cx="432.0" cy="33.6" r="2.5" style="stroke:var(--color-up)"/>
+  <text x="432" y="30.6" font-size="10" style="stroke:var(--color-up);fill-opacity:1" text-anchor="end" font-weight="bold">3842.20 +0.31%</text>
+  <text x="30" y="117" font-size="10" fill="#999">09:35</text><text x="231.0" y="117" font-size="10" fill="#999" text-anchor="middle">13:05</text><text x="432" y="117" font-size="10" fill="#999" text-anchor="end">15:00</text>
+</svg></div></div>
 
     <div class="card">
       <div class="title-row"><div class="card-title">量能对比</div><span class="card-date-tag">📅09/24</span></div>
       <div class="row-info">
         <span class="row-label">量能变化</span>
-        <span style="color:#27ae60;font-weight:bold">缩量 -6.39%</span>
+        <span class="badge badge-down">缩量 -6.39%</span>
       </div>
       <div class="row-info">
         <span class="row-label">今日成交额</span>
-        <span>16691亿元</span>
+        <span class="num-hero">16691<span style="font-size:13px;font-weight:normal;color:#999">亿元</span></span>
       </div>
       <div class="row-info">
         <span class="row-label">昨日成交额</span>
@@ -272,10 +477,14 @@ body {
           <div class="temp-value" style="color:#e67e22">67</div>
           <div class="row-label" style="color:#e67e22">正常</div>
         </div>
-<div class="row-info"><span class="row-label">连板高度</span><span class="row-val">7板</span></div>
+
+        <div class="summary-bar">
+          <div class="stat-item"><div class="stat-num-lg text-up">48</div><div class="stat-label">涨停</div></div>
+          <div class="stat-item"><div class="stat-num-lg text-down">8</div><div class="stat-label">跌停</div></div>
+          <div class="stat-item"><div class="stat-num-lg">7<span style="font-size:12px;color:#999">板</span></div><div class="stat-label">连板高度</div></div>
+          <div class="stat-item"><div class="stat-num" style="color:var(--color-warn)">35.4%</div><div class="stat-label">炸板17只</div></div>
+        </div>
 <div class="row-info"><span class="row-label">连板梯队</span><span style="font-size:13px">7板:1只 4板:1只 3板:3只 2板:6只 1板:37只</span></div>
-<div class="row-info"><span class="row-label">炸板率</span><span style="color:#e74c3c;font-weight:bold">35.4%（17只）</span></div>
-<div class="row-info"><span class="row-label">涨停/跌停</span><span><span style="color:#e74c3c">48</span> / <span style="color:#27ae60">8</span></span></div>
 
         <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #ddd">
           <div class="row-label" style="margin-bottom:6px;">🏷️ 涨停原因分布（共52只涨停）</div>
@@ -351,15 +560,15 @@ body {
 
     <div style="margin:10px 0;">
       <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;background:#eee;">
-        <div style="width:47.3%;background:#e74c3c;" title="上涨2470家"></div>
-        <div style="width:52.7%;background:#27ae60;" title="下跌2747家"></div>
+        <div style="width:47.3%;background:var(--color-up);" title="上涨2470家"></div>
+        <div style="width:52.7%;background:var(--color-down);" title="下跌2747家"></div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:13px;">
-        <span style="color:#e74c3c;font-weight:bold;">↑2470涨</span>
-        <span style="color:#27ae60;font-weight:bold;">涨跌比 0.90<span class="tag" style="background:#eaffea;color:#27ae60;font-size:10px;margin-left:6px">收盘最终</span></span>
-        <span style="color:#27ae60;font-weight:bold;">2747跌↓</span>
+        <span class="text-up">↑2470涨</span>
+        <span style="color:var(--color-down);font-weight:bold;">涨跌比 0.90<span class="tag" style="background:#eaffea;color:#27ae60;font-size:10px;margin-left:6px">收盘最终</span></span>
+        <span class="text-down">2747跌↓</span>
       </div>
-      <div style="margin-top:6px;font-size:12px;color:#666;"><span style="color:#e74c3c">涨停 72家</span> / <span style="color:#27ae60">跌停 16家</span></div>
+      <div style="margin-top:6px;font-size:12px;color:#666;"><span class="text-up">涨停 72家</span> / <span class="text-down">跌停 16家</span></div>
     </div>
 <div class="row-note">⚪ 北向资金每日净流入官方已停更（2024-08起），改参考主力资金/成交额环比</div>
 </div>
@@ -367,12 +576,12 @@ body {
 <div class="title-row"><div class="card-title">⚡ 实时涨跌停情绪</div><span class="card-date-tag">📅09/30</span></div>
 <div style="margin-bottom:6px;"><span class="tag" style="background:#fff3e0;color:#e67e22">盘后数据</span> <span style="font-size:11px;color:#999">东财实时 · 23:46:09</span></div>
 
-        <div style="display:flex;justify-content:space-around;padding:8px;background:#f8f9fa;border-radius:6px;margin:4px 0;">
-          <div style="text-align:center"><div style="font-size:20px;font-weight:bold;color:#e74c3c">52</div><div style="font-size:11px;color:#999">涨停</div></div>
-          <div style="text-align:center"><div style="font-size:20px;font-weight:bold;color:#27ae60">16</div><div style="font-size:11px;color:#999">跌停</div></div>
-          <div style="text-align:center"><div style="font-size:20px;font-weight:bold;color:#f39c12">12</div><div style="font-size:11px;color:#999">炸板(18.8%)</div></div>
+        <div class="summary-bar">
+          <div class="stat-item"><div class="stat-num-lg text-up">52</div><div class="stat-label">涨停</div></div>
+          <div class="stat-item"><div class="stat-num-lg text-down">16</div><div class="stat-label">跌停</div></div>
+          <div class="stat-item"><div class="stat-num-lg" style="color:var(--color-warn)">12</div><div class="stat-label">炸板(18.8%)</div></div>
         </div>
-<div class="row-info"><span class="row-label">涨跌家数</span><span><span style="color:#e74c3c">涨2470</span> / <span style="color:#27ae60">跌2747</span></span></div>
+<div class="row-info"><span class="row-label">涨跌家数</span><span><span class="text-up">涨2470</span> / <span class="text-down">跌2747</span></span></div>
 <div class="row-info"><span class="row-label">情绪标签</span><span style="color:#999;font-weight:bold">情绪稳定</span></div>
 <div class="row-info"><span class="row-label">涨停10分钟变化</span><span style="color:#333;font-weight:bold">+0家</span></div>
 <div class="section-sub" style="margin-top:6px;">涨停股（前5）</div>
@@ -410,7 +619,7 @@ body {
 <div class="card">
 <div class="title-row"><div class="card-title">💰 大盘资金流向</div><span class="card-date-tag">📅09/30</span></div>
 <div class="row-note">全市场主力资金汇总待采集</div>
-<div class="row-info" style="border-top:1px dashed #ddd;margin-top:4px;"><span class="row-label">持仓主力净流入合计</span><span style="color:#27ae60;font-weight:bold">-1158万</span></div>
+<div class="row-info" style="border-top:1px dashed #ddd;margin-top:4px;"><span class="row-label">持仓主力净流入合计</span><span class="num-hero-sm text-down">-1158万</span></div>
 </div>
 <div class="card">
 <div class="title-row"><div class="card-title">🌙 隔夜要闻解读</div><span class="card-date-tag">📅09/30</span></div>
@@ -481,25 +690,25 @@ body {
 <div class="card">
 <div class="title-row"><div class="card-title">💰 融资融券</div><span class="card-date-tag">📅09/30</span></div>
 
-    <div class="row-info"><span class="row-label">两市融资余额</span><span style="font-weight:bold">12965.21亿</span></div>
+    <div class="row-info"><span class="row-label">两市融资余额</span><span class="num-hero-sm">12965.21<span style="font-size:13px;font-weight:normal;color:#999">亿</span></span></div>
     <div class="row-info"><span class="row-label">两市融券余额</span><span>188.93亿</span></div>
-    <div class="row-info"><span class="row-label">当日融资买入</span><span style="color:#e74c3c">620.07亿</span></div>
-<div class="row-info"><span class="row-label">融资余额较前日</span><span style="color:#27ae60;font-weight:bold">-229.62亿 (-1.74%)</span></div>
-<div style="margin-top:8px;padding:8px;background:#ffeaea;border-radius:6px;color:#e74c3c;font-weight:bold">🚨 融资余额单日大幅下降-229.62亿，杠杆资金离场</div>
-<div class="row-info"><span class="row-label">杠杆情绪</span><span style="color:#27ae60;font-weight:bold">偏空（单日融资余额回落）</span></div>
-<div style="font-size:12px;color:#999;margin-top:4px;">近5日融资余额(亿): 13408 → 13318 → 13188 → 13195 → 12965</div>
+    <div class="row-info"><span class="row-label">当日融资买入</span><span class="text-up">620.07亿</span></div>
+<div class="row-info"><span class="row-label">融资余额较前日</span><span class="text-down">-229.62亿 (-1.74%)</span></div>
+<div class="alert-block alert-block-danger" style="margin-top:8px">🚨 融资余额单日大幅下降-229.62亿，杠杆资金离场</div>
+<div class="row-info"><span class="row-label">杠杆情绪</span><span class="text-down">偏空（单日融资余额回落）</span></div>
+<div class="text-muted-sm" style="margin-top:4px;">近5日融资余额(亿): 13408 → 13318 → 13188 → 13195 → 12965</div>
 </div>
 <div class="card">
 <div class="title-row"><div class="card-title">📦 大宗交易</div><span class="card-date-tag">📅09/30</span></div>
-<div class="row-info"><span class="row-label">今日大宗交易</span><span>0笔 · 0万</span></div>
+<div class="row-info"><span class="row-label">今日大宗交易</span><span class="num-hero-sm">0笔 · 0万</span></div>
 </div></div>
   <div id="sec-sectors" class="section"><div class="card">
 <div class="title-row"><div class="card-title">🌅 板块集合竞价环境（9:25）</div><span class="card-date-tag">📅09/30</span></div>
 
-        <div class="row-info"><span class="row-label">竞价评分</span><span style="color:#f39c12;font-weight:bold;font-size:18px">55分 · 中性</span></div>
+        <div class="row-info"><span class="row-label">竞价评分</span><span class="num-hero-sm" style="color:#f39c12">55分 · 中性</span></div>
         <div class="row-info"><span class="row-label">盘前环境</span><span>bear · 操作:维持 0%</span></div>
         <div class="row-info"><span class="row-label">指数竞价涨幅</span><span style="color:#e74c3c">+0.23%</span></div>
-        <div class="row-info"><span class="row-label">竞价涨跌家数</span><span><span style="color:#e74c3c">涨3353</span> / <span style="color:#27ae60">跌1870</span> · 涨停82</span></div>
+        <div class="row-info"><span class="row-label">竞价涨跌家数</span><span><span class="text-up">涨3353</span> / <span class="text-down">跌1870</span> · 涨停82</span></div>
         <div class="row-note">⏰ 竞价数据仅交易日9:25后有效；周末/休市显示最近一次</div>
         </div>
 <div class="card">
@@ -508,143 +717,143 @@ body {
 <div class="section-sub">行业涨幅 TOP10</div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">1</span>
+                  <span class="rank-badge rank-badge-top">1</span>
                   <span class="sector-name" style="font-size:13px;">疫苗</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+5.24%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">2</span>
+                  <span class="rank-badge rank-badge-top">2</span>
                   <span class="sector-name" style="font-size:13px;">其他种植业</span>
-                  <span style="color:#e74c3c;">↑1</span>
+                  <span class="text-up" style="font-size:12px">↑1</span>
                   <span class="sector-pct" style="color:#e74c3c">+4.31%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">3</span>
+                  <span class="rank-badge rank-badge-top">3</span>
                   <span class="sector-name" style="font-size:13px;">医疗研发外包</span>
-                  <span style="color:#27ae60;">↓1</span>
+                  <span class="text-down" style="font-size:12px">↓1</span>
                   <span class="sector-pct" style="color:#e74c3c">+4.31%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">4</span>
+                  <span class="rank-badge">4</span>
                   <span class="sector-name" style="font-size:13px;">种子</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+4.28%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">5</span>
+                  <span class="rank-badge">5</span>
                   <span class="sector-name" style="font-size:13px;">生物制品</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+4.18%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">6</span>
+                  <span class="rank-badge">6</span>
                   <span class="sector-name" style="font-size:13px;">其他生物制品</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+3.95%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">7</span>
+                  <span class="rank-badge">7</span>
                   <span class="sector-name" style="font-size:13px;">医疗服务</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+3.86%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">8</span>
+                  <span class="rank-badge">8</span>
                   <span class="sector-name" style="font-size:13px;">种植业</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+3.72%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">9</span>
+                  <span class="rank-badge">9</span>
                   <span class="sector-name" style="font-size:13px;">商用载货车</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+3.39%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">10</span>
+                  <span class="rank-badge">10</span>
                   <span class="sector-name" style="font-size:13px;">其他农产品加工</span>
-                  <span style="color:#e74c3c;">↑1</span>
+                  <span class="text-up" style="font-size:12px">↑1</span>
                   <span class="sector-pct" style="color:#e74c3c">+3.22%</span>
                 </div>
 <div class="section-sub" style="margin-top:6px;">概念涨幅 TOP10</div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">1</span>
+                  <span class="rank-badge rank-badge-top">1</span>
                   <span class="sector-name" style="font-size:13px;">昨日涨停股表现</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+14.10%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">2</span>
+                  <span class="rank-badge rank-badge-top">2</span>
                   <span class="sector-name" style="font-size:13px;">昨日非ST三板表现</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+9.98%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">3</span>
+                  <span class="rank-badge rank-badge-top">3</span>
                   <span class="sector-name" style="font-size:13px;">创业科创板昨日涨停</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+8.93%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">4</span>
+                  <span class="rank-badge">4</span>
                   <span class="sector-name" style="font-size:13px;">昨日连板股表现</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+8.04%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">5</span>
+                  <span class="rank-badge">5</span>
                   <span class="sector-name" style="font-size:13px;">昨日非ST首板表现</span>
-                  <span style="color:#999;">—</span>
+                  <span class="text-muted-sm">—</span>
                   <span class="sector-pct" style="color:#e74c3c">+6.20%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">6</span>
+                  <span class="rank-badge">6</span>
                   <span class="sector-name" style="font-size:13px;">昨日ST股表现</span>
-                  <span style="color:#e74c3c;">↑1</span>
+                  <span class="text-up" style="font-size:12px">↑1</span>
                   <span class="sector-pct" style="color:#e74c3c">+5.32%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">7</span>
+                  <span class="rank-badge">7</span>
                   <span class="sector-name" style="font-size:13px;">昨日跌停股表现</span>
-                  <span style="color:#e74c3c;">↑2</span>
+                  <span class="text-up" style="font-size:12px">↑2</span>
                   <span class="sector-pct" style="color:#e74c3c">+4.98%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">8</span>
+                  <span class="rank-badge">8</span>
                   <span class="sector-name" style="font-size:13px;">昨日炸板股表现</span>
-                  <span style="color:#e74c3c;">↑2</span>
+                  <span class="text-up" style="font-size:12px">↑2</span>
                   <span class="sector-pct" style="color:#e74c3c">+4.85%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">9</span>
+                  <span class="rank-badge">9</span>
                   <span class="sector-name" style="font-size:13px;">昨日触板股表现</span>
-                  <span style="color:#e74c3c;">↑2</span>
+                  <span class="text-up" style="font-size:12px">↑2</span>
                   <span class="sector-pct" style="color:#e74c3c">+4.82%</span>
                 </div>
 
                 <div class="sector-row">
-                  <span style="font-size:11px;color:#999;width:20px;">10</span>
+                  <span class="rank-badge">10</span>
                   <span class="sector-name" style="font-size:13px;">昨日高送转股表现</span>
-                  <span style="color:#e74c3c;">↑2</span>
+                  <span class="text-up" style="font-size:12px">↑2</span>
                   <span class="sector-pct" style="color:#e74c3c">+4.80%</span>
                 </div>
 </div>
@@ -754,18 +963,18 @@ body {
                       <span style="color:#27ae60;font-weight:bold">主力净流入 -150.2亿</span>
                     </div>
 
-            <div style="margin-top:10px;padding:8px;background:#f8f9fa;border-radius:6px;">
+            <div class="info-block" style="margin-top:10px;">
               <div class="row-label" style="margin-bottom:4px;">市场宽度（行业板块涨跌家数）</div>
               <div style="display:flex;height:10px;border-radius:5px;overflow:hidden;margin:4px 0;">
-                <div style="width:54.2%;background:#e74c3c;"></div>
-                <div style="width:45.8%;background:#27ae60;"></div>
+                <div style="width:54.2%;background:var(--color-up);"></div>
+                <div style="width:45.8%;background:var(--color-down);"></div>
               </div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;">
-                <span style="color:#e74c3c">上涨 1815</span>
-                <span style="color:#999">平 8</span>
-                <span style="color:#27ae60">下跌 1525</span>
+              <div class="flex-between" style="font-size:12px;color:#666;">
+                <span class="text-up">上涨 1815</span>
+                <span class="text-muted-sm">平 8</span>
+                <span class="text-down">下跌 1525</span>
               </div>
-              <div style="font-size:12px;color:#999;margin-top:2px;">全市场3348个板块 · 平均涨幅 +0.15%</div>
+              <div class="text-muted-sm" style="margin-top:2px;">全市场3348个板块 · 平均涨幅 +0.15%</div>
             </div>
 </div>
 <div class="card">
@@ -1104,7 +1313,7 @@ body {
         </div>
         <div style="text-align:center;flex:1;border-left:1px solid rgba(255,255,255,0.15);border-right:1px solid rgba(255,255,255,0.15);">
           <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:2px;">仓位</div>
-          <div style="font-size:16px;font-weight:bold;color:#27ae60;">65.4%</div>
+          <div style="font-size:16px;font-weight:bold;color:var(--color-down);">65.4%</div>
         </div>
         <div style="text-align:center;flex:1;">
           <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:2px;">可用现金</div>
@@ -1130,7 +1339,7 @@ body {
       <div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:8px 10px;margin-bottom:10px;">
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <span style="font-size:12px;color:rgba(255,255,255,0.7);">主力净流入合计</span>
-          <span style="font-size:14px;font-weight:bold;color:#27ae60;">-1158万</span>
+          <span style="font-size:14px;font-weight:bold;color:var(--color-down);">-1158万</span>
         </div>
         <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px;">2只流出 / 1只流入 · 个股分化详见下方解读</div>
       </div>
@@ -1141,86 +1350,86 @@ body {
             <div style="margin-bottom:4px;">
               <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:1px;">
                 <span style="color:#333;">莲花控股</span>
-                <span style="color:#3498db;font-weight:bold;">25.9%</span>
+                <span style="color:var(--color-info);font-weight:bold;">25.9%</span>
               </div>
               <div style="background:#f0f0f0;border-radius:3px;height:8px;overflow:hidden;">
-                <div style="background:#3498db;height:100%;width:25.9%;border-radius:3px;transition:width 0.3s;"></div>
+                <div style="background:var(--color-info);height:100%;width:25.9%;border-radius:3px;transition:width 0.3s;"></div>
               </div>
             </div>
             <div style="margin-bottom:4px;">
               <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:1px;">
                 <span style="color:#333;">光迅科技</span>
-                <span style="color:#3498db;font-weight:bold;">26.6%</span>
+                <span style="color:var(--color-info);font-weight:bold;">26.6%</span>
               </div>
               <div style="background:#f0f0f0;border-radius:3px;height:8px;overflow:hidden;">
-                <div style="background:#3498db;height:100%;width:26.6%;border-radius:3px;transition:width 0.3s;"></div>
+                <div style="background:var(--color-info);height:100%;width:26.6%;border-radius:3px;transition:width 0.3s;"></div>
               </div>
             </div>
             <div style="margin-bottom:4px;">
               <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:1px;">
                 <span style="color:#333;">鹏鼎控股</span>
-                <span style="color:#27ae60;font-weight:bold;">12.8%</span>
+                <span style="color:var(--color-down);font-weight:bold;">12.8%</span>
               </div>
               <div style="background:#f0f0f0;border-radius:3px;height:8px;overflow:hidden;">
-                <div style="background:#27ae60;height:100%;width:12.8%;border-radius:3px;transition:width 0.3s;"></div>
+                <div style="background:var(--color-down);height:100%;width:12.8%;border-radius:3px;transition:width 0.3s;"></div>
               </div>
             </div>
       </div>
     </div>
 <div class="card">
 <div class="title-row"><div class="card-title">💰 盘中主力资金（持仓股）</div><span class="card-date-tag">📅10/03</span></div>
-<div style="margin-bottom:6px;"><span class="tag" style="background:#fff3e0;color:#e67e22">盘后数据</span> <span style="font-size:11px;color:#999">盘后数据 · 2026-10-03 23:45:25</span></div>
+<div style="margin-bottom:6px;"><span class="badge badge-warn">盘后数据</span> <span class="text-muted-sm">盘后数据 · 2026-10-03 23:45:25</span></div>
 
             <div class="sector-row">
-              <span class="sector-name" style="font-size:13px;">莲花控股 <span style="color:#999;font-size:11px;">600186</span></span>
-              <span style="font-size:11px;color:#999;">净流入占比 -0.33%</span>
-              <span class="sector-pct" style="color:#27ae60;font-weight:bold">-1137万</span>
+              <span class="sector-name" style="font-size:13px;">莲花控股 <span class="text-muted-sm">600186</span></span>
+              <span class="text-muted-sm">净流入占比 -0.33%</span>
+              <span class="sector-pct" style="color:var(--color-down);font-weight:bold">-1137万</span>
             </div>
 
             <div class="sector-row">
-              <span class="sector-name" style="font-size:13px;">光迅科技 <span style="color:#999;font-size:11px;">002281</span></span>
-              <span style="font-size:11px;color:#999;">净流入占比 -0.08%</span>
-              <span class="sector-pct" style="color:#27ae60;font-weight:bold">-412万</span>
+              <span class="sector-name" style="font-size:13px;">光迅科技 <span class="text-muted-sm">002281</span></span>
+              <span class="text-muted-sm">净流入占比 -0.08%</span>
+              <span class="sector-pct" style="color:var(--color-down);font-weight:bold">-412万</span>
             </div>
 
             <div class="sector-row">
-              <span class="sector-name" style="font-size:13px;">鹏鼎控股 <span style="color:#999;font-size:11px;">002938</span></span>
-              <span style="font-size:11px;color:#999;">净流入占比 +0.16%</span>
-              <span class="sector-pct" style="color:#e74c3c;font-weight:bold">+392万</span>
+              <span class="sector-name" style="font-size:13px;">鹏鼎控股 <span class="text-muted-sm">002938</span></span>
+              <span class="text-muted-sm">净流入占比 +0.16%</span>
+              <span class="sector-pct" style="color:var(--color-up);font-weight:bold">+392万</span>
             </div>
 
             <div class="sector-row">
-              <span class="sector-name" style="font-size:13px;">东山精密 <span style="color:#999;font-size:11px;">002384</span></span>
-              <span style="font-size:11px;color:#999;">净流入占比 -6.05%</span>
-              <span class="sector-pct" style="color:#27ae60;font-weight:bold">-62891万</span>
+              <span class="sector-name" style="font-size:13px;">东山精密 <span class="text-muted-sm">002384</span></span>
+              <span class="text-muted-sm">净流入占比 -6.05%</span>
+              <span class="sector-pct" style="color:var(--color-down);font-weight:bold">-62891万</span>
             </div>
 
             <div class="sector-row">
-              <span class="sector-name" style="font-size:13px;">中天科技 <span style="color:#999;font-size:11px;">600522</span></span>
-              <span style="font-size:11px;color:#999;">净流入占比 -4.18%</span>
-              <span class="sector-pct" style="color:#27ae60;font-weight:bold">-22277万</span>
+              <span class="sector-name" style="font-size:13px;">中天科技 <span class="text-muted-sm">600522</span></span>
+              <span class="text-muted-sm">净流入占比 -4.18%</span>
+              <span class="sector-pct" style="color:var(--color-down);font-weight:bold">-22277万</span>
             </div>
 
             <div class="sector-row">
-              <span class="sector-name" style="font-size:13px;">烽火通信 <span style="color:#999;font-size:11px;">600498</span></span>
-              <span style="font-size:11px;color:#999;">净流入占比 -0.92%</span>
-              <span class="sector-pct" style="color:#27ae60;font-weight:bold">-2985万</span>
+              <span class="sector-name" style="font-size:13px;">烽火通信 <span class="text-muted-sm">600498</span></span>
+              <span class="text-muted-sm">净流入占比 -0.92%</span>
+              <span class="sector-pct" style="color:var(--color-down);font-weight:bold">-2985万</span>
             </div>
 
             <div class="sector-row">
-              <span class="sector-name" style="font-size:13px;">金安国纪 <span style="color:#999;font-size:11px;">002636</span></span>
-              <span style="font-size:11px;color:#999;">净流入占比 -4.41%</span>
-              <span class="sector-pct" style="color:#27ae60;font-weight:bold">-25313万</span>
+              <span class="sector-name" style="font-size:13px;">金安国纪 <span class="text-muted-sm">002636</span></span>
+              <span class="text-muted-sm">净流入占比 -4.41%</span>
+              <span class="sector-pct" style="color:var(--color-down);font-weight:bold">-25313万</span>
             </div>
 
             <div class="sector-row">
-              <span class="sector-name" style="font-size:13px;">中际旭创 <span style="color:#999;font-size:11px;">300308</span></span>
-              <span style="font-size:11px;color:#999;">净流入占比 -2.16%</span>
-              <span class="sector-pct" style="color:#27ae60;font-weight:bold">-55519万</span>
+              <span class="sector-name" style="font-size:13px;">中际旭创 <span class="text-muted-sm">300308</span></span>
+              <span class="text-muted-sm">净流入占比 -2.16%</span>
+              <span class="sector-pct" style="color:var(--color-down);font-weight:bold">-55519万</span>
             </div>
 </div>
 
-    <div class="card pos-card" onclick="toggleDetail('detail-0')">
+    <div class="card pos-card card-urgent animate-pulse" onclick="toggleDetail('detail-0')">
       <div class="pos-header">
         <div>
           <span class="pos-name">莲花控股</span>
@@ -1237,17 +1446,17 @@ body {
           <span class="row-label">持仓</span><span>2800股</span>
         </div>
         <div class="row-info">
-          <span class="row-label">市值/仓位</span><span>3.21万元 · <b style="color:#e74c3c">25.9%</b></span>
+          <span class="row-label">市值/仓位</span><span>3.21万元 · <span class="weight-badge weight-warn">25.9%</span></span>
         </div>
-        <div class="pos-profit" style="color:#27ae60">
+        <div class="pos-profit-hero" style="color:#27ae60">
           <span class="profit-amount">-1828.40元</span>
           <span class="profit-pct">-5.39%</span>
         </div>
         <div class="row-info">
-          <span class="row-label">止损位</span><span>11.629</span>
+          <span class="row-label">止损位</span><span class="price-stop">11.629</span>
         </div>
         <div class="row-info">
-          <span class="row-label">止盈位</span><span>T1:13.75 / T2:14.5</span>
+          <span class="row-label">止盈位</span><span class="price-target">T1:13.75 / T2:14.5</span>
         </div>
         <div class="row-info">
           <span class="row-label">止损距离</span>
@@ -1270,33 +1479,25 @@ body {
         <div class="detail-line"><span class="row-label">ATR止损依据</span><span>铁律止损=成本12.113*0.96=11.629</span></div>
         <div class="detail-line detail-sell"><span class="row-label">卖出规则</span><span>单票30.7%超限，需减至15%以内；铁律止损11.629(成本*0.96)；浮盈可考虑分批止盈</span></div>
         
-        <div style="border-left:3px solid #e74c3c;background:#fafafa;border-radius:0 6px 6px 0;padding:8px 10px;margin:4px 0;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div class="mf-block" style="--mf-accent:#e74c3c">
+          <div class="mf-row">
             <span class="row-label">💰 主力资金流向</span>
-            <span style="color:#27ae60;font-weight:bold;">-1137万</span>
+            <span style="color:var(--color-down);font-weight:bold;">-1137万</span>
           </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:2px;">
-            <span>超大单 +1046万</span><span>大单 -2183万</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:6px;">
-            <span>中单 -6100万</span><span>小单 +7238万</span>
-          </div>
-          <div style="font-size:12px;color:#555;line-height:1.5;border-top:1px dashed #ddd;padding-top:4px;">
-            <b>解读：</b>主力大幅流出；超大单接盘但大单抛售，多空分歧大，疑似换庄/洗盘；资金流出但股价抗跌，有洗盘特征
-          </div>
-          <div style="font-size:12px;color:#e74c3c;font-weight:bold;margin-top:2px;">
-            ⚠️ 主力流出但股价抗跌，观察是否洗盘，暂不加仓
-          </div>
-          <div style="font-size:10px;color:#bbb;margin-top:2px;">⚠️ 单日数据仅供参考，需结合连续3-5天趋势和价格配合判断</div>
+          <div class="mf-sub"><span>超大单 +1046万</span><span>大单 -2183万</span></div>
+          <div class="mf-sub" style="margin-bottom:6px;"><span>中单 -6100万</span><span>小单 +7238万</span></div>
+          <div class="mf-interpret"><b>解读：</b>主力大幅流出；超大单接盘但大单抛售，多空分歧大，疑似换庄/洗盘；资金流出但股价抗跌，有洗盘特征</div>
+          <div class="mf-advice">⚠️ 主力流出但股价抗跌，观察是否洗盘，暂不加仓</div>
+          <div class="mf-note">⚠️ 单日数据仅供参考，需结合连续3-5天趋势和价格配合判断</div>
         </div>
         
-        <div style="border-left:3px solid #f39c12;background:#fff8e6;border-radius:0 6px 6px 0;padding:6px 10px;margin:4px 0;">
-          <div style="display:flex;justify-content:space-between;align-items:center;">
-            <span class="row-label">📈 分时形态 <span class="tag" style="background:#f39c12;color:#fff">关注</span></span>
-            <span style="font-size:13px;font-weight:bold;color:#333;">放量下跌</span>
+        <div class="mf-block" style="--mf-accent:var(--color-warn);background:#fff7e6">
+          <div class="mf-row">
+            <span class="row-label">📈 分时形态 <span class="badge badge-warn">关注</span></span>
+            <span style="font-size:13px;font-weight:bold;color:var(--color-text-primary);">放量下跌</span>
           </div>
-          <div style="font-size:12px;color:#666;margin-top:2px;">均价线位置:均价线下方 · 尾盘:平稳</div>
-          <div style="font-size:12px;color:#666;margin-top:2px;line-height:1.4;">量价:放量下跌(量比1.70)，均价线下方</div>
+          <div class="mf-sub" style="margin-bottom:2px;">均价线位置:均价线下方 · 尾盘:平稳</div>
+          <div class="mf-sub" style="margin-bottom:0;line-height:1.4;">量价:放量下跌(量比1.70)，均价线下方</div>
         </div>
         <div style="border-top:1px dashed #ddd;margin-top:6px;padding-top:4px;">
 <div class="row-label" style="margin-bottom:2px;">📰 公告情报</div>
@@ -1304,22 +1505,23 @@ body {
 <div style="font-size:12px;color:#555;padding:2px 0;">• 北京市金杜律师事务所关于莲花控股股份有限公司2026年第二次临时股东会之法律意见…</div>
 </div>
         <div class="detail-line"><span class="row-label">🐉 龙虎榜</span><span style="color:#999;">未上榜</span></div>
-        <div style="margin:6px 0;">
+        <div class="mini-chart" style="margin:6px 0;">
           <div class="row-label" style="margin-bottom:2px;">当日分时（9/30）</div>
-          <svg viewBox="0 0 400 60" style="width:100%;height:auto;display:block;margin:4px 0;">
+          <div class="mini-chart"><svg viewBox="0 0 400 60" style="width:100%;height:auto;display:block;margin:4px 0;">
   <line x1="30" y1="29.3" x2="392" y2="29.3" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,2"/>
-  <polyline points="30.0,29.3 37.7,27.3 45.4,23.3 53.1,20.3 60.8,10.7 68.5,11.7 76.2,9.7 83.9,10.7 91.6,14.7 99.3,15.2 107.0,16.2 114.7,17.7 122.4,19.7 130.1,18.2 137.8,17.2 145.5,16.2 153.2,17.2 160.9,17.7 168.6,18.7 176.3,19.7 184.0,20.3 191.7,20.8 199.4,20.3 207.1,20.8 214.9,23.3 222.6,22.8 230.3,27.8 238.0,25.3 245.7,24.8 253.4,22.3 261.1,21.3 268.8,23.3 276.5,22.8 284.2,23.8 291.9,23.8 299.6,25.3 307.3,25.8 315.0,24.3 322.7,25.3 330.4,26.3 338.1,25.3 345.8,24.3 353.5,25.8 361.2,25.8 368.9,26.8 376.6,26.8 384.3,29.3 392.0,30.3" fill="none" stroke="#27ae60" stroke-width="1.4"/>
-  <rect x="28.5" y="35.4" width="3" height="8.6" fill="#27ae60" opacity="0.55"/><rect x="36.2" y="39.1" width="3" height="4.9" fill="#e74c3c" opacity="0.55"/><rect x="43.9" y="41.5" width="3" height="2.5" fill="#e74c3c" opacity="0.55"/><rect x="51.6" y="41.5" width="3" height="2.5" fill="#e74c3c" opacity="0.55"/><rect x="59.3" y="32.0" width="3" height="12.0" fill="#e74c3c" opacity="0.55"/><rect x="67.0" y="40.4" width="3" height="3.6" fill="#27ae60" opacity="0.55"/><rect x="74.7" y="41.5" width="3" height="2.5" fill="#e74c3c" opacity="0.55"/><rect x="82.4" y="38.7" width="3" height="5.3" fill="#27ae60" opacity="0.55"/><rect x="90.1" y="41.6" width="3" height="2.4" fill="#27ae60" opacity="0.55"/><rect x="97.8" y="41.5" width="3" height="2.5" fill="#27ae60" opacity="0.55"/><rect x="105.5" y="42.7" width="3" height="1.3" fill="#27ae60" opacity="0.55"/><rect x="113.2" y="41.3" width="3" height="2.7" fill="#27ae60" opacity="0.55"/><rect x="120.9" y="42.3" width="3" height="1.7" fill="#27ae60" opacity="0.55"/><rect x="128.6" y="42.5" width="3" height="1.5" fill="#e74c3c" opacity="0.55"/><rect x="136.3" y="43.2" width="3" height="0.8" fill="#e74c3c" opacity="0.55"/><rect x="144.0" y="43.3" width="3" height="0.7" fill="#e74c3c" opacity="0.55"/><rect x="151.7" y="43.5" width="3" height="0.5" fill="#27ae60" opacity="0.55"/><rect x="159.4" y="43.5" width="3" height="0.5" fill="#27ae60" opacity="0.55"/><rect x="167.1" y="43.4" width="3" height="0.6" fill="#27ae60" opacity="0.55"/><rect x="174.8" y="43.5" width="3" height="0.5" fill="#27ae60" opacity="0.55"/><rect x="182.5" y="43.5" width="3" height="0.5" fill="#27ae60" opacity="0.55"/><rect x="190.2" y="43.2" width="3" height="0.8" fill="#27ae60" opacity="0.55"/><rect x="197.9" y="43.5" width="3" height="0.5" fill="#e74c3c" opacity="0.55"/><rect x="205.6" y="43.2" width="3" height="0.8" fill="#27ae60" opacity="0.55"/><rect x="213.4" y="42.7" width="3" height="1.3" fill="#27ae60" opacity="0.55"/><rect x="221.1" y="42.9" width="3" height="1.1" fill="#e74c3c" opacity="0.55"/><rect x="228.8" y="40.8" width="3" height="3.2" fill="#27ae60" opacity="0.55"/><rect x="236.5" y="43.0" width="3" height="1.0" fill="#e74c3c" opacity="0.55"/><rect x="244.2" y="43.0" width="3" height="1.0" fill="#e74c3c" opacity="0.55"/><rect x="251.9" y="43.2" width="3" height="0.8" fill="#e74c3c" opacity="0.55"/><rect x="259.6" y="43.2" width="3" height="0.8" fill="#e74c3c" opacity="0.55"/><rect x="267.3" y="42.9" width="3" height="1.1" fill="#27ae60" opacity="0.55"/><rect x="275.0" y="43.5" width="3" height="0.5" fill="#e74c3c" opacity="0.55"/><rect x="282.7" y="43.4" width="3" height="0.6" fill="#27ae60" opacity="0.55"/><rect x="290.4" y="43.6" width="3" height="0.4" fill="#e74c3c" opacity="0.55"/><rect x="298.1" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="305.8" y="43.2" width="3" height="0.8" fill="#27ae60" opacity="0.55"/><rect x="313.5" y="43.5" width="3" height="0.5" fill="#e74c3c" opacity="0.55"/><rect x="321.2" y="43.3" width="3" height="0.7" fill="#27ae60" opacity="0.55"/><rect x="328.9" y="43.3" width="3" height="0.7" fill="#27ae60" opacity="0.55"/><rect x="336.6" y="42.8" width="3" height="1.2" fill="#e74c3c" opacity="0.55"/><rect x="344.3" y="43.5" width="3" height="0.5" fill="#e74c3c" opacity="0.55"/><rect x="352.0" y="43.0" width="3" height="1.0" fill="#27ae60" opacity="0.55"/><rect x="359.7" y="43.0" width="3" height="1.0" fill="#e74c3c" opacity="0.55"/><rect x="367.4" y="42.3" width="3" height="1.7" fill="#27ae60" opacity="0.55"/><rect x="375.1" y="41.4" width="3" height="2.6" fill="#e74c3c" opacity="0.55"/><rect x="382.8" y="39.1" width="3" height="4.9" fill="#27ae60" opacity="0.55"/><rect x="390.5" y="38.7" width="3" height="5.3" fill="#27ae60" opacity="0.55"/>
-  <circle cx="392.0" cy="30.3" r="2.5" fill="#27ae60"/>
-  <text x="392" y="27.3" font-size="9" fill="#27ae60" text-anchor="end" font-weight="bold">11.46 -0.17%</text>
-  <text x="30" y="57" font-size="9" fill="#999">09:35</text><text x="211.0" y="57" font-size="9" fill="#999" text-anchor="middle">13:05</text><text x="392" y="57" font-size="9" fill="#999" text-anchor="end">15:00</text>
-</svg>
+  <polyline points="30.0,21.0 37.7,23.8 45.4,23.8 53.1,23.6 60.8,18.4 68.5,17.6 76.2,17.2 83.9,16.0 91.6,15.8 99.3,15.8 107.0,15.8 114.7,15.9 122.4,16.1 130.1,16.1 137.8,16.2 145.5,16.2 153.2,16.2 160.9,16.2 168.6,16.2 176.3,16.2 184.0,16.3 191.7,16.3 199.4,16.4 207.1,16.4 214.9,16.5 222.6,16.7 230.3,17.1 238.0,17.2 245.7,17.4 253.4,17.4 261.1,17.5 268.8,17.6 276.5,17.6 284.2,17.7 291.9,17.7 299.6,17.8 307.3,17.9 315.0,17.9 322.7,18.0 330.4,18.1 338.1,18.2 345.8,18.2 353.5,18.3 361.2,18.4 368.9,18.6 376.6,18.8 384.3,19.3 392.0,19.9" fill="none" stroke="#f39c12" stroke-width="1" stroke-dasharray="4,2" opacity="0.85"/>
+  <polyline points="30.0,29.3 37.7,27.3 45.4,23.3 53.1,20.3 60.8,10.7 68.5,11.7 76.2,9.7 83.9,10.7 91.6,14.7 99.3,15.2 107.0,16.2 114.7,17.7 122.4,19.7 130.1,18.2 137.8,17.2 145.5,16.2 153.2,17.2 160.9,17.7 168.6,18.7 176.3,19.7 184.0,20.3 191.7,20.8 199.4,20.3 207.1,20.8 214.9,23.3 222.6,22.8 230.3,27.8 238.0,25.3 245.7,24.8 253.4,22.3 261.1,21.3 268.8,23.3 276.5,22.8 284.2,23.8 291.9,23.8 299.6,25.3 307.3,25.8 315.0,24.3 322.7,25.3 330.4,26.3 338.1,25.3 345.8,24.3 353.5,25.8 361.2,25.8 368.9,26.8 376.6,26.8 384.3,29.3 392.0,30.3" fill="none" style="stroke:var(--color-down)" stroke-width="1.4"/>
+  <rect x="28.5" y="35.4" width="3" height="8.6" style="fill:var(--color-down)" opacity="0.5"/><rect x="36.2" y="39.1" width="3" height="4.9" style="fill:var(--color-up)" opacity="0.5"/><rect x="43.9" y="41.5" width="3" height="2.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="51.6" y="41.5" width="3" height="2.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="59.3" y="32.0" width="3" height="12.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="67.0" y="40.4" width="3" height="3.6" style="fill:var(--color-down)" opacity="0.5"/><rect x="74.7" y="41.5" width="3" height="2.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="82.4" y="38.7" width="3" height="5.3" style="fill:var(--color-down)" opacity="0.5"/><rect x="90.1" y="41.6" width="3" height="2.4" style="fill:var(--color-down)" opacity="0.5"/><rect x="97.8" y="41.5" width="3" height="2.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="105.5" y="42.7" width="3" height="1.3" style="fill:var(--color-down)" opacity="0.5"/><rect x="113.2" y="41.3" width="3" height="2.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="120.9" y="42.3" width="3" height="1.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="128.6" y="42.5" width="3" height="1.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="136.3" y="43.2" width="3" height="0.8" style="fill:var(--color-up)" opacity="0.5"/><rect x="144.0" y="43.3" width="3" height="0.7" style="fill:var(--color-up)" opacity="0.5"/><rect x="151.7" y="43.5" width="3" height="0.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="159.4" y="43.5" width="3" height="0.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="167.1" y="43.4" width="3" height="0.6" style="fill:var(--color-down)" opacity="0.5"/><rect x="174.8" y="43.5" width="3" height="0.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="182.5" y="43.5" width="3" height="0.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="190.2" y="43.2" width="3" height="0.8" style="fill:var(--color-down)" opacity="0.5"/><rect x="197.9" y="43.5" width="3" height="0.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="205.6" y="43.2" width="3" height="0.8" style="fill:var(--color-down)" opacity="0.5"/><rect x="213.4" y="42.7" width="3" height="1.3" style="fill:var(--color-down)" opacity="0.5"/><rect x="221.1" y="42.9" width="3" height="1.1" style="fill:var(--color-up)" opacity="0.5"/><rect x="228.8" y="40.8" width="3" height="3.2" style="fill:var(--color-down)" opacity="0.5"/><rect x="236.5" y="43.0" width="3" height="1.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="244.2" y="43.0" width="3" height="1.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="251.9" y="43.2" width="3" height="0.8" style="fill:var(--color-up)" opacity="0.5"/><rect x="259.6" y="43.2" width="3" height="0.8" style="fill:var(--color-up)" opacity="0.5"/><rect x="267.3" y="42.9" width="3" height="1.1" style="fill:var(--color-down)" opacity="0.5"/><rect x="275.0" y="43.5" width="3" height="0.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="282.7" y="43.4" width="3" height="0.6" style="fill:var(--color-down)" opacity="0.5"/><rect x="290.4" y="43.6" width="3" height="0.4" style="fill:var(--color-up)" opacity="0.5"/><rect x="298.1" y="43.1" width="3" height="0.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="305.8" y="43.2" width="3" height="0.8" style="fill:var(--color-down)" opacity="0.5"/><rect x="313.5" y="43.5" width="3" height="0.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="321.2" y="43.3" width="3" height="0.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="328.9" y="43.3" width="3" height="0.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="336.6" y="42.8" width="3" height="1.2" style="fill:var(--color-up)" opacity="0.5"/><rect x="344.3" y="43.5" width="3" height="0.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="352.0" y="43.0" width="3" height="1.0" style="fill:var(--color-down)" opacity="0.5"/><rect x="359.7" y="43.0" width="3" height="1.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="367.4" y="42.3" width="3" height="1.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="375.1" y="41.4" width="3" height="2.6" style="fill:var(--color-up)" opacity="0.5"/><rect x="382.8" y="39.1" width="3" height="4.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="390.5" y="38.7" width="3" height="5.3" style="fill:var(--color-down)" opacity="0.5"/>
+  <circle cx="392.0" cy="30.3" r="2.5" style="stroke:var(--color-down)"/>
+  <text x="392" y="27.3" font-size="10" style="stroke:var(--color-down);fill-opacity:1" text-anchor="end" font-weight="bold">11.46 -0.17%</text>
+  <text x="30" y="57" font-size="10" fill="#999">09:35</text><text x="211.0" y="57" font-size="10" fill="#999" text-anchor="middle">13:05</text><text x="392" y="57" font-size="10" fill="#999" text-anchor="end">15:00</text>
+</svg></div>
         </div>
         <div class="detail-hint">点击卡片可折叠</div>
       </div>
     </div>
 
-    <div class="card pos-card" onclick="toggleDetail('detail-1')">
+    <div class="card pos-card card-urgent animate-pulse" onclick="toggleDetail('detail-1')">
       <div class="pos-header">
         <div>
           <span class="pos-name">光迅科技</span>
@@ -1336,17 +1538,17 @@ body {
           <span class="row-label">持仓</span><span>200股</span>
         </div>
         <div class="row-info">
-          <span class="row-label">市值/仓位</span><span>3.30万元 · <b style="color:#e74c3c">26.6%</b></span>
+          <span class="row-label">市值/仓位</span><span>3.30万元 · <span class="weight-badge weight-warn">26.6%</span></span>
         </div>
-        <div class="pos-profit" style="color:#27ae60">
+        <div class="pos-profit-hero" style="color:#27ae60">
           <span class="profit-amount">-5463.20元</span>
           <span class="profit-pct">-14.21%</span>
         </div>
         <div class="row-info">
-          <span class="row-label">止损位</span><span>184.508</span>
+          <span class="row-label">止损位</span><span class="price-stop">184.508</span>
         </div>
         <div class="row-info">
-          <span class="row-label">止盈位</span><span>T1:211.42 / T2:221.03</span>
+          <span class="row-label">止盈位</span><span class="price-target">T1:211.42 / T2:221.03</span>
         </div>
         <div class="row-info">
           <span class="row-label">止损距离</span>
@@ -1369,33 +1571,25 @@ body {
         <div class="detail-line"><span class="row-label">ATR止损依据</span><span>真ATR14=10.216, 2×ATR=20.433</span></div>
         <div class="detail-line detail-sell"><span class="row-label">卖出规则</span><span>单票30.7%超限，需减至15%以内；PE123高估值，不加仓</span></div>
         
-        <div style="border-left:3px solid #e67e22;background:#fafafa;border-radius:0 6px 6px 0;padding:8px 10px;margin:4px 0;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div class="mf-block" style="--mf-accent:#e67e22">
+          <div class="mf-row">
             <span class="row-label">💰 主力资金流向</span>
-            <span style="color:#27ae60;font-weight:bold;">-412万</span>
+            <span style="color:var(--color-down);font-weight:bold;">-412万</span>
           </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:2px;">
-            <span>超大单 -8736万</span><span>大单 +8325万</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:6px;">
-            <span>中单 +7161万</span><span>小单 -6749万</span>
-          </div>
-          <div style="font-size:12px;color:#555;line-height:1.5;border-top:1px dashed #ddd;padding-top:4px;">
-            <b>解读：</b>主力小幅流出；超大单撤离但大单接盘，大资金出货特征，警惕；资金流出但股价抗跌，有洗盘特征
-          </div>
-          <div style="font-size:12px;color:#e67e22;font-weight:bold;margin-top:2px;">
-            资金面中性，按原计划操作，重点看止损止盈
-          </div>
-          <div style="font-size:10px;color:#bbb;margin-top:2px;">⚠️ 单日数据仅供参考，需结合连续3-5天趋势和价格配合判断</div>
+          <div class="mf-sub"><span>超大单 -8736万</span><span>大单 +8325万</span></div>
+          <div class="mf-sub" style="margin-bottom:6px;"><span>中单 +7161万</span><span>小单 -6749万</span></div>
+          <div class="mf-interpret"><b>解读：</b>主力小幅流出；超大单撤离但大单接盘，大资金出货特征，警惕；资金流出但股价抗跌，有洗盘特征</div>
+          <div class="mf-advice">资金面中性，按原计划操作，重点看止损止盈</div>
+          <div class="mf-note">⚠️ 单日数据仅供参考，需结合连续3-5天趋势和价格配合判断</div>
         </div>
         
-        <div style="border-left:3px solid #e8e8e8;background:#fafafa;border-radius:0 6px 6px 0;padding:6px 10px;margin:4px 0;">
-          <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="mf-block" style="--mf-accent:var(--color-border);background:var(--color-bg-subtle)">
+          <div class="mf-row">
             <span class="row-label">📈 分时形态 </span>
-            <span style="font-size:13px;font-weight:bold;color:#333;">横盘整理</span>
+            <span style="font-size:13px;font-weight:bold;color:var(--color-text-primary);">横盘整理</span>
           </div>
-          <div style="font-size:12px;color:#666;margin-top:2px;">均价线位置:均价线下方 · 尾盘:平稳</div>
-          <div style="font-size:12px;color:#666;margin-top:2px;line-height:1.4;">量价:横盘整理(量比1.43)，均价线下方，走势平稳</div>
+          <div class="mf-sub" style="margin-bottom:2px;">均价线位置:均价线下方 · 尾盘:平稳</div>
+          <div class="mf-sub" style="margin-bottom:0;line-height:1.4;">量价:横盘整理(量比1.43)，均价线下方，走势平稳</div>
         </div>
         <div style="border-top:1px dashed #ddd;margin-top:6px;padding-top:4px;">
 <div class="row-label" style="margin-bottom:2px;">📰 公告情报</div>
@@ -1406,22 +1600,23 @@ body {
 <div style="font-size:12px;color:#555;padding:2px 0;">• 光迅科技:武汉光迅科技股份有限公司简式权益变动报告书</div>
 </div>
         <div class="detail-line"><span class="row-label">🐉 龙虎榜</span><span style="color:#999;">未上榜</span></div>
-        <div style="margin:6px 0;">
+        <div class="mini-chart" style="margin:6px 0;">
           <div class="row-label" style="margin-bottom:2px;">当日分时（9/30）</div>
-          <svg viewBox="0 0 400 60" style="width:100%;height:auto;display:block;margin:4px 0;">
+          <div class="mini-chart"><svg viewBox="0 0 400 60" style="width:100%;height:auto;display:block;margin:4px 0;">
   <line x1="30" y1="13.0" x2="392" y2="13.0" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,2"/>
-  <polyline points="30.0,13.0 37.7,16.6 45.4,17.1 53.1,19.2 60.8,20.0 68.5,20.3 76.2,9.7 83.9,15.6 91.6,19.8 99.3,18.2 107.0,19.1 114.7,21.2 122.4,22.7 130.1,23.3 137.8,21.7 145.5,18.1 153.2,19.1 160.9,20.3 168.6,20.7 176.3,22.7 184.0,22.4 191.7,23.8 199.4,23.6 207.1,25.6 214.9,27.0 222.6,25.3 230.3,29.2 238.0,30.3 245.7,29.7 253.4,25.8 261.1,21.3 268.8,22.9 276.5,24.6 284.2,25.2 291.9,24.6 299.6,26.4 307.3,27.5 315.0,26.1 322.7,25.9 330.4,26.4 338.1,27.1 345.8,26.8 353.5,26.6 361.2,25.7 368.9,26.8 376.6,27.3 384.3,27.3 392.0,27.5" fill="none" stroke="#27ae60" stroke-width="1.4"/>
-  <rect x="28.5" y="32.0" width="3" height="12.0" fill="#27ae60" opacity="0.55"/><rect x="36.2" y="36.5" width="3" height="7.5" fill="#27ae60" opacity="0.55"/><rect x="43.9" y="37.9" width="3" height="6.1" fill="#27ae60" opacity="0.55"/><rect x="51.6" y="39.0" width="3" height="5.0" fill="#27ae60" opacity="0.55"/><rect x="59.3" y="40.2" width="3" height="3.8" fill="#27ae60" opacity="0.55"/><rect x="67.0" y="39.3" width="3" height="4.7" fill="#27ae60" opacity="0.55"/><rect x="74.7" y="39.0" width="3" height="5.0" fill="#e74c3c" opacity="0.55"/><rect x="82.4" y="39.8" width="3" height="4.2" fill="#27ae60" opacity="0.55"/><rect x="90.1" y="41.4" width="3" height="2.6" fill="#27ae60" opacity="0.55"/><rect x="97.8" y="41.6" width="3" height="2.4" fill="#e74c3c" opacity="0.55"/><rect x="105.5" y="42.1" width="3" height="1.9" fill="#27ae60" opacity="0.55"/><rect x="113.2" y="40.9" width="3" height="3.1" fill="#27ae60" opacity="0.55"/><rect x="120.9" y="41.5" width="3" height="2.5" fill="#27ae60" opacity="0.55"/><rect x="128.6" y="41.3" width="3" height="2.7" fill="#27ae60" opacity="0.55"/><rect x="136.3" y="42.0" width="3" height="2.0" fill="#e74c3c" opacity="0.55"/><rect x="144.0" y="42.7" width="3" height="1.3" fill="#e74c3c" opacity="0.55"/><rect x="151.7" y="42.8" width="3" height="1.2" fill="#27ae60" opacity="0.55"/><rect x="159.4" y="41.7" width="3" height="2.3" fill="#27ae60" opacity="0.55"/><rect x="167.1" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="174.8" y="43.0" width="3" height="1.0" fill="#27ae60" opacity="0.55"/><rect x="182.5" y="43.4" width="3" height="0.6" fill="#e74c3c" opacity="0.55"/><rect x="190.2" y="42.6" width="3" height="1.4" fill="#27ae60" opacity="0.55"/><rect x="197.9" y="42.9" width="3" height="1.1" fill="#e74c3c" opacity="0.55"/><rect x="205.6" y="42.2" width="3" height="1.8" fill="#27ae60" opacity="0.55"/><rect x="213.4" y="40.5" width="3" height="3.5" fill="#27ae60" opacity="0.55"/><rect x="221.1" y="42.5" width="3" height="1.5" fill="#e74c3c" opacity="0.55"/><rect x="228.8" y="41.9" width="3" height="2.1" fill="#27ae60" opacity="0.55"/><rect x="236.5" y="41.5" width="3" height="2.5" fill="#27ae60" opacity="0.55"/><rect x="244.2" y="42.9" width="3" height="1.1" fill="#e74c3c" opacity="0.55"/><rect x="251.9" y="42.6" width="3" height="1.4" fill="#e74c3c" opacity="0.55"/><rect x="259.6" y="42.5" width="3" height="1.5" fill="#e74c3c" opacity="0.55"/><rect x="267.3" y="42.3" width="3" height="1.7" fill="#27ae60" opacity="0.55"/><rect x="275.0" y="42.8" width="3" height="1.2" fill="#27ae60" opacity="0.55"/><rect x="282.7" y="43.2" width="3" height="0.8" fill="#27ae60" opacity="0.55"/><rect x="290.4" y="43.0" width="3" height="1.0" fill="#e74c3c" opacity="0.55"/><rect x="298.1" y="42.8" width="3" height="1.2" fill="#27ae60" opacity="0.55"/><rect x="305.8" y="42.4" width="3" height="1.6" fill="#27ae60" opacity="0.55"/><rect x="313.5" y="43.1" width="3" height="0.9" fill="#e74c3c" opacity="0.55"/><rect x="321.2" y="42.6" width="3" height="1.4" fill="#e74c3c" opacity="0.55"/><rect x="328.9" y="43.0" width="3" height="1.0" fill="#27ae60" opacity="0.55"/><rect x="336.6" y="42.2" width="3" height="1.8" fill="#27ae60" opacity="0.55"/><rect x="344.3" y="42.4" width="3" height="1.6" fill="#e74c3c" opacity="0.55"/><rect x="352.0" y="42.5" width="3" height="1.5" fill="#e74c3c" opacity="0.55"/><rect x="359.7" y="41.3" width="3" height="2.7" fill="#e74c3c" opacity="0.55"/><rect x="367.4" y="41.5" width="3" height="2.5" fill="#27ae60" opacity="0.55"/><rect x="375.1" y="39.5" width="3" height="4.5" fill="#27ae60" opacity="0.55"/><rect x="382.8" y="39.4" width="3" height="4.6" fill="#e74c3c" opacity="0.55"/><rect x="390.5" y="39.4" width="3" height="4.6" fill="#27ae60" opacity="0.55"/>
-  <circle cx="392.0" cy="27.5" r="2.5" fill="#27ae60"/>
-  <text x="392" y="24.5" font-size="9" fill="#27ae60" text-anchor="end" font-weight="bold">164.88 -1.77%</text>
-  <text x="30" y="57" font-size="9" fill="#999">09:35</text><text x="211.0" y="57" font-size="9" fill="#999" text-anchor="middle">13:05</text><text x="392" y="57" font-size="9" fill="#999" text-anchor="end">15:00</text>
-</svg>
+  <polyline points="30.0,10.9 37.7,12.9 45.4,13.6 53.1,14.2 60.8,14.6 68.5,15.5 76.2,15.3 83.9,15.1 91.6,15.2 99.3,15.4 107.0,15.5 114.7,15.8 122.4,16.1 130.1,16.4 137.8,16.6 145.5,16.7 153.2,16.7 160.9,16.7 168.6,16.8 176.3,16.9 184.0,16.9 191.7,17.0 199.4,17.2 207.1,17.3 214.9,17.7 222.6,17.9 230.3,18.2 238.0,18.5 245.7,18.7 253.4,18.8 261.1,18.9 268.8,18.9 276.5,19.0 284.2,19.1 291.9,19.1 299.6,19.2 307.3,19.3 315.0,19.4 322.7,19.5 330.4,19.5 338.1,19.7 345.8,19.8 353.5,19.9 361.2,20.0 368.9,20.2 376.6,20.5 384.3,20.7 392.0,21.0" fill="none" stroke="#f39c12" stroke-width="1" stroke-dasharray="4,2" opacity="0.85"/>
+  <polyline points="30.0,13.0 37.7,16.6 45.4,17.1 53.1,19.2 60.8,20.0 68.5,20.3 76.2,9.7 83.9,15.6 91.6,19.8 99.3,18.2 107.0,19.1 114.7,21.2 122.4,22.7 130.1,23.3 137.8,21.7 145.5,18.1 153.2,19.1 160.9,20.3 168.6,20.7 176.3,22.7 184.0,22.4 191.7,23.8 199.4,23.6 207.1,25.6 214.9,27.0 222.6,25.3 230.3,29.2 238.0,30.3 245.7,29.7 253.4,25.8 261.1,21.3 268.8,22.9 276.5,24.6 284.2,25.2 291.9,24.6 299.6,26.4 307.3,27.5 315.0,26.1 322.7,25.9 330.4,26.4 338.1,27.1 345.8,26.8 353.5,26.6 361.2,25.7 368.9,26.8 376.6,27.3 384.3,27.3 392.0,27.5" fill="none" style="stroke:var(--color-down)" stroke-width="1.4"/>
+  <rect x="28.5" y="32.0" width="3" height="12.0" style="fill:var(--color-down)" opacity="0.5"/><rect x="36.2" y="36.5" width="3" height="7.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="43.9" y="37.9" width="3" height="6.1" style="fill:var(--color-down)" opacity="0.5"/><rect x="51.6" y="39.0" width="3" height="5.0" style="fill:var(--color-down)" opacity="0.5"/><rect x="59.3" y="40.2" width="3" height="3.8" style="fill:var(--color-down)" opacity="0.5"/><rect x="67.0" y="39.3" width="3" height="4.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="74.7" y="39.0" width="3" height="5.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="82.4" y="39.8" width="3" height="4.2" style="fill:var(--color-down)" opacity="0.5"/><rect x="90.1" y="41.4" width="3" height="2.6" style="fill:var(--color-down)" opacity="0.5"/><rect x="97.8" y="41.6" width="3" height="2.4" style="fill:var(--color-up)" opacity="0.5"/><rect x="105.5" y="42.1" width="3" height="1.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="113.2" y="40.9" width="3" height="3.1" style="fill:var(--color-down)" opacity="0.5"/><rect x="120.9" y="41.5" width="3" height="2.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="128.6" y="41.3" width="3" height="2.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="136.3" y="42.0" width="3" height="2.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="144.0" y="42.7" width="3" height="1.3" style="fill:var(--color-up)" opacity="0.5"/><rect x="151.7" y="42.8" width="3" height="1.2" style="fill:var(--color-down)" opacity="0.5"/><rect x="159.4" y="41.7" width="3" height="2.3" style="fill:var(--color-down)" opacity="0.5"/><rect x="167.1" y="43.1" width="3" height="0.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="174.8" y="43.0" width="3" height="1.0" style="fill:var(--color-down)" opacity="0.5"/><rect x="182.5" y="43.4" width="3" height="0.6" style="fill:var(--color-up)" opacity="0.5"/><rect x="190.2" y="42.6" width="3" height="1.4" style="fill:var(--color-down)" opacity="0.5"/><rect x="197.9" y="42.9" width="3" height="1.1" style="fill:var(--color-up)" opacity="0.5"/><rect x="205.6" y="42.2" width="3" height="1.8" style="fill:var(--color-down)" opacity="0.5"/><rect x="213.4" y="40.5" width="3" height="3.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="221.1" y="42.5" width="3" height="1.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="228.8" y="41.9" width="3" height="2.1" style="fill:var(--color-down)" opacity="0.5"/><rect x="236.5" y="41.5" width="3" height="2.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="244.2" y="42.9" width="3" height="1.1" style="fill:var(--color-up)" opacity="0.5"/><rect x="251.9" y="42.6" width="3" height="1.4" style="fill:var(--color-up)" opacity="0.5"/><rect x="259.6" y="42.5" width="3" height="1.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="267.3" y="42.3" width="3" height="1.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="275.0" y="42.8" width="3" height="1.2" style="fill:var(--color-down)" opacity="0.5"/><rect x="282.7" y="43.2" width="3" height="0.8" style="fill:var(--color-down)" opacity="0.5"/><rect x="290.4" y="43.0" width="3" height="1.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="298.1" y="42.8" width="3" height="1.2" style="fill:var(--color-down)" opacity="0.5"/><rect x="305.8" y="42.4" width="3" height="1.6" style="fill:var(--color-down)" opacity="0.5"/><rect x="313.5" y="43.1" width="3" height="0.9" style="fill:var(--color-up)" opacity="0.5"/><rect x="321.2" y="42.6" width="3" height="1.4" style="fill:var(--color-up)" opacity="0.5"/><rect x="328.9" y="43.0" width="3" height="1.0" style="fill:var(--color-down)" opacity="0.5"/><rect x="336.6" y="42.2" width="3" height="1.8" style="fill:var(--color-down)" opacity="0.5"/><rect x="344.3" y="42.4" width="3" height="1.6" style="fill:var(--color-up)" opacity="0.5"/><rect x="352.0" y="42.5" width="3" height="1.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="359.7" y="41.3" width="3" height="2.7" style="fill:var(--color-up)" opacity="0.5"/><rect x="367.4" y="41.5" width="3" height="2.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="375.1" y="39.5" width="3" height="4.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="382.8" y="39.4" width="3" height="4.6" style="fill:var(--color-up)" opacity="0.5"/><rect x="390.5" y="39.4" width="3" height="4.6" style="fill:var(--color-down)" opacity="0.5"/>
+  <circle cx="392.0" cy="27.5" r="2.5" style="stroke:var(--color-down)"/>
+  <text x="392" y="24.5" font-size="10" style="stroke:var(--color-down);fill-opacity:1" text-anchor="end" font-weight="bold">164.88 -1.77%</text>
+  <text x="30" y="57" font-size="10" fill="#999">09:35</text><text x="211.0" y="57" font-size="10" fill="#999" text-anchor="middle">13:05</text><text x="392" y="57" font-size="10" fill="#999" text-anchor="end">15:00</text>
+</svg></div>
         </div>
         <div class="detail-hint">点击卡片可折叠</div>
       </div>
     </div>
 
-    <div class="card pos-card" onclick="toggleDetail('detail-2')">
+    <div class="card pos-card card-urgent animate-pulse" onclick="toggleDetail('detail-2')">
       <div class="pos-header">
         <div>
           <span class="pos-name">鹏鼎控股</span>
@@ -1438,17 +1633,17 @@ body {
           <span class="row-label">持仓</span><span>200股</span>
         </div>
         <div class="row-info">
-          <span class="row-label">市值/仓位</span><span>1.59万元 · <b style="color:#333">12.8%</b></span>
+          <span class="row-label">市值/仓位</span><span>1.59万元 · <span class="weight-badge weight-ok">12.8%</span></span>
         </div>
-        <div class="pos-profit" style="color:#27ae60">
+        <div class="pos-profit-hero" style="color:#27ae60">
           <span class="profit-amount">-2030.00元</span>
           <span class="profit-pct">-11.32%</span>
         </div>
         <div class="row-info">
-          <span class="row-label">止损位</span><span>86.112</span>
+          <span class="row-label">止损位</span><span class="price-stop">86.112</span>
         </div>
         <div class="row-info">
-          <span class="row-label">止盈位</span><span>T1:98.67 / T2:103.16</span>
+          <span class="row-label">止盈位</span><span class="price-target">T1:98.67 / T2:103.16</span>
         </div>
         <div class="row-info">
           <span class="row-label">止损距离</span>
@@ -1471,46 +1666,39 @@ body {
         <div class="detail-line"><span class="row-label">ATR止损依据</span><span>真ATR14=4.619, 2×ATR=9.239</span></div>
         <div class="detail-line detail-sell"><span class="row-label">卖出规则</span><span>单票14.2%合规，持有观察；接近MA20支撑87.8</span></div>
         
-        <div style="border-left:3px solid #27ae60;background:#fafafa;border-radius:0 6px 6px 0;padding:8px 10px;margin:4px 0;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div class="mf-block" style="--mf-accent:#27ae60">
+          <div class="mf-row">
             <span class="row-label">💰 主力资金流向</span>
-            <span style="color:#e74c3c;font-weight:bold;">+392万</span>
+            <span style="color:var(--color-up);font-weight:bold;">+392万</span>
           </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:2px;">
-            <span>超大单 -65万</span><span>大单 +456万</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:6px;">
-            <span>中单 +2890万</span><span>小单 -3281万</span>
-          </div>
-          <div style="font-size:12px;color:#555;line-height:1.5;border-top:1px dashed #ddd;padding-top:4px;">
-            <b>解读：</b>主力小幅流入；超大单撤离但大单接盘，大资金出货特征，警惕；资金流入但股价不涨，疑似诱多
-          </div>
-          <div style="font-size:12px;color:#27ae60;font-weight:bold;margin-top:2px;">
-            资金面中性，按原计划操作，重点看止损止盈
-          </div>
-          <div style="font-size:10px;color:#bbb;margin-top:2px;">⚠️ 单日数据仅供参考，需结合连续3-5天趋势和价格配合判断</div>
+          <div class="mf-sub"><span>超大单 -65万</span><span>大单 +456万</span></div>
+          <div class="mf-sub" style="margin-bottom:6px;"><span>中单 +2890万</span><span>小单 -3281万</span></div>
+          <div class="mf-interpret"><b>解读：</b>主力小幅流入；超大单撤离但大单接盘，大资金出货特征，警惕；资金流入但股价不涨，疑似诱多</div>
+          <div class="mf-advice">资金面中性，按原计划操作，重点看止损止盈</div>
+          <div class="mf-note">⚠️ 单日数据仅供参考，需结合连续3-5天趋势和价格配合判断</div>
         </div>
         
-        <div style="border-left:3px solid #e8e8e8;background:#fafafa;border-radius:0 6px 6px 0;padding:6px 10px;margin:4px 0;">
-          <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="mf-block" style="--mf-accent:var(--color-border);background:var(--color-bg-subtle)">
+          <div class="mf-row">
             <span class="row-label">📈 分时形态 </span>
-            <span style="font-size:13px;font-weight:bold;color:#333;">缩量横盘</span>
+            <span style="font-size:13px;font-weight:bold;color:var(--color-text-primary);">缩量横盘</span>
           </div>
-          <div style="font-size:12px;color:#666;margin-top:2px;">均价线位置:均价线下方 · 尾盘:平稳</div>
-          <div style="font-size:12px;color:#666;margin-top:2px;line-height:1.4;">量价:缩量横盘(量比0.80)，均价线下方，走势平稳</div>
+          <div class="mf-sub" style="margin-bottom:2px;">均价线位置:均价线下方 · 尾盘:平稳</div>
+          <div class="mf-sub" style="margin-bottom:0;line-height:1.4;">量价:缩量横盘(量比0.80)，均价线下方，走势平稳</div>
         </div>
         <div class="detail-line"><span class="row-label">📰 公告情报</span><span style="color:#999;">近期无重要公告</span></div>
         <div class="detail-line"><span class="row-label">🐉 龙虎榜</span><span style="color:#999;">未上榜</span></div>
-        <div style="margin:6px 0;">
+        <div class="mini-chart" style="margin:6px 0;">
           <div class="row-label" style="margin-bottom:2px;">当日分时（9/30）</div>
-          <svg viewBox="0 0 400 60" style="width:100%;height:auto;display:block;margin:4px 0;">
+          <div class="mini-chart"><svg viewBox="0 0 400 60" style="width:100%;height:auto;display:block;margin:4px 0;">
   <line x1="30" y1="9.7" x2="392" y2="9.7" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,2"/>
-  <polyline points="30.0,9.7 37.7,15.0 45.4,15.0 53.1,18.4 60.8,18.4 68.5,18.4 76.2,16.7 83.9,19.9 91.6,22.8 99.3,21.3 107.0,23.2 114.7,25.6 122.4,27.4 130.1,26.4 137.8,26.4 145.5,25.2 153.2,24.2 160.9,25.5 168.6,26.5 176.3,26.8 184.0,27.0 191.7,27.1 199.4,27.7 207.1,28.7 214.9,27.3 222.6,27.0 230.3,28.8 238.0,28.1 245.7,27.2 253.4,25.4 261.1,21.3 268.8,24.6 276.5,25.9 284.2,26.5 291.9,27.2 299.6,28.6 307.3,28.3 315.0,28.2 322.7,29.2 330.4,29.7 338.1,29.9 345.8,29.4 353.5,29.5 361.2,29.1 368.9,30.0 376.6,30.3 384.3,30.3 392.0,29.9" fill="none" stroke="#27ae60" stroke-width="1.4"/>
-  <rect x="28.5" y="32.0" width="3" height="12.0" fill="#27ae60" opacity="0.55"/><rect x="36.2" y="36.6" width="3" height="7.4" fill="#27ae60" opacity="0.55"/><rect x="43.9" y="40.0" width="3" height="4.0" fill="#e74c3c" opacity="0.55"/><rect x="51.6" y="41.6" width="3" height="2.4" fill="#27ae60" opacity="0.55"/><rect x="59.3" y="42.2" width="3" height="1.8" fill="#e74c3c" opacity="0.55"/><rect x="67.0" y="42.3" width="3" height="1.7" fill="#e74c3c" opacity="0.55"/><rect x="74.7" y="42.5" width="3" height="1.5" fill="#e74c3c" opacity="0.55"/><rect x="82.4" y="42.5" width="3" height="1.5" fill="#27ae60" opacity="0.55"/><rect x="90.1" y="41.2" width="3" height="2.8" fill="#27ae60" opacity="0.55"/><rect x="97.8" y="42.6" width="3" height="1.4" fill="#e74c3c" opacity="0.55"/><rect x="105.5" y="42.9" width="3" height="1.1" fill="#27ae60" opacity="0.55"/><rect x="113.2" y="42.6" width="3" height="1.4" fill="#27ae60" opacity="0.55"/><rect x="120.9" y="42.3" width="3" height="1.7" fill="#27ae60" opacity="0.55"/><rect x="128.6" y="43.1" width="3" height="0.9" fill="#e74c3c" opacity="0.55"/><rect x="136.3" y="43.3" width="3" height="0.7" fill="#e74c3c" opacity="0.55"/><rect x="144.0" y="43.4" width="3" height="0.6" fill="#e74c3c" opacity="0.55"/><rect x="151.7" y="43.3" width="3" height="0.7" fill="#e74c3c" opacity="0.55"/><rect x="159.4" y="43.3" width="3" height="0.7" fill="#27ae60" opacity="0.55"/><rect x="167.1" y="43.5" width="3" height="0.5" fill="#27ae60" opacity="0.55"/><rect x="174.8" y="43.0" width="3" height="1.0" fill="#27ae60" opacity="0.55"/><rect x="182.5" y="43.6" width="3" height="0.4" fill="#27ae60" opacity="0.55"/><rect x="190.2" y="43.4" width="3" height="0.6" fill="#27ae60" opacity="0.55"/><rect x="197.9" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="205.6" y="42.9" width="3" height="1.1" fill="#27ae60" opacity="0.55"/><rect x="213.4" y="42.0" width="3" height="2.0" fill="#e74c3c" opacity="0.55"/><rect x="221.1" y="43.4" width="3" height="0.6" fill="#e74c3c" opacity="0.55"/><rect x="228.8" y="43.4" width="3" height="0.6" fill="#27ae60" opacity="0.55"/><rect x="236.5" y="43.2" width="3" height="0.8" fill="#e74c3c" opacity="0.55"/><rect x="244.2" y="43.5" width="3" height="0.5" fill="#e74c3c" opacity="0.55"/><rect x="251.9" y="43.1" width="3" height="0.9" fill="#e74c3c" opacity="0.55"/><rect x="259.6" y="41.6" width="3" height="2.4" fill="#e74c3c" opacity="0.55"/><rect x="267.3" y="41.9" width="3" height="2.1" fill="#27ae60" opacity="0.55"/><rect x="275.0" y="43.4" width="3" height="0.6" fill="#27ae60" opacity="0.55"/><rect x="282.7" y="43.6" width="3" height="0.4" fill="#27ae60" opacity="0.55"/><rect x="290.4" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="298.1" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="305.8" y="43.2" width="3" height="0.8" fill="#e74c3c" opacity="0.55"/><rect x="313.5" y="43.6" width="3" height="0.4" fill="#e74c3c" opacity="0.55"/><rect x="321.2" y="43.1" width="3" height="0.9" fill="#27ae60" opacity="0.55"/><rect x="328.9" y="42.9" width="3" height="1.1" fill="#27ae60" opacity="0.55"/><rect x="336.6" y="43.2" width="3" height="0.8" fill="#27ae60" opacity="0.55"/><rect x="344.3" y="43.4" width="3" height="0.6" fill="#e74c3c" opacity="0.55"/><rect x="352.0" y="43.3" width="3" height="0.7" fill="#27ae60" opacity="0.55"/><rect x="359.7" y="43.4" width="3" height="0.6" fill="#e74c3c" opacity="0.55"/><rect x="367.4" y="42.8" width="3" height="1.2" fill="#27ae60" opacity="0.55"/><rect x="375.1" y="42.3" width="3" height="1.7" fill="#27ae60" opacity="0.55"/><rect x="382.8" y="42.0" width="3" height="2.0" fill="#e74c3c" opacity="0.55"/><rect x="390.5" y="42.8" width="3" height="1.2" fill="#e74c3c" opacity="0.55"/>
-  <circle cx="392.0" cy="29.9" r="2.5" fill="#27ae60"/>
-  <text x="392" y="26.9" font-size="9" fill="#27ae60" text-anchor="end" font-weight="bold">79.55 -3.98%</text>
-  <text x="30" y="57" font-size="9" fill="#999">09:35</text><text x="211.0" y="57" font-size="9" fill="#999" text-anchor="middle">13:05</text><text x="392" y="57" font-size="9" fill="#999" text-anchor="end">15:00</text>
-</svg>
+  <polyline points="30.0,15.1 37.7,14.1 45.4,14.4 53.1,14.6 60.8,14.8 68.5,15.1 76.2,15.2 83.9,15.4 91.6,15.9 99.3,16.1 107.0,16.3 114.7,16.6 122.4,17.0 130.1,17.3 137.8,17.4 145.5,17.5 153.2,17.7 160.9,17.8 168.6,17.9 176.3,18.1 184.0,18.2 191.7,18.3 199.4,18.4 207.1,18.7 214.9,19.0 222.6,19.1 230.3,19.2 238.0,19.4 245.7,19.5 253.4,19.6 261.1,19.7 268.8,19.8 276.5,19.9 284.2,19.9 291.9,20.0 299.6,20.1 307.3,20.3 315.0,20.3 322.7,20.4 330.4,20.6 338.1,20.7 345.8,20.8 353.5,20.8 361.2,20.9 368.9,21.1 376.6,21.3 384.3,21.5 392.0,21.7" fill="none" stroke="#f39c12" stroke-width="1" stroke-dasharray="4,2" opacity="0.85"/>
+  <polyline points="30.0,9.7 37.7,15.0 45.4,15.0 53.1,18.4 60.8,18.4 68.5,18.4 76.2,16.7 83.9,19.9 91.6,22.8 99.3,21.3 107.0,23.2 114.7,25.6 122.4,27.4 130.1,26.4 137.8,26.4 145.5,25.2 153.2,24.2 160.9,25.5 168.6,26.5 176.3,26.8 184.0,27.0 191.7,27.1 199.4,27.7 207.1,28.7 214.9,27.3 222.6,27.0 230.3,28.8 238.0,28.1 245.7,27.2 253.4,25.4 261.1,21.3 268.8,24.6 276.5,25.9 284.2,26.5 291.9,27.2 299.6,28.6 307.3,28.3 315.0,28.2 322.7,29.2 330.4,29.7 338.1,29.9 345.8,29.4 353.5,29.5 361.2,29.1 368.9,30.0 376.6,30.3 384.3,30.3 392.0,29.9" fill="none" style="stroke:var(--color-down)" stroke-width="1.4"/>
+  <rect x="28.5" y="32.0" width="3" height="12.0" style="fill:var(--color-down)" opacity="0.5"/><rect x="36.2" y="36.6" width="3" height="7.4" style="fill:var(--color-down)" opacity="0.5"/><rect x="43.9" y="40.0" width="3" height="4.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="51.6" y="41.6" width="3" height="2.4" style="fill:var(--color-down)" opacity="0.5"/><rect x="59.3" y="42.2" width="3" height="1.8" style="fill:var(--color-up)" opacity="0.5"/><rect x="67.0" y="42.3" width="3" height="1.7" style="fill:var(--color-up)" opacity="0.5"/><rect x="74.7" y="42.5" width="3" height="1.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="82.4" y="42.5" width="3" height="1.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="90.1" y="41.2" width="3" height="2.8" style="fill:var(--color-down)" opacity="0.5"/><rect x="97.8" y="42.6" width="3" height="1.4" style="fill:var(--color-up)" opacity="0.5"/><rect x="105.5" y="42.9" width="3" height="1.1" style="fill:var(--color-down)" opacity="0.5"/><rect x="113.2" y="42.6" width="3" height="1.4" style="fill:var(--color-down)" opacity="0.5"/><rect x="120.9" y="42.3" width="3" height="1.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="128.6" y="43.1" width="3" height="0.9" style="fill:var(--color-up)" opacity="0.5"/><rect x="136.3" y="43.3" width="3" height="0.7" style="fill:var(--color-up)" opacity="0.5"/><rect x="144.0" y="43.4" width="3" height="0.6" style="fill:var(--color-up)" opacity="0.5"/><rect x="151.7" y="43.3" width="3" height="0.7" style="fill:var(--color-up)" opacity="0.5"/><rect x="159.4" y="43.3" width="3" height="0.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="167.1" y="43.5" width="3" height="0.5" style="fill:var(--color-down)" opacity="0.5"/><rect x="174.8" y="43.0" width="3" height="1.0" style="fill:var(--color-down)" opacity="0.5"/><rect x="182.5" y="43.6" width="3" height="0.4" style="fill:var(--color-down)" opacity="0.5"/><rect x="190.2" y="43.4" width="3" height="0.6" style="fill:var(--color-down)" opacity="0.5"/><rect x="197.9" y="43.1" width="3" height="0.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="205.6" y="42.9" width="3" height="1.1" style="fill:var(--color-down)" opacity="0.5"/><rect x="213.4" y="42.0" width="3" height="2.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="221.1" y="43.4" width="3" height="0.6" style="fill:var(--color-up)" opacity="0.5"/><rect x="228.8" y="43.4" width="3" height="0.6" style="fill:var(--color-down)" opacity="0.5"/><rect x="236.5" y="43.2" width="3" height="0.8" style="fill:var(--color-up)" opacity="0.5"/><rect x="244.2" y="43.5" width="3" height="0.5" style="fill:var(--color-up)" opacity="0.5"/><rect x="251.9" y="43.1" width="3" height="0.9" style="fill:var(--color-up)" opacity="0.5"/><rect x="259.6" y="41.6" width="3" height="2.4" style="fill:var(--color-up)" opacity="0.5"/><rect x="267.3" y="41.9" width="3" height="2.1" style="fill:var(--color-down)" opacity="0.5"/><rect x="275.0" y="43.4" width="3" height="0.6" style="fill:var(--color-down)" opacity="0.5"/><rect x="282.7" y="43.6" width="3" height="0.4" style="fill:var(--color-down)" opacity="0.5"/><rect x="290.4" y="43.1" width="3" height="0.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="298.1" y="43.1" width="3" height="0.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="305.8" y="43.2" width="3" height="0.8" style="fill:var(--color-up)" opacity="0.5"/><rect x="313.5" y="43.6" width="3" height="0.4" style="fill:var(--color-up)" opacity="0.5"/><rect x="321.2" y="43.1" width="3" height="0.9" style="fill:var(--color-down)" opacity="0.5"/><rect x="328.9" y="42.9" width="3" height="1.1" style="fill:var(--color-down)" opacity="0.5"/><rect x="336.6" y="43.2" width="3" height="0.8" style="fill:var(--color-down)" opacity="0.5"/><rect x="344.3" y="43.4" width="3" height="0.6" style="fill:var(--color-up)" opacity="0.5"/><rect x="352.0" y="43.3" width="3" height="0.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="359.7" y="43.4" width="3" height="0.6" style="fill:var(--color-up)" opacity="0.5"/><rect x="367.4" y="42.8" width="3" height="1.2" style="fill:var(--color-down)" opacity="0.5"/><rect x="375.1" y="42.3" width="3" height="1.7" style="fill:var(--color-down)" opacity="0.5"/><rect x="382.8" y="42.0" width="3" height="2.0" style="fill:var(--color-up)" opacity="0.5"/><rect x="390.5" y="42.8" width="3" height="1.2" style="fill:var(--color-up)" opacity="0.5"/>
+  <circle cx="392.0" cy="29.9" r="2.5" style="stroke:var(--color-down)"/>
+  <text x="392" y="26.9" font-size="10" style="stroke:var(--color-down);fill-opacity:1" text-anchor="end" font-weight="bold">79.55 -3.98%</text>
+  <text x="30" y="57" font-size="10" fill="#999">09:35</text><text x="211.0" y="57" font-size="10" fill="#999" text-anchor="middle">13:05</text><text x="392" y="57" font-size="10" fill="#999" text-anchor="end">15:00</text>
+</svg></div>
         </div>
         <div class="detail-hint">点击卡片可折叠</div>
       </div>
@@ -1533,27 +1721,27 @@ body {
 <div class="card">
 <div class="card-title">核心池（当前持仓）</div>
 
-            <div class="row-info" style="cursor:pointer" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
+            <div class="row-info clickable-row" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
               <span class="row-label">莲花控股 <span class="pos-code">600186</span></span>
-              <span style="color:#27ae60;font-weight:bold">-5.39%</span>
+              <span class="text-down">-5.39%</span>
             </div>
 
-            <div class="row-info" style="cursor:pointer" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
+            <div class="row-info clickable-row" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
               <span class="row-label">光迅科技 <span class="pos-code">002281</span></span>
-              <span style="color:#27ae60;font-weight:bold">-14.21%</span>
+              <span class="text-down">-14.21%</span>
             </div>
 
-            <div class="row-info" style="cursor:pointer" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
+            <div class="row-info clickable-row" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))">
               <span class="row-label">鹏鼎控股 <span class="pos-code">002938</span></span>
-              <span style="color:#27ae60;font-weight:bold">-11.32%</span>
+              <span class="text-down">-11.32%</span>
             </div>
 </div>
 <div class="card">
 <div class="card-title">候选池（今日信号）</div>
 <div class="row-note">暂无候选（今日无信号）</div>
 </div>
-<div class="card"><div class="card-title" style="color:#e74c3c">🎯 信号池</div><div class="row-note">暂无信号股（信号扫描命中后自动入池）</div></div>
-<div class="card"><div class="card-title" style="color:#1976d2">👑 龙头池</div><div class="row-note">暂无龙头股（需严格筛选行业龙头后加入）</div></div></div>
+<div class="card"><div class="card-title" style="color:var(--color-up)">🎯 信号池</div><div class="row-note">暂无信号股（信号扫描命中后自动入池）</div></div>
+<div class="card"><div class="card-title" style="color:var(--color-info)">👑 龙头池</div><div class="row-note">暂无龙头股（需严格筛选行业龙头后加入）</div></div></div>
   <div id="sec-trades" class="section">
     <div class="card empty-card">
       <div class="empty-icon">📊</div>
@@ -1622,41 +1810,41 @@ body {
       <button class="sort-btn" id="btn-sort-pnl" onclick="sortLedger('pnl')">按盈亏%</button>
     </div>
 <div class="table-wrap">
-<table class="ledger-table" id="ledgerTable">
+<table class="ledger-table data-table" id="ledgerTable">
       <thead><tr>
         <th>股票</th><th>买入</th><th>卖出</th><th>天</th><th>买价</th><th>卖价</th>
-        <th>盈亏%</th><th>战法</th><th>卖出原因</th><th>错误类型</th>
+        <th class="num">盈亏%</th><th>战法</th><th>卖出原因</th><th>错误类型</th>
       </tr></thead><tbody>
 
         <tr data-pct="0.0451" data-date="20260929.0">
           <td class="td-name">黄河旋风<div class="td-code">600172.SH</div></td>
-          <td>09-22</td><td>09-29</td><td>4</td>
-          <td>15.3</td><td>15.99</td>
-          <td style="color:#e74c3c;font-weight:bold">+4.5%</td>
+          <td>09-22</td><td>09-29</td><td class="num">4</td>
+          <td class="num">15.3</td><td class="num">15.99</td>
+          <td class="num text-up">+4.5%</td>
           <td>REAL</td><td>止损</td><td>-</td>
         </tr>
 
         <tr data-pct="-0.0356" data-date="20260929.0">
           <td class="td-name">莲花控股<div class="td-code">600186.SH</div></td>
-          <td>09-22</td><td>09-29</td><td>4</td>
-          <td>12.184</td><td>11.75</td>
-          <td style="color:#27ae60;font-weight:bold">-3.6%</td>
+          <td>09-22</td><td>09-29</td><td class="num">4</td>
+          <td class="num">12.184</td><td class="num">11.75</td>
+          <td class="num text-down">-3.6%</td>
           <td>REAL</td><td>止损</td><td>-</td>
         </tr>
 
         <tr data-pct="-0.1121" data-date="20260928.0">
           <td class="td-name">豫能控股<div class="td-code">001896.SZ</div></td>
-          <td>09-22</td><td>09-28</td><td>3</td>
-          <td>12.22</td><td>10.85</td>
-          <td style="color:#27ae60;font-weight:bold">-11.2%</td>
+          <td>09-22</td><td>09-28</td><td class="num">3</td>
+          <td class="num">12.22</td><td class="num">10.85</td>
+          <td class="num text-down">-11.2%</td>
           <td>REAL</td><td>止损</td><td>-</td>
         </tr>
 
         <tr data-pct="-9999" data-date="20260923.0">
           <td class="td-name">百合花<div class="td-code">603823.SH</div></td>
-          <td>-</td><td>09-23</td><td>-</td>
-          <td>-</td><td>51.35</td>
-          <td style="color:#999;font-weight:bold">-</td>
+          <td>-</td><td>09-23</td><td class="num">-</td>
+          <td class="num">-</td><td class="num">51.35</td>
+          <td class="num ">-</td>
           <td>-</td><td>止损</td><td>-</td>
         </tr>
 </tbody></table></div>
@@ -1926,40 +2114,40 @@ body {
 <div class="card-title">纪律评分（复盘联动）</div>
 <div class="row-info"><span class="row-label">日期</span><span>2026-09-30</span></div>
 <div class="row-info"><span class="row-label">总分/评级</span><span style="color:#e74c3c;font-weight:bold">9.0分 · D（不及格）</span></div>
-<div class="row-note" style="color:#e74c3c">🔴 止损逾期未执行 3 只，需优先处理：</div>
-<div class="row-info"><span class="row-label">莲花控股(600186)</span><span style="color:#e74c3c">逾期3天 · 浮亏-5.39%</span></div>
-<div class="row-info"><span class="row-label">光迅科技(002281)</span><span style="color:#e74c3c">逾期4天 · 浮亏-14.21%</span></div>
-<div class="row-info"><span class="row-label">鹏鼎控股(002938)</span><span style="color:#e74c3c">逾期4天 · 浮亏-11.32%</span></div>
+<div class="alert-block alert-block-danger" style="margin-bottom:6px">🔴 止损逾期未执行 3 只，需优先处理：</div>
+<div class="row-info"><span class="row-label">莲花控股(600186)</span><span class="text-down">逾期3天 · 浮亏-5.39%</span></div>
+<div class="row-info"><span class="row-label">光迅科技(002281)</span><span class="text-down">逾期4天 · 浮亏-14.21%</span></div>
+<div class="row-info"><span class="row-label">鹏鼎控股(002938)</span><span class="text-down">逾期4天 · 浮亏-11.32%</span></div>
 </div></div>
   <div id="sec-risk" class="section"><div class="card">
 <div class="card-title">风控预警</div>
 
-            <div class="alert-row" style="background:#fff3e0;border-left:4px solid #e67e22">
-              <div class="alert-label" style="color:#e67e22">仓位超限</div>
+            <div class="alert-row animate-pulse" style="background:#fff7e6;border-left:4px solid var(--color-warn)">
+              <div class="alert-label" style="color:var(--color-warn)">仓位超限</div>
               <div class="alert-name">莲花控股 <span class="pos-code">600186</span></div>
               <div class="alert-msg">莲花控股仓位25.9%，超限73%，建议减仓至15%以内</div>
             </div>
 
-            <div class="alert-row" style="background:#fff3e0;border-left:4px solid #e67e22">
-              <div class="alert-label" style="color:#e67e22">仓位超限</div>
+            <div class="alert-row animate-pulse" style="background:#fff7e6;border-left:4px solid var(--color-warn)">
+              <div class="alert-label" style="color:var(--color-warn)">仓位超限</div>
               <div class="alert-name">光迅科技 <span class="pos-code">002281</span></div>
               <div class="alert-msg">光迅科技仓位26.6%，超限77%，建议减仓至15%以内</div>
             </div>
 
-            <div class="alert-row" style="background:#ffeaea;border-left:4px solid #e74c3c">
-              <div class="alert-label" style="color:#e74c3c">止损预警</div>
+            <div class="alert-row animate-pulse" style="background:#fff5f5;border-left:4px solid var(--color-up)">
+              <div class="alert-label" style="color:var(--color-up)">止损预警</div>
               <div class="alert-name">莲花控股 <span class="pos-code">600186</span></div>
               <div class="alert-msg">距止损位仅 -1.47%（止损价 11.63）</div>
             </div>
 
-            <div class="alert-row" style="background:#ffeaea;border-left:4px solid #e74c3c">
-              <div class="alert-label" style="color:#e74c3c">止损预警</div>
+            <div class="alert-row animate-pulse" style="background:#fff5f5;border-left:4px solid var(--color-up)">
+              <div class="alert-label" style="color:var(--color-up)">止损预警</div>
               <div class="alert-name">光迅科技 <span class="pos-code">002281</span></div>
               <div class="alert-msg">距止损位仅 -11.90%（止损价 184.51）</div>
             </div>
 
-            <div class="alert-row" style="background:#ffeaea;border-left:4px solid #e74c3c">
-              <div class="alert-label" style="color:#e74c3c">止损预警</div>
+            <div class="alert-row animate-pulse" style="background:#fff5f5;border-left:4px solid var(--color-up)">
+              <div class="alert-label" style="color:var(--color-up)">止损预警</div>
               <div class="alert-name">鹏鼎控股 <span class="pos-code">002938</span></div>
               <div class="alert-msg">距止损位仅 -8.25%（止损价 86.11）</div>
             </div>
@@ -1967,343 +2155,354 @@ body {
 <div class="card">
 <div class="card-title">📊 持仓风控参数明细</div>
 
-        <div style="border-left:4px solid #e74c3c;padding:8px 10px;margin-bottom:8px;background:#fafafa;border-radius:0 6px 6px 0;">
-          <div style="font-size:15px;font-weight:bold">莲花控股 <span style="color:#999;font-weight:normal;font-size:12px">(600186)</span> <span class="tag tag-warn">VIOLATION</span></div>
+        <div class="mf-block animate-pulse" style="--mf-accent:var(--color-up);margin-bottom:8px;">
+          <div style="font-size:15px;font-weight:bold">莲花控股 <span class="text-muted-sm" style="font-weight:normal">(600186)</span> <span class="badge badge-up">VIOLATION</span></div>
           <div class="detail-line"><span class="row-label">现价</span><span>11.46</span></div>
-          <div class="detail-line"><span class="row-label">ATR止损价</span><span style="color:#e74c3c;font-weight:bold">11.629</span></div>
-          <div class="detail-line"><span class="row-label">止损距离</span><span style="color:#e74c3c;font-weight:bold">⚠️已击穿(-1.5%)</span></div>
-          <div class="detail-line"><span class="row-label">止盈T1/T2</span><span style="color:#27ae60">13.75 / 14.5</span></div>
+          <div class="detail-line"><span class="row-label">ATR止损价</span><span class="price-stop">11.629</span></div>
+          <div class="detail-line"><span class="row-label">止损距离</span><span style="color:var(--color-up);font-weight:bold">⚠️已击穿(-1.5%)</span></div>
+          <div class="detail-line"><span class="row-label">止盈T1/T2</span><span class="price-target">13.75 / 14.5</span></div>
           <div class="detail-line"><span class="row-label">持仓天数</span><span>8天</span></div>
         </div>
 
-        <div style="border-left:4px solid #e74c3c;padding:8px 10px;margin-bottom:8px;background:#fafafa;border-radius:0 6px 6px 0;">
-          <div style="font-size:15px;font-weight:bold">光迅科技 <span style="color:#999;font-weight:normal;font-size:12px">(002281)</span> <span class="tag tag-warn">VIOLATION</span></div>
+        <div class="mf-block animate-pulse" style="--mf-accent:var(--color-up);margin-bottom:8px;">
+          <div style="font-size:15px;font-weight:bold">光迅科技 <span class="text-muted-sm" style="font-weight:normal">(002281)</span> <span class="badge badge-up">VIOLATION</span></div>
           <div class="detail-line"><span class="row-label">现价</span><span>164.88</span></div>
-          <div class="detail-line"><span class="row-label">ATR止损价</span><span style="color:#e74c3c;font-weight:bold">184.508</span></div>
-          <div class="detail-line"><span class="row-label">止损距离</span><span style="color:#e74c3c;font-weight:bold">⚠️已击穿(-10.6%)</span></div>
-          <div class="detail-line"><span class="row-label">止盈T1/T2</span><span style="color:#27ae60">211.42 / 221.03</span></div>
+          <div class="detail-line"><span class="row-label">ATR止损价</span><span class="price-stop">184.508</span></div>
+          <div class="detail-line"><span class="row-label">止损距离</span><span style="color:var(--color-up);font-weight:bold">⚠️已击穿(-10.6%)</span></div>
+          <div class="detail-line"><span class="row-label">止盈T1/T2</span><span class="price-target">211.42 / 221.03</span></div>
           <div class="detail-line"><span class="row-label">持仓天数</span><span>12天</span></div>
         </div>
 
-        <div style="border-left:4px solid #e8e8e8;padding:8px 10px;margin-bottom:8px;background:#fafafa;border-radius:0 6px 6px 0;">
-          <div style="font-size:15px;font-weight:bold">鹏鼎控股 <span style="color:#999;font-weight:normal;font-size:12px">(002938)</span> <span class="tag tag-warn">S12_OBSERVE</span></div>
+        <div class="mf-block" style="--mf-accent:var(--color-border);margin-bottom:8px;">
+          <div style="font-size:15px;font-weight:bold">鹏鼎控股 <span class="text-muted-sm" style="font-weight:normal">(002938)</span> <span class="badge badge-up">S12_OBSERVE</span></div>
           <div class="detail-line"><span class="row-label">现价</span><span>79.55</span></div>
-          <div class="detail-line"><span class="row-label">ATR止损价</span><span style="color:#e74c3c;font-weight:bold">86.112</span></div>
-          <div class="detail-line"><span class="row-label">止损距离</span><span style="color:#e74c3c;font-weight:bold">⚠️已击穿(-7.6%)</span></div>
-          <div class="detail-line"><span class="row-label">止盈T1/T2</span><span style="color:#27ae60">98.67 / 103.16</span></div>
+          <div class="detail-line"><span class="row-label">ATR止损价</span><span class="price-stop">86.112</span></div>
+          <div class="detail-line"><span class="row-label">止损距离</span><span style="color:var(--color-up);font-weight:bold">⚠️已击穿(-7.6%)</span></div>
+          <div class="detail-line"><span class="row-label">止盈T1/T2</span><span class="price-target">98.67 / 103.16</span></div>
           <div class="detail-line"><span class="row-label">持仓天数</span><span>13天</span></div>
         </div>
 </div>
-<div class="card">
+<div class="card card-urgent">
 <div class="card-title">🎖️ 纪律评分</div>
-<div class="row-info"><span class="row-label">日期</span><span>2026-09-30</span></div>
-<div class="row-info"><span class="row-label">总分</span><span style="color:#e74c3c;font-weight:bold;font-size:20px">9.0分</span></div>
-<div class="row-info"><span class="row-label">评级</span><span>D（不及格）</span></div>
-<div style="margin-top:8px;padding:8px;background:#ffeaea;border-radius:6px;color:#e74c3c;font-weight:bold">🔴 止损逾期未执行 3 只</div>
-<div class="row-info"><span class="row-label">莲花控股(600186)</span><span style="color:#e74c3c">逾期3天 · 浮亏-5.39%</span></div>
-<div class="row-info"><span class="row-label">光迅科技(002281)</span><span style="color:#e74c3c">逾期4天 · 浮亏-14.21%</span></div>
-<div class="row-info"><span class="row-label">鹏鼎控股(002938)</span><span style="color:#e74c3c">逾期4天 · 浮亏-11.32%</span></div>
+<div class="alert-block alert-block-danger animate-pulse" style="margin-bottom:8px">🔴 止损逾期未执行 3 只（立即处理）</div>
+<div class="row-info"><span class="row-label">莲花控股(600186)</span><span class="text-up">逾期3天 · 浮亏-5.39%</span></div>
+<div class="row-info"><span class="row-label">光迅科技(002281)</span><span class="text-up">逾期4天 · 浮亏-14.21%</span></div>
+<div class="row-info"><span class="row-label">鹏鼎控股(002938)</span><span class="text-up">逾期4天 · 浮亏-11.32%</span></div>
+<div class="metric-hero" style="color:var(--color-up)">9.0<span style="font-size:14px;color:var(--color-text-muted)">分</span></div>
+<div class="metric-label">评级：D（不及格） · 日期：2026-09-30</div>
 </div>
 <div class="card">
 <div class="title-row"><div class="card-title">🔔 预警推送状态</div><span class="card-date-tag">📅10/04</span></div>
-<div class="row-info"><span class="row-label">推送方式</span><span><span style="color:#27ae60;font-weight:bold">✅ lark-cli(增值中心群)</span></span></div>
+<div class="row-info"><span class="row-label">推送方式</span><span><span class="text-down">✅ lark-cli(增值中心群)</span></span></div>
 <div class="row-info"><span class="row-label">今日触发/已推送</span><span>3 / 3</span></div>
-<div class="row-info"><span class="row-label">待推送队列</span><span style="color:#e67e22;font-weight:bold">3条</span></div>
+<div class="row-info"><span class="row-label">待推送队列</span><span class="text-up" style="font-weight:bold">3条</span></div>
 <div class="section-sub" style="margin-top:6px;">待推送告警（前5）</div>
 
-            <div style="padding:6px 0;border-bottom:1px solid #f5f5f5;font-size:13px;">
-              <b>莲花控股</b> <span style="color:#e67e22;">止损触发</span>
-              <span style="float:right;color:#999;font-size:11px;">2026-10-03 23:43:21</span>
+            <div style="padding:6px 0;border-bottom:1px solid var(--color-border);font-size:13px;min-height:44px;display:flex;align-items:center;">
+              <b>莲花控股</b> <span style="color:var(--color-warn);margin-left:6px;">止损触发</span>
+              <span class="text-muted-sm" style="margin-left:auto;">2026-10-03 23:43:21</span>
             </div>
 
-            <div style="padding:6px 0;border-bottom:1px solid #f5f5f5;font-size:13px;">
-              <b>光迅科技</b> <span style="color:#e67e22;">止损触发</span>
-              <span style="float:right;color:#999;font-size:11px;">2026-10-03 23:43:21</span>
+            <div style="padding:6px 0;border-bottom:1px solid var(--color-border);font-size:13px;min-height:44px;display:flex;align-items:center;">
+              <b>光迅科技</b> <span style="color:var(--color-warn);margin-left:6px;">止损触发</span>
+              <span class="text-muted-sm" style="margin-left:auto;">2026-10-03 23:43:21</span>
             </div>
 
-            <div style="padding:6px 0;border-bottom:1px solid #f5f5f5;font-size:13px;">
-              <b>鹏鼎控股</b> <span style="color:#e67e22;">止损触发</span>
-              <span style="float:right;color:#999;font-size:11px;">2026-10-03 23:43:21</span>
+            <div style="padding:6px 0;border-bottom:1px solid var(--color-border);font-size:13px;min-height:44px;display:flex;align-items:center;">
+              <b>鹏鼎控股</b> <span style="color:var(--color-warn);margin-left:6px;">止损触发</span>
+              <span class="text-muted-sm" style="margin-left:auto;">2026-10-03 23:43:21</span>
             </div>
 </div></div>
   <div id="sec-longhubang" class="section"><div class="card"><div class="title-row"><div class="card-title">🐉 龙虎榜</div><span class="card-date-tag">📅09/30</span></div>
 
-        <div style="display:flex;justify-content:space-around;padding:8px;background:#f8f9fa;border-radius:6px;margin-bottom:8px;">
-          <div style="text-align:center"><div style="font-size:18px;font-weight:bold;color:#e74c3c">+27.97亿</div><div style="font-size:11px;color:#999">合计净买入</div></div>
-          <div style="text-align:center"><div style="font-size:18px;font-weight:bold;color:#27ae60">+12.47亿</div><div style="font-size:11px;color:#999">合计净卖出</div></div>
-          <div style="text-align:center"><div style="font-size:18px;font-weight:bold">66</div><div style="font-size:11px;color:#999">上榜个股</div></div>
+        <div class="summary-bar">
+          <div class="stat-item"><div class="stat-num-lg text-up">+27.97亿</div><div class="stat-label">合计净买入</div></div>
+          <div class="stat-item"><div class="stat-num-lg text-down">+12.47亿</div><div class="stat-label">合计净卖出</div></div>
+          <div class="stat-item"><div class="stat-num-lg">66</div><div class="stat-label">上榜个股</div></div>
         </div>
 <div class="section-sub">🔴 净买入 TOP10（红色=主力抢筹）</div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">1. 力勤资源 <span class="pos-code">001246.SZ</span>
-                <div style="font-size:11px;color:#999;font-weight:normal">无价格涨跌幅限制的证券</div>
-              </span>
-              <span style="text-align:right">
-                <div style="color:#e74c3c;font-weight:bold">+5.04亿</div>
-                <div style="font-size:11px;color:#e74c3c">+206.59%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">2. 华是科技 <span class="pos-code">301218.SZ</span>
-                <div style="font-size:11px;color:#999;font-weight:normal">日涨幅达到15%的前5只证券；连续三个交易日内，涨幅偏离值累…</div>
-              </span>
-              <span style="text-align:right">
-                <div style="color:#e74c3c;font-weight:bold">+4.47亿</div>
-                <div style="font-size:11px;color:#e74c3c">+15.84%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">3. 襄阳轴承 <span class="pos-code">000678.SZ</span>
-                <div style="font-size:11px;color:#999;font-weight:normal">日涨幅偏离值达到7%的前5只证券；连续三个交易日内，涨幅偏离…</div>
-              </span>
-              <span style="text-align:right">
-                <div style="color:#e74c3c;font-weight:bold">+2.85亿</div>
-                <div style="font-size:11px;color:#e74c3c">+9.98%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">4. 滨江集团 <span class="pos-code">002244.SZ</span>
-                <div style="font-size:11px;color:#999;font-weight:normal">日振幅值达到15%的前5只证券；连续三个交易日内，涨幅偏离值…</div>
-              </span>
-              <span style="text-align:right">
-                <div style="color:#e74c3c;font-weight:bold">+2.26亿</div>
-                <div style="font-size:11px;color:#e74c3c">+7.19%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">5. 我爱我家 <span class="pos-code">000560.SZ</span>
-                <div style="font-size:11px;color:#999;font-weight:normal">日换手率达到20%的前5只证券</div>
-              </span>
-              <span style="text-align:right">
-                <div style="color:#e74c3c;font-weight:bold">+1.71亿</div>
-                <div style="font-size:11px;color:#27ae60">-1.60%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">6. 近岸蛋白 <span class="pos-code">688137.SH</span>
-                <div style="font-size:11px;color:#999;font-weight:normal">有价格涨跌幅限制的连续10个交易日内收盘价格涨幅偏离值累计达…</div>
-              </span>
-              <span style="text-align:right">
-                <div style="color:#e74c3c;font-weight:bold">+1.55亿</div>
-                <div style="font-size:11px;color:#e74c3c">+13.47%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">7. 康希诺 <span class="pos-code">688185.SH</span>
-                <div style="font-size:11px;color:#999;font-weight:normal">有价格涨跌幅限制的日收盘价格涨幅达到15%的前五只证券；有价…</div>
-              </span>
-              <span style="text-align:right">
-                <div style="color:#e74c3c;font-weight:bold">+1.32亿</div>
-                <div style="font-size:11px;color:#e74c3c">+20.00%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">8. 新华传媒 <span class="pos-code">600825.SH</span>
-                <div style="font-size:11px;color:#999;font-weight:normal">非S证券连续三个交易日内收盘价格涨幅偏离值累计达到20%的证…</div>
-              </span>
-              <span style="text-align:right">
-                <div style="color:#e74c3c;font-weight:bold">+9204万</div>
-                <div style="font-size:11px;color:#e74c3c">+9.99%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">9. 古越龙山 <span class="pos-code">600059.SH</span>
-                <div style="font-size:11px;color:#999;font-weight:normal">有价格涨跌幅限制的日收盘价格涨幅偏离值达到7%的前五只证券</div>
-              </span>
-              <span style="text-align:right">
-                <div style="color:#e74c3c;font-weight:bold">+8620万</div>
-                <div style="font-size:11px;color:#e74c3c">+10.04%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">10. 南华生物 <span class="pos-code">000504.SZ</span>
-                <div style="font-size:11px;color:#999;font-weight:normal">日振幅值达到15%的前5只证券</div>
-              </span>
-              <span style="text-align:right">
-                <div style="color:#e74c3c;font-weight:bold">+8163万</div>
-                <div style="font-size:11px;color:#e74c3c">+10.01%</div>
-              </span>
-            </div>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>#</th><th>股票</th><th class="num">涨跌幅</th><th class="num">净买入</th><th class="num">买入额</th><th class="num">卖出额</th><th>上榜原因</th></tr></thead><tbody>
+<tr>
+              <td><span class="rank-badge rank-badge-top">1</span></td>
+              <td>力勤资源<div class="pos-code">001246.SZ</div></td>
+              <td class="num text-up">+206.59%</td>
+              <td class="num text-up">+5.04亿</td>
+              <td class="num">+7.46亿</td>
+              <td class="num">+2.42亿</td>
+              <td style="font-size:11px;color:#999">无价格涨跌幅限制的证券</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge rank-badge-top">2</span></td>
+              <td>华是科技<div class="pos-code">301218.SZ</div></td>
+              <td class="num text-up">+15.84%</td>
+              <td class="num text-up">+4.47亿</td>
+              <td class="num">+11.01亿</td>
+              <td class="num">+6.54亿</td>
+              <td style="font-size:11px;color:#999">日涨幅达到15%的前5只证券；连续三个交…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge rank-badge-top">3</span></td>
+              <td>襄阳轴承<div class="pos-code">000678.SZ</div></td>
+              <td class="num text-up">+9.98%</td>
+              <td class="num text-up">+2.85亿</td>
+              <td class="num">+5.27亿</td>
+              <td class="num">+2.42亿</td>
+              <td style="font-size:11px;color:#999">日涨幅偏离值达到7%的前5只证券；连续三…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">4</span></td>
+              <td>滨江集团<div class="pos-code">002244.SZ</div></td>
+              <td class="num text-up">+7.19%</td>
+              <td class="num text-up">+2.26亿</td>
+              <td class="num">+8.44亿</td>
+              <td class="num">+6.18亿</td>
+              <td style="font-size:11px;color:#999">日振幅值达到15%的前5只证券；连续三个…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">5</span></td>
+              <td>我爱我家<div class="pos-code">000560.SZ</div></td>
+              <td class="num text-down">-1.60%</td>
+              <td class="num text-up">+1.71亿</td>
+              <td class="num">+4.65亿</td>
+              <td class="num">+2.94亿</td>
+              <td style="font-size:11px;color:#999">日换手率达到20%的前5只证券</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">6</span></td>
+              <td>近岸蛋白<div class="pos-code">688137.SH</div></td>
+              <td class="num text-up">+13.47%</td>
+              <td class="num text-up">+1.55亿</td>
+              <td class="num">+121.98亿</td>
+              <td class="num">+120.43亿</td>
+              <td style="font-size:11px;color:#999">有价格涨跌幅限制的连续10个交易日内收盘…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">7</span></td>
+              <td>康希诺<div class="pos-code">688185.SH</div></td>
+              <td class="num text-up">+20.00%</td>
+              <td class="num text-up">+1.32亿</td>
+              <td class="num">+6.22亿</td>
+              <td class="num">+4.90亿</td>
+              <td style="font-size:11px;color:#999">有价格涨跌幅限制的日收盘价格涨幅达到15…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">8</span></td>
+              <td>新华传媒<div class="pos-code">600825.SH</div></td>
+              <td class="num text-up">+9.99%</td>
+              <td class="num text-up">+9204万</td>
+              <td class="num">+1.29亿</td>
+              <td class="num">+3703万</td>
+              <td style="font-size:11px;color:#999">非S证券连续三个交易日内收盘价格涨幅偏离…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">9</span></td>
+              <td>古越龙山<div class="pos-code">600059.SH</div></td>
+              <td class="num text-up">+10.04%</td>
+              <td class="num text-up">+8620万</td>
+              <td class="num">+1.95亿</td>
+              <td class="num">+1.09亿</td>
+              <td style="font-size:11px;color:#999">有价格涨跌幅限制的日收盘价格涨幅偏离值达…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">10</span></td>
+              <td>南华生物<div class="pos-code">000504.SZ</div></td>
+              <td class="num text-up">+10.01%</td>
+              <td class="num text-up">+8163万</td>
+              <td class="num">+2.12亿</td>
+              <td class="num">+1.30亿</td>
+              <td style="font-size:11px;color:#999">日振幅值达到15%的前5只证券</td>
+            </tr>
+</tbody></table></div>
 <div class="section-sub">🟢 净卖出 TOP10（绿色=资金出逃）</div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">1. 高争民爆 <span class="pos-code">002827.SZ</span></span>
-              <span style="text-align:right">
-                <div style="color:#27ae60;font-weight:bold">-1.98亿</div>
-                <div style="font-size:11px;color:#27ae60">-4.90%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">2. 澳洋健康 <span class="pos-code">002172.SZ</span></span>
-              <span style="text-align:right">
-                <div style="color:#27ae60;font-weight:bold">-1.43亿</div>
-                <div style="font-size:11px;color:#27ae60">-1.09%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">3. 金健米业 <span class="pos-code">600127.SH</span></span>
-              <span style="text-align:right">
-                <div style="color:#27ae60;font-weight:bold">-1.29亿</div>
-                <div style="font-size:11px;color:#27ae60">-1.65%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">4. 泰慕士 <span class="pos-code">001234.SZ</span></span>
-              <span style="text-align:right">
-                <div style="color:#27ae60;font-weight:bold">-9649万</div>
-                <div style="font-size:11px;color:#27ae60">-10.01%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">5. 尚水智能 <span class="pos-code">301513.SZ</span></span>
-              <span style="text-align:right">
-                <div style="color:#27ae60;font-weight:bold">-8710万</div>
-                <div style="font-size:11px;color:#e74c3c">+9.92%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">6. 华茂股份 <span class="pos-code">000850.SZ</span></span>
-              <span style="text-align:right">
-                <div style="color:#27ae60;font-weight:bold">-6762万</div>
-                <div style="font-size:11px;color:#27ae60">-9.94%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">7. 百花医药 <span class="pos-code">600721.SH</span></span>
-              <span style="text-align:right">
-                <div style="color:#27ae60;font-weight:bold">-6582万</div>
-                <div style="font-size:11px;color:#e74c3c">+1.24%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">8. 深物业A <span class="pos-code">000011.SZ</span></span>
-              <span style="text-align:right">
-                <div style="color:#27ae60;font-weight:bold">-5595万</div>
-                <div style="font-size:11px;color:#e74c3c">+9.97%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">9. 洛轴股份 <span class="pos-code">301699.SZ</span></span>
-              <span style="text-align:right">
-                <div style="color:#27ae60;font-weight:bold">-4632万</div>
-                <div style="font-size:11px;color:#e74c3c">+0.13%</div>
-              </span>
-            </div>
-
-            <div class="row-info" style="align-items:flex-start;">
-              <span class="row-label" style="flex:1">10. 沈鼓集团 <span class="pos-code">601091.SH</span></span>
-              <span style="text-align:right">
-                <div style="color:#27ae60;font-weight:bold">-4328万</div>
-                <div style="font-size:11px;color:#27ae60">-8.10%</div>
-              </span>
-            </div>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>#</th><th>股票</th><th class="num">涨跌幅</th><th class="num">净卖出</th><th class="num">买入额</th><th class="num">卖出额</th><th>上榜原因</th></tr></thead><tbody>
+<tr>
+              <td><span class="rank-badge rank-badge-top">1</span></td>
+              <td>高争民爆<div class="pos-code">002827.SZ</div></td>
+              <td class="num text-down">-4.90%</td>
+              <td class="num text-down">-1.98亿</td>
+              <td class="num">+5.49亿</td>
+              <td class="num">+7.47亿</td>
+              <td style="font-size:11px;color:#999">连续三个交易日内，跌幅偏离值累计达到20…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge rank-badge-top">2</span></td>
+              <td>澳洋健康<div class="pos-code">002172.SZ</div></td>
+              <td class="num text-down">-1.09%</td>
+              <td class="num text-down">-1.43亿</td>
+              <td class="num">+7634万</td>
+              <td class="num">+2.19亿</td>
+              <td style="font-size:11px;color:#999">日换手率达到20%的前5只证券</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge rank-badge-top">3</span></td>
+              <td>金健米业<div class="pos-code">600127.SH</div></td>
+              <td class="num text-down">-1.65%</td>
+              <td class="num text-down">-1.29亿</td>
+              <td class="num">+2.02亿</td>
+              <td class="num">+3.31亿</td>
+              <td style="font-size:11px;color:#999">有价格涨跌幅限制的日换手率达到20%的前…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">4</span></td>
+              <td>泰慕士<div class="pos-code">001234.SZ</div></td>
+              <td class="num text-down">-10.01%</td>
+              <td class="num text-down">-9649万</td>
+              <td class="num">+1.59亿</td>
+              <td class="num">+2.55亿</td>
+              <td style="font-size:11px;color:#999">日跌幅偏离值达到7%的前5只证券；连续三…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">5</span></td>
+              <td>尚水智能<div class="pos-code">301513.SZ</div></td>
+              <td class="num text-up">+9.92%</td>
+              <td class="num text-down">-8710万</td>
+              <td class="num">+1.46亿</td>
+              <td class="num">+2.33亿</td>
+              <td style="font-size:11px;color:#999">日换手率达到30%的前5只证券；连续三个…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">6</span></td>
+              <td>华茂股份<div class="pos-code">000850.SZ</div></td>
+              <td class="num text-down">-9.94%</td>
+              <td class="num text-down">-6762万</td>
+              <td class="num">+3838万</td>
+              <td class="num">+1.06亿</td>
+              <td style="font-size:11px;color:#999">日跌幅偏离值达到7%的前5只证券</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">7</span></td>
+              <td>百花医药<div class="pos-code">600721.SH</div></td>
+              <td class="num text-up">+1.24%</td>
+              <td class="num text-down">-6582万</td>
+              <td class="num">+1.36亿</td>
+              <td class="num">+2.02亿</td>
+              <td style="font-size:11px;color:#999">有价格涨跌幅限制的日换手率达到20%的前…</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">8</span></td>
+              <td>深物业A<div class="pos-code">000011.SZ</div></td>
+              <td class="num text-up">+9.97%</td>
+              <td class="num text-down">-5595万</td>
+              <td class="num">+1.08亿</td>
+              <td class="num">+1.63亿</td>
+              <td style="font-size:11px;color:#999">日振幅值达到15%的前5只证券</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">9</span></td>
+              <td>洛轴股份<div class="pos-code">301699.SZ</div></td>
+              <td class="num text-up">+0.13%</td>
+              <td class="num text-down">-4632万</td>
+              <td class="num">+1.62亿</td>
+              <td class="num">+2.09亿</td>
+              <td style="font-size:11px;color:#999">日换手率达到30%的前5只证券</td>
+            </tr>
+<tr>
+              <td><span class="rank-badge">10</span></td>
+              <td>沈鼓集团<div class="pos-code">601091.SH</div></td>
+              <td class="num text-down">-8.10%</td>
+              <td class="num text-down">-4328万</td>
+              <td class="num">+1.38亿</td>
+              <td class="num">+1.81亿</td>
+              <td style="font-size:11px;color:#999">有价格涨跌幅限制的日换手率达到20%的前…</td>
+            </tr>
+</tbody></table></div>
 <div class="section-sub">🏛️ 机构席位动向</div>
 
-        <div style="display:flex;justify-content:space-around;padding:8px;background:#f8f9fa;border-radius:6px;margin:4px 0;">
-          <div style="text-align:center"><div style="font-size:16px;font-weight:bold;color:#e74c3c">+14.97亿</div><div style="font-size:11px;color:#999">机构合计买入</div></div>
-          <div style="text-align:center"><div style="font-size:16px;font-weight:bold;color:#27ae60">+12.77亿</div><div style="font-size:11px;color:#999">机构合计卖出</div></div>
-          <div style="text-align:center"><div style="font-size:16px;font-weight:bold">31</div><div style="font-size:11px;color:#999">机构参与个股</div></div>
+        <div class="summary-bar">
+          <div class="stat-item"><div class="stat-num text-up">+14.97亿</div><div class="stat-label">机构合计买入</div></div>
+          <div class="stat-item"><div class="stat-num text-down">+12.77亿</div><div class="stat-label">机构合计卖出</div></div>
+          <div class="stat-item"><div class="stat-num">31</div><div class="stat-label">机构参与个股</div></div>
         </div>
-<div class="row-info"><span class="row-label">机构净买入 301218.SZ</span><span style="color:#e74c3c;font-weight:bold">+8627万</span></div>
-<div class="row-info"><span class="row-label">机构净买入 000002.SZ</span><span style="color:#e74c3c;font-weight:bold">+5832万</span></div>
-<div class="row-info"><span class="row-label">机构净买入 000678.SZ</span><span style="color:#e74c3c;font-weight:bold">+5324万</span></div>
-<div class="row-info"><span class="row-label">机构净买入 600383.SH</span><span style="color:#e74c3c;font-weight:bold">+4824万</span></div>
-<div class="row-info"><span class="row-label">机构净买入 000560.SZ</span><span style="color:#e74c3c;font-weight:bold">+3615万</span></div>
-<div class="row-info"><span class="row-label">机构净卖出 002244.SZ</span><span style="color:#27ae60;font-weight:bold">-5211万</span></div>
-<div class="row-info"><span class="row-label">机构净卖出 301699.SZ</span><span style="color:#27ae60;font-weight:bold">-2819万</span></div>
-<div class="row-info"><span class="row-label">机构净卖出 688185.SH</span><span style="color:#27ae60;font-weight:bold">-2053万</span></div>
-<div class="row-info"><span class="row-label">机构净卖出 301520.SZ</span><span style="color:#27ae60;font-weight:bold">-1898万</span></div>
-<div class="row-info"><span class="row-label">机构净卖出 002962.SZ</span><span style="color:#27ae60;font-weight:bold">-1815万</span></div>
+<div class="row-info"><span class="row-label">机构净买入 301218.SZ</span><span class="text-up">+8627万</span></div>
+<div class="row-info"><span class="row-label">机构净买入 000002.SZ</span><span class="text-up">+5832万</span></div>
+<div class="row-info"><span class="row-label">机构净买入 000678.SZ</span><span class="text-up">+5324万</span></div>
+<div class="row-info"><span class="row-label">机构净买入 600383.SH</span><span class="text-up">+4824万</span></div>
+<div class="row-info"><span class="row-label">机构净买入 000560.SZ</span><span class="text-up">+3615万</span></div>
+<div class="row-info"><span class="row-label">机构净卖出 002244.SZ</span><span class="text-down">-5211万</span></div>
+<div class="row-info"><span class="row-label">机构净卖出 301699.SZ</span><span class="text-down">-2819万</span></div>
+<div class="row-info"><span class="row-label">机构净卖出 688185.SH</span><span class="text-down">-2053万</span></div>
+<div class="row-info"><span class="row-label">机构净卖出 301520.SZ</span><span class="text-down">-1898万</span></div>
+<div class="row-info"><span class="row-label">机构净卖出 002962.SZ</span><span class="text-down">-1815万</span></div>
 <div class="section-sub">🎰 知名游资席位动向</div>
 
             <div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="display:flex;justify-content:space-between;">
+              <div class="flex-between">
                 <span style="font-size:13px;font-weight:bold;">东方财富证券股份有限公司拉萨团结路第一证券营…</span>
-                <span style="color:#e74c3c;font-weight:bold;font-size:13px;">+1.64亿</span>
+                <span class="text-up" style="font-size:13px;">+1.64亿</span>
               </div>
-              <div style="font-size:11px;color:#999;margin-top:2px;">上榜个股: 001246.SZ, 001246.SZ, 002717.SZ</div>
+              <div class="text-muted-sm" style="margin-top:2px;">上榜个股: 001246.SZ, 001246.SZ, 002717.SZ</div>
             </div>
 
             <div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="display:flex;justify-content:space-between;">
+              <div class="flex-between">
                 <span style="font-size:13px;font-weight:bold;">东方财富证券股份有限公司拉萨东环路第二证券营…</span>
-                <span style="color:#e74c3c;font-weight:bold;font-size:13px;">+4252万</span>
+                <span class="text-up" style="font-size:13px;">+4252万</span>
               </div>
-              <div style="font-size:11px;color:#999;margin-top:2px;">上榜个股: 001216.SZ, 001246.SZ, 001246.SZ</div>
+              <div class="text-muted-sm" style="margin-top:2px;">上榜个股: 001216.SZ, 001246.SZ, 001246.SZ</div>
             </div>
 
             <div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="display:flex;justify-content:space-between;">
+              <div class="flex-between">
                 <span style="font-size:13px;font-weight:bold;">东方财富证券股份有限公司拉萨东环路第一证券营…</span>
-                <span style="color:#e74c3c;font-weight:bold;font-size:13px;">+3426万</span>
+                <span class="text-up" style="font-size:13px;">+3426万</span>
               </div>
-              <div style="font-size:11px;color:#999;margin-top:2px;">上榜个股: 001246.SZ, 002717.SZ, 301030.SZ</div>
+              <div class="text-muted-sm" style="margin-top:2px;">上榜个股: 001246.SZ, 002717.SZ, 301030.SZ</div>
             </div>
 
             <div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="display:flex;justify-content:space-between;">
+              <div class="flex-between">
                 <span style="font-size:13px;font-weight:bold;">华泰证券股份有限公司深圳益田路荣超商务中心证…</span>
-                <span style="color:#e74c3c;font-weight:bold;font-size:13px;">+2947万</span>
+                <span class="text-up" style="font-size:13px;">+2947万</span>
               </div>
-              <div style="font-size:11px;color:#999;margin-top:2px;">上榜个股: 001234.SZ, 920201.BJ, 920201.BJ</div>
+              <div class="text-muted-sm" style="margin-top:2px;">上榜个股: 001234.SZ, 920201.BJ, 920201.BJ</div>
             </div>
 
             <div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="display:flex;justify-content:space-between;">
+              <div class="flex-between">
                 <span style="font-size:13px;font-weight:bold;">东方财富证券股份有限公司拉萨团结路第二证券营…</span>
-                <span style="color:#e74c3c;font-weight:bold;font-size:13px;">+1836万</span>
+                <span class="text-up" style="font-size:13px;">+1836万</span>
               </div>
-              <div style="font-size:11px;color:#999;margin-top:2px;">上榜个股: 001246.SZ, 002717.SZ, 301686.SZ</div>
+              <div class="text-muted-sm" style="margin-top:2px;">上榜个股: 001246.SZ, 002717.SZ, 301686.SZ</div>
             </div>
 
             <div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="display:flex;justify-content:space-between;">
+              <div class="flex-between">
                 <span style="font-size:13px;font-weight:bold;">广发证券股份有限公司深圳深南东路证券营业部</span>
-                <span style="color:#27ae60;font-weight:bold;font-size:13px;">-1689万</span>
+                <span class="text-down" style="font-size:13px;">-1689万</span>
               </div>
-              <div style="font-size:11px;color:#999;margin-top:2px;">上榜个股: 600383.SH</div>
+              <div class="text-muted-sm" style="margin-top:2px;">上榜个股: 600383.SH</div>
             </div>
 
             <div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="display:flex;justify-content:space-between;">
+              <div class="flex-between">
                 <span style="font-size:13px;font-weight:bold;">东方财富证券股份有限公司拉萨金融城南环路证券…</span>
-                <span style="color:#27ae60;font-weight:bold;font-size:13px;">-919万</span>
+                <span class="text-down" style="font-size:13px;">-919万</span>
               </div>
-              <div style="font-size:11px;color:#999;margin-top:2px;">上榜个股: 000850.SZ, 001216.SZ, 001246.SZ</div>
+              <div class="text-muted-sm" style="margin-top:2px;">上榜个股: 000850.SZ, 001216.SZ, 001246.SZ</div>
             </div>
 
             <div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="display:flex;justify-content:space-between;">
+              <div class="flex-between">
                 <span style="font-size:13px;font-weight:bold;">招商证券股份有限公司深圳益田路免税商务大厦证…</span>
-                <span style="color:#27ae60;font-weight:bold;font-size:13px;">-754万</span>
+                <span class="text-down" style="font-size:13px;">-754万</span>
               </div>
-              <div style="font-size:11px;color:#999;margin-top:2px;">上榜个股: 301520.SZ, 603797.SH, 605058.SH</div>
+              <div class="text-muted-sm" style="margin-top:2px;">上榜个股: 301520.SZ, 603797.SH, 605058.SH</div>
             </div>
 </div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-04 13:31:38</div>
+    <div>数据更新时间: 2026-10-04 14:12:49</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分、公告情报</div>
     <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
     <div>推荐部署节奏: 盘前8:50 / 开盘9:35 / 午盘11:25 / 尾盘14:45 / 盘后17:20</div>
     <div class="disclaimer">⚠️ 本页面由量化系统自动生成，仅供参考，不构成投资建议。</div>
+  </div>
+  <!-- 底部快捷导航（5个最常用tab，与顶部导航同步） -->
+  <div class="bottom-nav visible" id="bottomNav">
+    <div class="bottom-nav-item active" data-btab="overview" onclick="showTab('overview', document.querySelector('.tab-item[data-tab=overview]'))"><span class="bottom-nav-icon">🏠</span>总览</div>
+    <div class="bottom-nav-item" data-btab="market" onclick="showTab('market', document.querySelector('.tab-item[data-tab=market]'))"><span class="bottom-nav-icon">📈</span>大盘</div>
+    <div class="bottom-nav-item" data-btab="positions" onclick="showTab('positions', document.querySelector('.tab-item[data-tab=positions]'))"><span class="bottom-nav-icon">💼</span>持仓</div>
+    <div class="bottom-nav-item" data-btab="signals" onclick="showTab('signals', document.querySelector('.tab-item[data-tab=signals]'))"><span class="bottom-nav-icon">🎯</span>信号</div>
+    <div class="bottom-nav-item" data-btab="risk" onclick="showTab('risk', document.querySelector('.tab-item[data-tab=risk]'))"><span class="bottom-nav-icon">🛡️</span>风控</div>
   </div>
 </div>
 <script>
@@ -2315,6 +2514,11 @@ function showTab(name, el) {
   var tabs = document.querySelectorAll('.tab-item');
   for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
   if (el) el.classList.add('active');
+  // 同步底部快捷导航active状态
+  var bItems = document.querySelectorAll('.bottom-nav-item');
+  for (var k = 0; k < bItems.length; k++) bItems[k].classList.remove('active');
+  var bActive = document.querySelector('.bottom-nav-item[data-btab="' + name + '"]');
+  if (bActive) bActive.classList.add('active');
   window.scrollTo(0, 0);
 }
 function toggleDetail(id) {
