@@ -341,9 +341,88 @@ body.has-bottom-nav { padding-bottom: 60px; }
     <div class="tab-item" data-tab="review" onclick="showTab('review',this)"><span class="tab-icon">📝</span>复盘</div>
     <div class="tab-item" data-tab="risk" onclick="showTab('risk',this)"><span class="tab-icon">🛡️</span>风控</div>
     <div class="tab-item" data-tab="longhubang" onclick="showTab('longhubang',this)"><span class="tab-icon">🐉</span>龙虎榜</div>
+    <div class="tab-item" data-tab="api" onclick="showTab('api',this)"><span class="tab-icon">🔌</span>API健康</div>
   </div>
   <div class="alert-banner" onclick="showTab('risk', document.querySelector('.tab-item[data-tab=risk]'))">🚨 2只持仓击穿止损 | 纪律评分:9.0分D（不及格） | 违规8次 ▶点击查风控</div>
-  <div id="sec-overview" class="section active"><div class="card card-highlight">
+  <div id="sec-overview" class="section active"><div class="card card-urgent" style="background:#fff5f5;">
+<div class="title-row"><div class="card-title">🔴 待止损队列（3只逾期）</div><span class="card-date-tag">2026-10-08</span></div>
+<div class="alert-block alert-block-warn">⚠️ 纪律违规评分：80/100（逾期4天）</div>
+<div style="background:#fff;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>莲花控股 <span class="pos-code">600186</span></b>
+            <span class="badge badge-up">逾期3天</span>
+          </div>
+          <div class="detail-line"><span class="row-label">止损价</span><span class="price-stop">11.629</span></div>
+          <div class="detail-line"><span class="row-label">现价</span><span>11.46</span></div>
+          <div class="detail-line"><span class="row-label">浮亏</span><span style="color:var(--color-up);font-weight:bold">-5.39%</span></div>
+          <div class="detail-line"><span class="row-label">战法/触发日</span><span style="font-size:12px">emotion · 2026-09-29</span></div>
+        </div>
+<div style="background:#fff;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>光迅科技 <span class="pos-code">002281</span></b>
+            <span class="badge badge-up">逾期4天</span>
+          </div>
+          <div class="detail-line"><span class="row-label">止损价</span><span class="price-stop">184.508</span></div>
+          <div class="detail-line"><span class="row-label">现价</span><span>164.88</span></div>
+          <div class="detail-line"><span class="row-label">浮亏</span><span style="color:var(--color-up);font-weight:bold">-14.21%</span></div>
+          <div class="detail-line"><span class="row-label">战法/触发日</span><span style="font-size:12px">S11 · 2026-09-25</span></div>
+        </div>
+<div style="background:#fff;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>鹏鼎控股 <span class="pos-code">002938</span></b>
+            <span class="badge badge-up">逾期4天</span>
+          </div>
+          <div class="detail-line"><span class="row-label">止损价</span><span class="price-stop">86.112</span></div>
+          <div class="detail-line"><span class="row-label">现价</span><span>79.55</span></div>
+          <div class="detail-line"><span class="row-label">浮亏</span><span style="color:var(--color-up);font-weight:bold">-11.32%</span></div>
+          <div class="detail-line"><span class="row-label">战法/触发日</span><span style="font-size:12px">S12 · 2026-09-25</span></div>
+        </div>
+<div style="background:var(--color-up);color:#fff;text-align:center;padding:10px;border-radius:6px;font-weight:bold;font-size:16px;margin-top:8px;">🔴 开盘竞价必须挂卖清仓，不得犹豫</div>
+<div class="card-sub" style="margin-top:6px">更新时间: 2026-10-02T22:21:43</div>
+</div>
+<div class="card card-highlight">
+<div class="title-row"><div class="card-title">📋 今日操作清单</div><span class="card-date-tag">2026-10-05 09:18:10</span></div>
+<div class="row-info"><span class="row-label">环境 / 仓位上限</span><span class="row-val">bear / 15%</span></div>
+<div class="row-info"><span class="row-label">可用资金</span><span class="row-val" style="color:var(--color-info)">¥21,911</span></div>
+<div class="section-sub">持仓操作</div>
+<div style="background:#fff5f5;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:15px">莲花控股 <span class="pos-code">600186</span></b>
+                <span style="color:var(--color-up);font-weight:bold">止损卖出</span>
+              </div>
+              <div class="detail-line"><span class="row-label">挂单时点</span><span>竞价挂</span></div>
+              <div class="detail-line"><span class="row-label">挂单价格</span><span>11.629</span></div>
+              <div class="detail-line"><span class="row-label">数量</span><span>全仓(2800股)</span></div>
+              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价11.46 &lt; 止损价11.629，已破止损-1.45%</span></div>
+            </div>
+<div style="background:#fff5f5;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:15px">光迅科技 <span class="pos-code">002281</span></b>
+                <span style="color:var(--color-up);font-weight:bold">止损卖出</span>
+              </div>
+              <div class="detail-line"><span class="row-label">挂单时点</span><span>竞价挂</span></div>
+              <div class="detail-line"><span class="row-label">挂单价格</span><span>184.508</span></div>
+              <div class="detail-line"><span class="row-label">数量</span><span>全仓(200股)</span></div>
+              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价164.88 &lt; 止损价184.508，已破止损-10.64%</span></div>
+            </div>
+<div style="background:#fff5f5;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:15px">鹏鼎控股 <span class="pos-code">002938</span></b>
+                <span style="color:var(--color-up);font-weight:bold">止损卖出</span>
+              </div>
+              <div class="detail-line"><span class="row-label">挂单时点</span><span>竞价挂</span></div>
+              <div class="detail-line"><span class="row-label">挂单价格</span><span>86.112</span></div>
+              <div class="detail-line"><span class="row-label">数量</span><span>全仓(200股)</span></div>
+              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价79.55 &lt; 止损价86.112，已破止损-7.62%</span></div>
+            </div>
+<div class="section-sub">🚫 禁止动作</div>
+<div class="row-note" style="color:var(--color-up);min-height:auto">· 不追高：信号股高开&gt;3%直接放弃买入</div>
+<div class="row-note" style="color:var(--color-up);min-height:auto">· 不满仓：总仓位≤环境上限15%</div>
+<div class="row-note" style="color:var(--color-up);min-height:auto">· 不碰ST/*ST/退市风险股，不碰上市不足250天次新股</div>
+<div class="row-note" style="color:var(--color-up);min-height:auto">· 熊市/弱市不加仓摊平，亏损股只止损不补仓</div>
+<div class="row-note" style="color:var(--color-up);min-height:auto">· 熊市只做S05超卖反弹，快进快出，持仓≤3天</div>
+</div>
+<div class="card card-highlight">
 <div class="card-title">🌍 大盘环境速览</div>
 <div class="metric-hero">bear</div>
 <div class="metric-label">次日展望：中性</div>
@@ -361,6 +440,58 @@ body.has-bottom-nav { padding-bottom: 60px; }
       <div style="margin-top:6px;font-size:12px;color:#666;"><span class="text-up">涨停 72家</span> / <span class="text-down">跌停 16家</span></div>
     </div>
 <div class="row-note" onclick="showTab('market', document.querySelector('.tab-item[data-tab=market]'))" style="color:var(--color-info);cursor:pointer;display:flex;align-items:center;min-height:44px">▶ 查看大盘详情（指数/量能/资金/涨跌停）</div>
+</div>
+<div class="card">
+<div class="title-row"><div class="card-title">🛢️ 隔夜大宗商品</div><span class="card-date-tag">📅10/05</span></div>
+
+            <div class="row-info">
+              <span class="row-label">WTI原油</span>
+              <span><span style="font-weight:bold">90.30</span>
+              <span class="text-down" style="margin-left:8px">-0.06%</span></span>
+            </div>
+</div>
+<div class="card">
+<div class="title-row"><div class="card-title">📰 今日政策要闻</div><span class="card-date-tag">📅10/05</span></div>
+
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">从十篇“金轩”文章看中国经济：新动能、新空间、新支撑同向发力 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="margin-top:5px;"></div>
+        </div>
+
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">国庆假期前四日 经港珠澳大桥珠海公路口岸出入境旅客超45万人次 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="margin-top:5px;"></div>
+        </div>
+
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">国庆前三日内地访客超73万 陈茂波称香港中长期动能稳固 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="margin-top:5px;"></div>
+        </div>
+
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">六网协同如何释放“乘数级效益”？国家发展改革委解读 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="margin-top:5px;"></div>
+        </div>
+
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">六网协同如何释放“乘数级效益”？国家发改委解读 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="margin-top:5px;"></div>
+        </div>
+
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">横琴口岸单日客流突破15万人次 创口岸启用以来新高 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="margin-top:5px;"></div>
+        </div>
+
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">长三角铁路返程客流增多 今日预计发送旅客超380万人次 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="margin-top:5px;"></div>
+        </div>
+
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">实探：金价回调遇上国庆消费旺季 深圳水贝市场人气火爆 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="margin-top:5px;"></div>
+        </div>
 </div>
 
     <div class="card summary-card">
@@ -395,6 +526,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
 <div class="row-info"><span class="row-label">允许战法</span><span style="font-size:14px">S02 / S04 / S05</span></div>
 <div class="row-info"><span class="row-label">建议总仓位</span><span class="row-val">15%</span></div>
 <div class="row-info"><span class="row-label">上证/MA20</span><span>3842.2 / 3925.5（20日-3.5%）</span></div>
+<div class="section-sub" style="margin-top:8px;">📐 判定依据</div>
 <div class="row-info"><span class="row-label">多指数确认</span><span style="font-size:12px"><span style="color:#999;font-weight:bold">创业板指+0.0%</span> / <span style="color:#999;font-weight:bold">科创50+0.0%</span> / <span style="color:#999;font-weight:bold">沪深300+0.0%</span> <span style="color:#f39c12;font-weight:bold">[0/3上涨]</span></span></div>
 <div class="row-info"><span class="row-label">市场宽度</span><span style="font-size:12px">2470涨/2747跌 涨停72/跌停16 <span style="color:#f39c12;font-weight:bold">[中性]</span></span></div>
 <div class="row-info"><span class="row-label">量能(成交额)</span><span style="font-size:12px">今日14501亿/5日均17488亿 量比0.83 <span style="color:#f39c12;font-weight:bold">[正常]</span></span></div>
@@ -1299,7 +1431,49 @@ body.has-bottom-nav { padding-bottom: 60px; }
                   <span class="sector-pct" style="color:#e74c3c">+4.29%</span>
                 </div>
 </div></div>
-  <div id="sec-positions" class="section">
+  <div id="sec-positions" class="section"><div class="card card-highlight">
+<div class="title-row"><div class="card-title">📋 今日操作清单</div><span class="card-date-tag">2026-10-05 09:18:10</span></div>
+<div class="row-info"><span class="row-label">环境 / 仓位上限</span><span class="row-val">bear / 15%</span></div>
+<div class="row-info"><span class="row-label">可用资金</span><span class="row-val" style="color:var(--color-info)">¥21,911</span></div>
+<div class="section-sub">持仓操作</div>
+<div style="background:#fff5f5;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:15px">莲花控股 <span class="pos-code">600186</span></b>
+                <span style="color:var(--color-up);font-weight:bold">止损卖出</span>
+              </div>
+              <div class="detail-line"><span class="row-label">挂单时点</span><span>竞价挂</span></div>
+              <div class="detail-line"><span class="row-label">挂单价格</span><span>11.629</span></div>
+              <div class="detail-line"><span class="row-label">数量</span><span>全仓(2800股)</span></div>
+              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价11.46 &lt; 止损价11.629，已破止损-1.45%</span></div>
+            </div>
+<div style="background:#fff5f5;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:15px">光迅科技 <span class="pos-code">002281</span></b>
+                <span style="color:var(--color-up);font-weight:bold">止损卖出</span>
+              </div>
+              <div class="detail-line"><span class="row-label">挂单时点</span><span>竞价挂</span></div>
+              <div class="detail-line"><span class="row-label">挂单价格</span><span>184.508</span></div>
+              <div class="detail-line"><span class="row-label">数量</span><span>全仓(200股)</span></div>
+              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价164.88 &lt; 止损价184.508，已破止损-10.64%</span></div>
+            </div>
+<div style="background:#fff5f5;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:15px">鹏鼎控股 <span class="pos-code">002938</span></b>
+                <span style="color:var(--color-up);font-weight:bold">止损卖出</span>
+              </div>
+              <div class="detail-line"><span class="row-label">挂单时点</span><span>竞价挂</span></div>
+              <div class="detail-line"><span class="row-label">挂单价格</span><span>86.112</span></div>
+              <div class="detail-line"><span class="row-label">数量</span><span>全仓(200股)</span></div>
+              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价79.55 &lt; 止损价86.112，已破止损-7.62%</span></div>
+            </div>
+<div class="section-sub">🚫 禁止动作</div>
+<div class="row-note" style="color:var(--color-up);min-height:auto">· 不追高：信号股高开&gt;3%直接放弃买入</div>
+<div class="row-note" style="color:var(--color-up);min-height:auto">· 不满仓：总仓位≤环境上限15%</div>
+<div class="row-note" style="color:var(--color-up);min-height:auto">· 不碰ST/*ST/退市风险股，不碰上市不足250天次新股</div>
+<div class="row-note" style="color:var(--color-up);min-height:auto">· 熊市/弱市不加仓摊平，亏损股只止损不补仓</div>
+<div class="row-note" style="color:var(--color-up);min-height:auto">· 熊市只做S05超卖反弹，快进快出，持仓≤3天</div>
+</div>
+
     <div class="card" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border-radius:12px;padding:14px;color:#fff;">
       <div style="font-size:15px;font-weight:bold;margin-bottom:10px;display:flex;align-items:center;">
         <span style="margin-right:6px;">💰</span>账户与持仓总览
@@ -1435,6 +1609,8 @@ body.has-bottom-nav { padding-bottom: 60px; }
           <span class="pos-name">莲花控股</span>
           <span class="pos-code">600186</span>
           <span class="tag tag-warn">VIOLATION</span>
+          
+          <span class="badge badge-down" style="margin-left:4px;" title="散户情绪恐慌">😱股吧恐慌</span>
         </div>
         <div class="pos-price" style="color:#27ae60">11.46</div>
       </div>
@@ -1528,6 +1704,8 @@ body.has-bottom-nav { padding-bottom: 60px; }
           <span class="pos-name">光迅科技</span>
           <span class="pos-code">002281</span>
           <span class="tag tag-warn">VIOLATION</span>
+          
+          <span class="badge badge-down" style="margin-left:4px;" title="散户情绪恐慌">😱股吧恐慌</span>
         </div>
         <div class="pos-price" style="color:#27ae60">164.88</div>
       </div>
@@ -1623,6 +1801,8 @@ body.has-bottom-nav { padding-bottom: 60px; }
           <span class="pos-name">鹏鼎控股</span>
           <span class="pos-code">002938</span>
           <span class="tag tag-warn">S12_OBSERVE</span>
+          
+          <span class="badge badge-down" style="margin-left:4px;" title="散户情绪恐慌">😱股吧恐慌</span>
         </div>
         <div class="pos-price" style="color:#27ae60">79.55</div>
       </div>
@@ -1704,10 +1884,21 @@ body.has-bottom-nav { padding-bottom: 60px; }
         <div class="detail-hint">点击卡片可折叠</div>
       </div>
     </div></div>
-  <div id="sec-signals" class="section">
+  <div id="sec-signals" class="section"><div class="card">
+<div class="card-title">🎯 战法历史表现（PF排序）</div>
+<div class="card-sub">🟢当前环境允许 · ⚪不允许/半透明</div>
+<div class="table-wrap" style="margin:0 -14px;"><table class="data-table" style="min-width:0;font-size:12px;"><thead><tr><th>战法</th><th class="num">PF</th><th class="num">胜率</th><th class="num">笔数</th><th class="num">持仓天</th></tr></thead><tbody>
+<tr style="background:#eaffea;opacity:1"><td><b>S02</b> <span class="badge badge-down">可</span></td><td class="num" style="color:var(--color-down);font-weight:bold">5.19</td><td class="num">55.0%</td><td class="num">120</td><td class="num">3.5</td></tr>
+<tr style="background:#f5f5f5;opacity:0.35"><td><b>S01</b> <span class="badge" style="background:#eee;color:#999">禁</span></td><td class="num" style="color:var(--color-down);font-weight:bold">4.37</td><td class="num">52.0%</td><td class="num">180</td><td class="num">4.2</td></tr>
+<tr style="background:#eaffea;opacity:1"><td><b>S05</b> <span class="badge badge-down">可</span></td><td class="num" style="color:var(--color-down);font-weight:bold">3.59</td><td class="num">58.0%</td><td class="num">200</td><td class="num">2.1</td></tr>
+<tr style="background:#f5f5f5;opacity:0.35"><td><b>S08</b> <span class="badge" style="background:#eee;color:#999">禁</span></td><td class="num" style="color:var(--color-warn);font-weight:bold">1.95</td><td class="num">48.0%</td><td class="num">160</td><td class="num">5.0</td></tr>
+<tr style="background:#fff;opacity:1"><td><b>S04</b> <span class="badge badge-down">可</span></td><td class="num" style="color:var(--color-warn);font-weight:bold">1.30</td><td class="num">45.0%</td><td class="num">201</td><td class="num">6.5</td></tr>
+</tbody></table></div>
+</div>
+
     <div class="card empty-card">
       <div class="empty-icon">📊</div>
-      <div class="empty-text">今日无新信号</div>
+      <div class="empty-text">今日无新信号（观察池见上）</div>
     </div></div>
   <div id="sec-watchlist" class="section">
     <div class="card summary-card">
@@ -1851,6 +2042,71 @@ body.has-bottom-nav { padding-bottom: 60px; }
 </tbody></table></div>
 </div></div>
   <div id="sec-review" class="section"><div class="card">
+<div class="card-title">📊 回测表现（7年样本外）</div>
+<div class="summary-bar">
+      <div class="stat-item"><div class="stat-num-lg" style="color:var(--color-up)">0</div><div class="stat-label">总PF</div></div>
+      <div class="stat-item"><div class="stat-num-lg text-up">+0.0%</div><div class="stat-label">总收益</div></div>
+      <div class="stat-item"><div class="stat-num-lg">0年</div><div class="stat-label">年化~0.0%</div></div>
+    </div>
+<div class="row-info"><span class="row-label">最大回撤</span><span style="color:var(--color-up);font-weight:bold">0.00%</span></div>
+<div class="row-info"><span class="row-label">总交易/月均</span><span>0笔 / 月均0.0笔</span></div>
+<div class="section-sub">各战法对比（按PF排序）</div>
+<div class="table-wrap" style="margin:0 -14px;"><table class="data-table" style="min-width:0;font-size:12px;"><thead><tr><th>战法</th><th class="num">PF</th><th class="num">胜率</th><th class="num">笔数</th><th class="num">持仓天</th></tr></thead><tbody>
+<tr style="background:#eaffea"><td><b>S02</b></td><td class="num" style="color:var(--color-down);font-weight:bold">5.19</td><td class="num">55.0%</td><td class="num">120</td><td class="num">3.5</td></tr>
+<tr style="background:#eaffea"><td><b>S01</b></td><td class="num" style="color:var(--color-down);font-weight:bold">4.37</td><td class="num">52.0%</td><td class="num">180</td><td class="num">4.2</td></tr>
+<tr style="background:#eaffea"><td><b>S05</b></td><td class="num" style="color:var(--color-down);font-weight:bold">3.59</td><td class="num">58.0%</td><td class="num">200</td><td class="num">2.1</td></tr>
+<tr style="background:#fff7e6"><td><b>S08</b></td><td class="num" style="color:var(--color-warn);font-weight:bold">1.95</td><td class="num">48.0%</td><td class="num">160</td><td class="num">5.0</td></tr>
+<tr style="background:#fff7e6"><td><b>S04</b></td><td class="num" style="color:var(--color-warn);font-weight:bold">1.30</td><td class="num">45.0%</td><td class="num">201</td><td class="num">6.5</td></tr>
+</tbody></table></div>
+</div>
+<div class="card">
+<div class="title-row"><div class="card-title">📈 PF滚动报告</div><span class="card-date-tag">2026-09-23 08:13:06</span></div>
+<div class="row-info"><span class="row-label">总已平仓</span><span class="row-val">8笔</span></div>
+<div style="background:#fff5f5;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>二板爆量</b><span style="color:var(--color-up);font-weight:bold">⚠️ 策略衰减</span>
+          </div>
+          <div class="detail-line"><span class="row-label">总体PF/胜率</span><span style="color:var(--color-up);font-weight:bold">0.00 / 0.0%</span></div>
+          <div class="detail-line"><span class="row-label">平均收益/笔数</span><span>-6.17% / 1笔</span></div>
+<div style="margin-top:4px;font-size:12px;color:#666;">季度PF趋势: 
+🔴2026Q3=0.00(1笔)
+</div>
+</div>
+<div style="background:#fff5f5;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>箱体突破</b><span style="color:var(--color-up);font-weight:bold">⚠️ 策略衰减</span>
+          </div>
+          <div class="detail-line"><span class="row-label">总体PF/胜率</span><span style="color:var(--color-up);font-weight:bold">0.02 / 14.3%</span></div>
+          <div class="detail-line"><span class="row-label">平均收益/笔数</span><span>-2.77% / 7笔</span></div>
+<div style="margin-top:4px;font-size:12px;color:#666;">季度PF趋势: 
+🔴2026Q3=0.02(7笔)
+</div>
+</div>
+</div>
+<div class="card">
+<div class="title-row"><div class="card-title">📡 信号执行报告</div><span class="card-date-tag">2026-09-21 21:32:56</span></div>
+<div class="summary-bar">
+      <div class="stat-item"><div class="stat-num-lg">21</div><div class="stat-label">信号总数</div></div>
+      <div class="stat-item"><div class="stat-num-lg text-down">0</div><div class="stat-label">已执行</div></div>
+      <div class="stat-item"><div class="stat-num-lg text-up">21</div><div class="stat-label">未执行</div></div>
+    </div>
+<div class="row-info"><span class="row-label">执行率</span><span style="color:var(--color-up);font-size:22px;font-weight:bold">0.0%</span></div>
+<div class="alert-block" style="background:#fff5f5;color:var(--color-up);margin-top:6px;">🔴 严重：信号执行率&lt;30%，系统和执行完全脱节</div>
+<div class="section-sub">最近未执行信号</div>
+<div class="table-wrap" style="margin:0 -14px;"><table class="data-table" style="min-width:0;font-size:12px;"><thead><tr><th>日期</th><th>股票</th><th>战法</th><th>评级</th><th class="num">推荐价</th></tr></thead><tbody>
+<tr><td>2026-09-07</td><td>东山精密<div class="td-code">002384</div></td><td>主线龙头回踩</td><td>B观察</td><td class="num">187.05</td></tr>
+<tr><td>2026-09-09</td><td>光迅科技<div class="td-code">002281</div></td><td>弱转强</td><td>A</td><td class="num">186.0</td></tr>
+<tr><td>2026-09-09</td><td>中天科技<div class="td-code">600522</div></td><td>弱转强</td><td>B</td><td class="num">33.4</td></tr>
+<tr><td>2026-09-09</td><td>烽火通信<div class="td-code">600498</div></td><td>主线低位补涨</td><td>B</td><td class="num">40.24</td></tr>
+<tr><td>2026-09-09</td><td>金安国纪<div class="td-code">002636</div></td><td>主线低位补涨</td><td>B</td><td class="num">68.64</td></tr>
+<tr><td>2026-09-11</td><td>中际旭创<div class="td-code">300308</div></td><td>C级观察-退潮冰点不买</td><td>C</td><td class="num">nan</td></tr>
+<tr><td>2026-09-11</td><td>通信设备高速铜连接方向(主板待筛)<div class="td-code">nan</div></td><td>C级观察-退潮冰点不买</td><td>C</td><td class="num">nan</td></tr>
+<tr><td>2026-09-14</td><td>电子材料PCB-覆铜板-玻纤布链方向<div class="td-code">nan</div></td><td>C级观察-退潮期不买</td><td>C</td><td class="num">nan</td></tr>
+<tr><td>2026-09-15</td><td>市场宽度防御<div class="td-code">盘中巡检无A级(宽度偏弱+仓位82.1%超限)</div></td><td>C</td><td>nan</td><td class="num">nan</td></tr>
+<tr><td>2026-09-15</td><td>市场宽度防御<div class="td-code">尾盘扫描无A级(宽度偏弱+仓位82.1%超限+大盘午后跳水)</div></td><td>C</td><td>nan</td><td class="num">nan</td></tr>
+</tbody></table></div>
+</div>
+<div class="card">
 <div class="card-title">每日复盘</div>
 <div class="review-dates">
 <button class="review-date-btn" onclick="showReview(0,this)">09-28</button>
@@ -2120,7 +2376,81 @@ body.has-bottom-nav { padding-bottom: 60px; }
 <div class="row-info"><span class="row-label">光迅科技(002281)</span><span class="text-down">逾期4天 · 浮亏-14.21%</span></div>
 <div class="row-info"><span class="row-label">鹏鼎控股(002938)</span><span class="text-down">逾期4天 · 浮亏-11.32%</span></div>
 </div></div>
-  <div id="sec-risk" class="section"><div class="card">
+  <div id="sec-risk" class="section"><div class="card card-urgent" style="background:#fff5f5;">
+<div class="title-row"><div class="card-title">🔴 待止损队列（3只逾期）</div><span class="card-date-tag">2026-10-08</span></div>
+<div class="alert-block alert-block-warn">⚠️ 纪律违规评分：80/100（逾期4天）</div>
+<div style="background:#fff;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>莲花控股 <span class="pos-code">600186</span></b>
+            <span class="badge badge-up">逾期3天</span>
+          </div>
+          <div class="detail-line"><span class="row-label">止损价</span><span class="price-stop">11.629</span></div>
+          <div class="detail-line"><span class="row-label">现价</span><span>11.46</span></div>
+          <div class="detail-line"><span class="row-label">浮亏</span><span style="color:var(--color-up);font-weight:bold">-5.39%</span></div>
+          <div class="detail-line"><span class="row-label">战法/触发日</span><span style="font-size:12px">emotion · 2026-09-29</span></div>
+        </div>
+<div style="background:#fff;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>光迅科技 <span class="pos-code">002281</span></b>
+            <span class="badge badge-up">逾期4天</span>
+          </div>
+          <div class="detail-line"><span class="row-label">止损价</span><span class="price-stop">184.508</span></div>
+          <div class="detail-line"><span class="row-label">现价</span><span>164.88</span></div>
+          <div class="detail-line"><span class="row-label">浮亏</span><span style="color:var(--color-up);font-weight:bold">-14.21%</span></div>
+          <div class="detail-line"><span class="row-label">战法/触发日</span><span style="font-size:12px">S11 · 2026-09-25</span></div>
+        </div>
+<div style="background:#fff;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>鹏鼎控股 <span class="pos-code">002938</span></b>
+            <span class="badge badge-up">逾期4天</span>
+          </div>
+          <div class="detail-line"><span class="row-label">止损价</span><span class="price-stop">86.112</span></div>
+          <div class="detail-line"><span class="row-label">现价</span><span>79.55</span></div>
+          <div class="detail-line"><span class="row-label">浮亏</span><span style="color:var(--color-up);font-weight:bold">-11.32%</span></div>
+          <div class="detail-line"><span class="row-label">战法/触发日</span><span style="font-size:12px">S12 · 2026-09-25</span></div>
+        </div>
+<div style="background:var(--color-up);color:#fff;text-align:center;padding:10px;border-radius:6px;font-weight:bold;font-size:16px;margin-top:8px;">🔴 开盘竞价必须挂卖清仓，不得犹豫</div>
+<div class="card-sub" style="margin-top:6px">更新时间: 2026-10-02T22:21:43</div>
+</div>
+<div class="card">
+<div class="card-title">⚖️ 仓位管理对比</div>
+<div class="row-info"><span class="row-label">建议仓位上限（bear）</span><span class="row-val">15%</span></div>
+<div class="row-info"><span class="row-label">实际仓位</span><span class="row-val" style="color:var(--color-up);font-size:20px">65.4%</span></div>
+<div class="row-info"><span class="row-label">持仓市值/可用现金</span><span>¥80,974 / ¥21,911</span></div>
+<div class="row-info"><span class="row-label">账户权益</span><span>¥123,866</span></div>
+<div class="alert-block alert-block-danger animate-pulse">⚠️ 仓位超限：实际65.4% &gt; 建议15%，需减仓！</div>
+<div class="section-sub">单票仓位上限（硬编码）</div>
+<div class="table-wrap" style="margin:0 -14px;"><table class="data-table" style="min-width:0;font-size:12px;"><thead><tr><th>战法</th><th class="num">单票上限</th></tr></thead><tbody>
+<tr><td>S01/S02</td><td class="num">10.0%</td></tr>
+<tr><td>S08</td><td class="num">8.0%</td></tr>
+<tr><td>S05</td><td class="num">5.0%</td></tr>
+<tr><td>S04</td><td class="num">2.5%</td></tr>
+</tbody></table></div>
+</div>
+<div class="card">
+<div class="title-row"><div class="card-title">📡 信号执行报告</div><span class="card-date-tag">2026-09-21 21:32:56</span></div>
+<div class="summary-bar">
+      <div class="stat-item"><div class="stat-num-lg">21</div><div class="stat-label">信号总数</div></div>
+      <div class="stat-item"><div class="stat-num-lg text-down">0</div><div class="stat-label">已执行</div></div>
+      <div class="stat-item"><div class="stat-num-lg text-up">21</div><div class="stat-label">未执行</div></div>
+    </div>
+<div class="row-info"><span class="row-label">执行率</span><span style="color:var(--color-up);font-size:22px;font-weight:bold">0.0%</span></div>
+<div class="alert-block" style="background:#fff5f5;color:var(--color-up);margin-top:6px;">🔴 严重：信号执行率&lt;30%，系统和执行完全脱节</div>
+<div class="section-sub">最近未执行信号</div>
+<div class="table-wrap" style="margin:0 -14px;"><table class="data-table" style="min-width:0;font-size:12px;"><thead><tr><th>日期</th><th>股票</th><th>战法</th><th>评级</th><th class="num">推荐价</th></tr></thead><tbody>
+<tr><td>2026-09-07</td><td>东山精密<div class="td-code">002384</div></td><td>主线龙头回踩</td><td>B观察</td><td class="num">187.05</td></tr>
+<tr><td>2026-09-09</td><td>光迅科技<div class="td-code">002281</div></td><td>弱转强</td><td>A</td><td class="num">186.0</td></tr>
+<tr><td>2026-09-09</td><td>中天科技<div class="td-code">600522</div></td><td>弱转强</td><td>B</td><td class="num">33.4</td></tr>
+<tr><td>2026-09-09</td><td>烽火通信<div class="td-code">600498</div></td><td>主线低位补涨</td><td>B</td><td class="num">40.24</td></tr>
+<tr><td>2026-09-09</td><td>金安国纪<div class="td-code">002636</div></td><td>主线低位补涨</td><td>B</td><td class="num">68.64</td></tr>
+<tr><td>2026-09-11</td><td>中际旭创<div class="td-code">300308</div></td><td>C级观察-退潮冰点不买</td><td>C</td><td class="num">nan</td></tr>
+<tr><td>2026-09-11</td><td>通信设备高速铜连接方向(主板待筛)<div class="td-code">nan</div></td><td>C级观察-退潮冰点不买</td><td>C</td><td class="num">nan</td></tr>
+<tr><td>2026-09-14</td><td>电子材料PCB-覆铜板-玻纤布链方向<div class="td-code">nan</div></td><td>C级观察-退潮期不买</td><td>C</td><td class="num">nan</td></tr>
+<tr><td>2026-09-15</td><td>市场宽度防御<div class="td-code">盘中巡检无A级(宽度偏弱+仓位82.1%超限)</div></td><td>C</td><td>nan</td><td class="num">nan</td></tr>
+<tr><td>2026-09-15</td><td>市场宽度防御<div class="td-code">尾盘扫描无A级(宽度偏弱+仓位82.1%超限+大盘午后跳水)</div></td><td>C</td><td>nan</td><td class="num">nan</td></tr>
+</tbody></table></div>
+</div>
+<div class="card">
 <div class="card-title">风控预警</div>
 
             <div class="alert-row animate-pulse" style="background:#fff7e6;border-left:4px solid var(--color-warn)">
@@ -2490,8 +2820,150 @@ body.has-bottom-nav { padding-bottom: 60px; }
               <div class="text-muted-sm" style="margin-top:2px;">上榜个股: 301520.SZ, 603797.SH, 605058.SH</div>
             </div>
 </div></div>
+  <div id="sec-api" class="section"><div class="card">
+<div class="card-title">🔌 熔断器状态（数据源级）</div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>eastmoney</b><span class="badge badge-down">normal</span>
+          </div>
+          <div class="detail-line"><span class="row-label">失败次数</span><span>1</span></div>
+          <div class="detail-line"><span class="row-label">最后失败</span><span>10-05 14:44</span></div>
+          <div class="row-note" style="color:var(--color-up);min-height:auto">错误: 网络异常((&#x27;Connection aborted.&#x27;, Remote)</div>
+        </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>eastmoney_breadth</b><span class="badge badge-down">normal</span>
+          </div>
+          <div class="detail-line"><span class="row-label">失败次数</span><span>0</span></div>
+          <div class="detail-line"><span class="row-label">最后失败</span><span>--</span></div>
+          
+        </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>tencent</b><span class="badge badge-down">normal</span>
+          </div>
+          <div class="detail-line"><span class="row-label">失败次数</span><span>0</span></div>
+          <div class="detail-line"><span class="row-label">最后失败</span><span>--</span></div>
+          
+        </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>daoshare</b><span class="badge badge-down">normal</span>
+          </div>
+          <div class="detail-line"><span class="row-label">失败次数</span><span>0</span></div>
+          <div class="detail-line"><span class="row-label">最后失败</span><span>--</span></div>
+          
+        </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>deepseek</b><span class="badge badge-down">normal</span>
+          </div>
+          <div class="detail-line"><span class="row-label">失败次数</span><span>0</span></div>
+          <div class="detail-line"><span class="row-label">最后失败</span><span>--</span></div>
+          
+        </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>tencent_idx</b><span class="badge badge-down">normal</span>
+          </div>
+          <div class="detail-line"><span class="row-label">失败次数</span><span>0</span></div>
+          <div class="detail-line"><span class="row-label">最后失败</span><span>--</span></div>
+          
+        </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>sina</b><span class="badge badge-down">normal</span>
+          </div>
+          <div class="detail-line"><span class="row-label">失败次数</span><span>0</span></div>
+          <div class="detail-line"><span class="row-label">最后失败</span><span>--</span></div>
+          
+        </div>
+</div>
+<div class="card">
+<div class="title-row"><div class="card-title">💊 API健康详情</div><span class="card-date-tag">2026-10-05 08:33:54</span></div>
+<div class="row-info"><span class="row-label">健康分</span><span class="row-val" style="color:var(--color-down)">90/100</span></div>
+<div class="row-info"><span class="row-label">通过/总数</span><span>10/11</span></div>
+<div class="section-sub">各数据源</div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:13px">tushare_api</b><span class="badge badge-down">OK</span>
+              </div>
+              <div class="detail-line"><span class="row-label">延迟</span><span>272ms</span></div>
+              <div class="row-note" style="font-size:11px;min-height:auto;color:#888">统一数据源日线正常（腾讯日线），3条</div>
+            </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:13px">tenglong_api</b><span class="badge badge-down">OK</span>
+              </div>
+              <div class="detail-line"><span class="row-label">延迟</span><span>0ms</span></div>
+              <div class="row-note" style="font-size:11px;min-height:auto;color:#888">[DEPRECATED] 腾龙API已下线(2026-10-02)，日线类由DaoShare承接，见check_daoshare_api</div>
+            </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:13px">daoshare_api</b><span class="badge badge-down">OK</span>
+              </div>
+              <div class="detail-line"><span class="row-label">延迟</span><span>2263ms</span></div>
+              <div class="row-note" style="font-size:11px;min-height:auto;color:#888">DaoShare直连正常（20260930），5561条</div>
+            </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:13px">daoshare_expiry</b><span class="badge badge-down">OK</span>
+              </div>
+              <div class="detail-line"><span class="row-label">延迟</span><span>0ms</span></div>
+              <div class="row-note" style="font-size:11px;min-height:auto;color:#888">[备源]DaoShare订阅2027-01-27到期，剩余113天；高风险4项已迁移(腾讯/本地宽表/BaoStock)，见daoshare_migration_execution_report.md</div>
+            </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:13px">migrated_primaries</b><span class="badge badge-down">OK</span>
+              </div>
+              <div class="detail-line"><span class="row-label">延迟</span><span>9845ms</span></div>
+              <div class="row-note" style="font-size:11px;min-height:auto;color:#888">腾讯日线(腾讯日线)7条；daily_basic(DaoShare)pe=5.2665；财务(DaoShare)234期</div>
+            </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:13px">eastmoney_limit_pool</b><span class="badge badge-down">OK</span>
+              </div>
+              <div class="detail-line"><span class="row-label">延迟</span><span>65ms</span></div>
+              <div class="row-note" style="font-size:11px;min-height:auto;color:#888">统一数据源涨跌停正常（东财涨跌分布），涨停72只</div>
+            </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:13px">baidu_netdisk</b><span class="badge badge-up">FAIL</span>
+              </div>
+              <div class="detail-line"><span class="row-label">延迟</span><span>1ms</span></div>
+              <div class="row-note" style="font-size:11px;min-height:auto;color:#888">token文件不存在（数据已本地化不影响交易）</div>
+            </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:13px">deepseek_api</b><span class="badge badge-down">OK</span>
+              </div>
+              <div class="detail-line"><span class="row-label">延迟</span><span>1231ms</span></div>
+              <div class="row-note" style="font-size:11px;min-height:auto;color:#888">DeepSeek连通正常（DeepSeek）</div>
+            </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:13px">feishu_push</b><span class="badge badge-down">OK</span>
+              </div>
+              <div class="detail-line"><span class="row-label">延迟</span><span>653ms</span></div>
+              <div class="row-note" style="font-size:11px;min-height:auto;color:#888">lark-cli连通正常</div>
+            </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:13px">tencent_quote</b><span class="badge badge-down">OK</span>
+              </div>
+              <div class="detail-line"><span class="row-label">延迟</span><span>123ms</span></div>
+              <div class="row-note" style="font-size:11px;min-height:auto;color:#888">统一数据源实时行情正常（腾讯），上证3842.19</div>
+            </div>
+<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:13px">data_directory</b><span class="badge badge-down">OK</span>
+              </div>
+              <div class="detail-line"><span class="row-label">延迟</span><span>116ms</span></div>
+              <div class="row-note" style="font-size:11px;min-height:auto;color:#888">宽表+5分钟数据均可访问</div>
+            </div>
+</div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-05 11:43:05</div>
+    <div>数据更新时间: 2026-10-05 14:44:04</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分、公告情报</div>
     <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
     <div>推荐部署节奏: 盘前8:50 / 开盘9:35 / 午盘11:25 / 尾盘14:45 / 盘后17:20</div>
