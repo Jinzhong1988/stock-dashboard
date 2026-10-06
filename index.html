@@ -385,7 +385,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
 </div>
 <div class="card card-highlight">
 <div class="card-title">🌍 大盘环境</div>
-<div class="metric-hero">bear</div>
+<div class="metric-hero">osc_weak</div>
 <div class="metric-label">次日展望：中性</div>
 <div class="row-note" onclick="showTab('market', document.querySelector('.tab-item[data-tab=market]'))" style="color:var(--color-info);cursor:pointer;display:flex;align-items:center;min-height:44px">▶ 查看大盘详情</div>
 </div>
@@ -411,19 +411,18 @@ body.has-bottom-nav { padding-bottom: 60px; }
 <div class="card-title">🎯 5环境择时（多指数+宽度+板块联动）</div>
 <div style="background:#e8f4fd;color:#2980b9;border-radius:6px;padding:6px 10px;margin:6px 0;font-size:11px;">📌 休市期间，以下行情数据均为最近交易日 2026-09-30（融资余额为T+1发布的最新可用数据）</div>
 
-        <div style="background:#7f8c8d;color:#fff;border-radius:8px;padding:14px;text-align:center;margin:8px 0;">
-          <div style="font-size:26px;font-weight:bold;">熊市 🐻</div>
-          <div style="font-size:14px;margin-top:4px;">仓位上限15%（非空仓，S04+S05博超跌）</div>
+        <div style="background:#3498db;color:#fff;border-radius:8px;padding:14px;text-align:center;margin:8px 0;">
+          <div style="font-size:26px;font-weight:bold;">震荡偏弱</div>
+          <div style="font-size:14px;margin-top:4px;">仓位上限25%</div>
         </div>
 <div class="row-info"><span class="row-label">允许战法</span><span style="font-size:14px">S02 / S04 / S05</span></div>
-<div class="row-info"><span class="row-label">建议总仓位</span><span class="row-val">15%</span></div>
+<div class="row-info"><span class="row-label">建议总仓位</span><span class="row-val">25%</span></div>
 <div class="row-info"><span class="row-label">上证/MA20</span><span>3842.2 / 3905.6（20日-2.5%）</span></div>
 <div class="section-sub" style="margin-top:8px;">📐 判定依据</div>
 <div class="row-info"><span class="row-label">多指数确认</span><span style="font-size:12px"><span style="color:#27ae60;font-weight:bold">创业板指-0.23%</span> / <span style="color:#27ae60;font-weight:bold">科创50-2.51%</span> / <span style="color:#e74c3c;font-weight:bold">沪深300+0.29%</span> <span style="color:#f39c12;font-weight:bold">[1/3上涨]</span> <span style="color:#999;font-size:11px;">📌休市，数据为20260930</span></span></div>
 <div class="row-info"><span class="row-label">市场宽度</span><span style="font-size:12px">2470涨/2747跌 涨停72/跌停16 <span style="color:#f39c12;font-weight:bold">[中性]</span></span></div>
 <div class="row-info"><span class="row-label">量能(成交额)</span><span style="font-size:12px">今日14501亿/5日均17488亿 量比0.83 <span style="color:#f39c12;font-weight:bold">[正常]</span></span></div>
 <div class="row-info"><span class="row-label">环境稳定性</span><span style="font-size:12px">已持续1天 / 60天切换0次(低) <span style="color:#999;font-weight:bold">[可信度低]</span></span></div>
-<div style="background:#f8d7da;color:#721c24;border-radius:6px;padding:6px 10px;margin:6px 0;font-size:12px;font-weight:bold;">⚠️ 亏钱效应触发（跌停>3只），弱震荡降级→熊市（仓位15%，非空仓）</div>
 <div class="row-info"><span class="row-label">资金面(两融)</span><span style="font-size:12px">融资余额12965亿(2026-09-30) <span style="color:#999">北向已停更</span></span></div>
 <div class="row-info"><span class="row-label">情绪面(连板)</span><span style="font-size:12px">最高7连板 / 炸板率35.4% <span style="color:#f39c12;font-weight:bold">[中性]</span></span></div>
 <div class="row-info"><span class="row-label">波动率(ATR14)</span><span style="font-size:12px">ATR 1.04% <span style="color:#f39c12;font-weight:bold">[中波动]</span></span></div>
@@ -2517,11 +2516,11 @@ body.has-bottom-nav { padding-bottom: 60px; }
 </div>
 <div class="card">
 <div class="card-title">⚖️ 仓位管理对比</div>
-<div class="row-info"><span class="row-label">建议仓位上限（bear）</span><span class="row-val">15%</span></div>
+<div class="row-info"><span class="row-label">建议仓位上限（osc_weak）</span><span class="row-val">25%</span></div>
 <div class="row-info"><span class="row-label">实际仓位</span><span class="row-val" style="color:var(--color-up);font-size:20px">65.4%</span></div>
 <div class="row-info"><span class="row-label">持仓市值/可用现金</span><span>¥80,974 / ¥21,911</span></div>
 <div class="row-info"><span class="row-label">账户权益</span><span>¥123,866</span></div>
-<div class="alert-block alert-block-danger animate-pulse">⚠️ 仓位超限：实际65.4% &gt; 建议15%，需减仓！</div>
+<div class="alert-block alert-block-danger animate-pulse">⚠️ 仓位超限：实际65.4% &gt; 建议25%，需减仓！</div>
 <div class="section-sub">单票仓位上限（硬编码）</div>
 <div class="table-wrap" style="margin:0 -14px;"><table class="data-table" style="min-width:0;font-size:12px;"><thead><tr><th>战法</th><th class="num">单票上限</th></tr></thead><tbody>
 <tr><td>S01/S02</td><td class="num">10.0%</td></tr>
@@ -2866,7 +2865,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
 *报告生成时间：2026-10-05 17:21:47*</pre></div>
 </div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-06 09:43:27</div>
+    <div>数据更新时间: 2026-10-06 10:41:41</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分、公告情报</div>
     <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
     <div>推荐部署节奏: 盘前8:50 / 开盘9:35 / 午盘11:25 / 尾盘14:45 / 盘后17:20</div>
