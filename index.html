@@ -432,21 +432,25 @@ body.has-bottom-nav { padding-bottom: 60px; }
 <div class="card-sub">数据日期: 20260930</div>
 </div>
 <div class="card">
-<div class="title-row"><div class="card-title">🌍 隔夜外盘</div><span class="card-date-tag">📅10/07</span></div>
-<div style="padding:6px 10px;background:#99918;border-radius:6px;color:#999;font-weight:bold;margin-bottom:6px;">隔夜影响：中性</div>
-<div class="row-label" style="margin-top:2px;">🇺🇸 美股三大指数</div>
-<div class="row-info"><span class="row-label">道琼斯</span><span><span class="num-hero-sm">46247.29</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.65%</span></span></div>
-<div class="row-info"><span class="row-label">纳斯达克</span><span><span class="num-hero-sm">22484.07</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.44%</span></span></div>
-<div class="row-info"><span class="row-label">标普500</span><span><span class="num-hero-sm">6643.7</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.59%</span></span></div>
+<div class="title-row"><div class="card-title">🌍 隔夜外盘</div><span class="card-date-tag">📅10/07</span><span class="card-date-tag">11:07-11:08</span></div>
+<div class="alert-block alert-block-danger">🚨 [warning] 美股指数：道琼斯获取失败</div>
+<div class="alert-block alert-block-danger">🚨 [warning] 大宗商品：黄金获取失败; 铜获取失败; 白银获取失败</div>
+<div style="padding:6px 10px;background:#99918;border-radius:6px;color:#999;font-weight:bold;margin-bottom:6px;">隔夜影响：中性 <span style="font-weight:normal;opacity:0.8;">(加权总分 0.13)</span></div>
+<div class="row-label" style="margin-top:6px;">🇺🇸 美股三大指数</div>
+<div class="row-note" style="color:#e74c3c;font-weight:bold;">🚨 🇺🇸 美股三大指数采集失败：道琼斯获取失败</div>
+<div class="row-note" style="color:#e74c3c;">数据缺失</div>
+<div class="row-label" style="margin-top:6px;">🇨🇳 A50期指</div>
+<div class="row-info"><span class="row-label">A50期指<span style="color:#bbb;font-size:10px;margin-left:4px;">11:08</span></span><span><span class="num-hero-sm">13826.0</span> <span style="color:#27ae60;font-weight:bold;margin-left:6px;">-0.22%</span></span></div>
 <div class="row-label" style="margin-top:6px;">🐉 中概股（金龙指数）</div>
-<div class="row-note" style="color:#999;">暂无中概数据</div>
+<div class="row-info"><span class="row-label">金龙中国<span style="color:#bbb;font-size:10px;margin-left:4px;">11:07</span></span><span><span class="num-hero-sm">5631.3198</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.31%</span></span></div>
 <div class="row-label" style="margin-top:6px;">💱 汇率（美元/离岸人民币）</div>
-<div class="row-info"><span class="row-label">美元/离岸人民币</span><span><span class="num-hero-sm">6.7017</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.00%</span></span></div>
+<div class="row-info"><span class="row-label">美元/离岸人民币<span style="color:#bbb;font-size:10px;margin-left:4px;">11:08</span></span><span><span class="num-hero-sm">6.7042</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.00%</span></span></div>
 <div class="row-label" style="margin-top:6px;">📦 大宗商品</div>
-<div class="row-info"><span class="row-label">WTI原油</span><span><span class="num-hero-sm">89.973</span> <span style="color:#27ae60;font-weight:bold;margin-left:6px;">-0.01%</span></span></div>
-<div class="row-info"><span class="row-label">黄金</span><span><span class="num-hero-sm">4195.798</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.00%</span></span></div>
-<div class="row-info"><span class="row-label">白银</span><span><span class="num-hero-sm">61.745</span> <span style="color:#27ae60;font-weight:bold;margin-left:6px;">-0.02%</span></span></div>
-<div class="row-note">• 隔夜市场波动不大，对A股影响有限</div>
+<div class="row-note" style="color:#e74c3c;font-weight:bold;">🚨 📦 大宗商品采集失败：黄金获取失败; 铜获取失败; 白银获取失败</div>
+<div class="row-note" style="color:#e74c3c;">数据缺失</div>
+<div class="row-note">• 纳斯达克 +0.44%（得分+0.0×40%=+0.00）</div>
+<div class="row-note">• A50期指 -0.22%（得分+0.0×20%=+0.00）</div>
+<div class="row-note">• 大宗商品(WTI+黄金)综合得分+0.50×20%=+0.10</div>
 </div>
 <div class="card">
 <div class="title-row"><div class="card-title">大盘指数</div><span class="card-date-tag">📅09-30</span></div>
@@ -751,63 +755,59 @@ body.has-bottom-nav { padding-bottom: 60px; }
 
             <div class="row-info">
               <span class="row-label">WTI原油</span>
-              <span><span style="font-weight:bold">89.97</span>
-              <span class="text-down" style="margin-left:8px">-0.01%</span></span>
+              <span><span style="font-weight:bold">90.25</span>
+              <span class="text-up" style="margin-left:8px">+0.90%</span></span>
             </div>
+<div style="margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0;">
+<div class="row-label" style="margin-bottom:6px;">📊 行业影响解读</div>
 
-            <div class="row-info">
-              <span class="row-label">黄金</span>
-              <span><span style="font-weight:bold">4195.80</span>
-              <span class="text-up" style="margin-left:8px">+0.00%</span></span>
+            <div style="margin-bottom:8px;padding:6px;background:#f8f9fa;border-radius:6px;">
+              <div style="font-size:13px;font-weight:bold;">WTI原油 <span style="color:var(--color-text-muted);font-weight:normal">上涨 +0.90%</span> <span class="badge badge-warn">中影响</span></div>
+              <div style="margin-top:4px;"><span class="badge badge-down" style="margin:2px;">利好·石油开采</span><span class="badge badge-down" style="margin:2px;">利好·煤化工</span><span class="badge badge-up" style="margin:2px;">利空·航空</span><span class="badge badge-up" style="margin:2px;">利空·物流</span></div>
             </div>
-
-            <div class="row-info">
-              <span class="row-label">白银</span>
-              <span><span style="font-weight:bold">61.74</span>
-              <span class="text-down" style="margin-left:8px">-0.02%</span></span>
-            </div>
+</div>
 </div>
 <div class="card">
 <div class="title-row"><div class="card-title">📰 今日政策要闻</div><span class="card-date-tag">📅10/07</span></div>
 
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;background:#fff5f5;border-left:4px solid #e74c3c;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">港股半导体股集体下跌 澜起科技跌近8% <span class="badge badge-up">高影响</span><span class="badge badge-info" style="margin-left:4px;">行业政策-半导体</span></div>
+          <div style="margin-top:5px;"><span class="badge badge-down" style="margin:2px;">↑半导体</span><span class="badge badge-down" style="margin:2px;">↑电子</span></div>
+        </div>
+
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;background:#fffbf0;border-left:4px solid #f39c12;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">前8个月医保统筹基金收入约2.07万亿元 <span class="badge badge-warn">中影响</span><span class="badge badge-info" style="margin-left:4px;">行业政策-医药</span></div>
+          <div style="margin-top:5px;"><span class="badge badge-down" style="margin:2px;">↑创新药</span><span class="badge badge-up" style="margin:2px;">↓仿制药</span></div>
+        </div>
+
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;background:#fffbf0;border-left:4px solid #f39c12;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">国家医保局：前8个月医保统筹基金收入约2.07万亿元 <span class="badge badge-warn">中影响</span><span class="badge badge-info" style="margin-left:4px;">行业政策-医药</span></div>
+          <div style="margin-top:5px;"><span class="badge badge-down" style="margin:2px;">↑创新药</span><span class="badge badge-up" style="margin:2px;">↓仿制药</span></div>
+        </div>
+
         <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
-          <div style="font-size:14px;font-weight:bold;line-height:1.4;">今日37个高速公路路段易发拥堵；纳指、标普500指数创收盘新高丨21早新闻 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">国家外汇管理局：9月末我国外汇储备规模为34003亿美元 较8月末下降381亿美元 降幅为1.11% <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
           <div style="margin-top:5px;"></div>
         </div>
 
         <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
-          <div style="font-size:14px;font-weight:bold;line-height:1.4;">江苏构建“15分钟养老服务圈” 托起老年人的幸福（培育更多“中国服务”品牌） <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">水利部：确保全年完成水利建设投资1万亿元目标 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
           <div style="margin-top:5px;"></div>
         </div>
 
         <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
-          <div style="font-size:14px;font-weight:bold;line-height:1.4;">扩大开放、连接全球、赋能产业、惠及民生的重要窗口（进博会观察） <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">央行数据显示 9月末外汇储备报34002.51亿美元 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
           <div style="margin-top:5px;"></div>
         </div>
 
-        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
-          <div style="font-size:14px;font-weight:bold;line-height:1.4;">成都强化校地合作提升科创动能（“十五五”开好局起好步） <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
-          <div style="margin-top:5px;"></div>
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;background:#fff5f5;border-left:4px solid #e74c3c;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">中国央行连续第23个月增持黄金 <span class="badge badge-up">高影响</span><span class="badge badge-info" style="margin-left:4px;">证监会/监管</span></div>
+          <div style="margin-top:5px;"><span class="badge badge-down" style="margin:2px;">↑券商</span><span class="badge badge-up" style="margin:2px;">↓问题股</span></div>
         </div>
 
-        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
-          <div style="font-size:14px;font-weight:bold;line-height:1.4;">经济日报：深化国资国企改革提升核心竞争力 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
-          <div style="margin-top:5px;"></div>
-        </div>
-
-        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
-          <div style="font-size:14px;font-weight:bold;line-height:1.4;">政策吸引 平台赋能 雄安新区招才引智共建未来之城 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
-          <div style="margin-top:5px;"></div>
-        </div>
-
-        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
-          <div style="font-size:14px;font-weight:bold;line-height:1.4;">农业科创共同体“攥指成拳”办大事 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
-          <div style="margin-top:5px;"></div>
-        </div>
-
-        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
-          <div style="font-size:14px;font-weight:bold;line-height:1.4;">系统提升绿色金融精准性约束力 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
-          <div style="margin-top:5px;"></div>
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;background:#fffbf0;border-left:4px solid #f39c12;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">港股医药股多数走弱 金斯瑞生物科技跌近14% <span class="badge badge-warn">中影响</span><span class="badge badge-info" style="margin-left:4px;">行业政策-医药</span></div>
+          <div style="margin-top:5px;"><span class="badge badge-down" style="margin:2px;">↑创新药</span><span class="badge badge-up" style="margin:2px;">↓仿制药</span></div>
         </div>
 </div></div>
   <div id="sec-positions" class="section">
@@ -2520,13 +2520,13 @@ body.has-bottom-nav { padding-bottom: 60px; }
 <div class="row-info"><span class="row-label">实际仓位</span><span class="row-val" style="color:var(--color-up);font-size:20px">65.4%</span></div>
 <div class="row-info"><span class="row-label">持仓市值/可用现金</span><span>¥80,974 / ¥21,911</span></div>
 <div class="row-info"><span class="row-label">账户权益</span><span>¥123,866</span></div>
-<div class="alert-block alert-block-danger animate-pulse">⚠️ 仓位超限：实际65.4% &gt; 建议25%，需减仓！</div>
-<div class="section-sub">单票仓位上限（硬编码）</div>
+<div class="alert-block alert-block-danger animate-pulse">🚨🚨🚨 仓位超限：实际65.4% &gt; 环境上限25%，超限40.4%（2.6倍），强制减仓！</div>
+<div class="section-sub">单票仓位上限（回测基准）</div>
 <div class="table-wrap" style="margin:0 -14px;"><table class="data-table" style="min-width:0;font-size:12px;"><thead><tr><th>战法</th><th class="num">单票上限</th></tr></thead><tbody>
-<tr><td>S01/S02</td><td class="num">10.0%</td></tr>
-<tr><td>S08</td><td class="num">8.0%</td></tr>
-<tr><td>S05</td><td class="num">5.0%</td></tr>
-<tr><td>S04</td><td class="num">2.5%</td></tr>
+<tr><td>S01/S02</td><td class="num">6.0%</td></tr>
+<tr><td>S08</td><td class="num">5.0%</td></tr>
+<tr><td>S05</td><td class="num">4.0%</td></tr>
+<tr><td>S04</td><td class="num">1.5%</td></tr>
 </tbody></table></div>
 </div>
 <div class="card">
@@ -2866,7 +2866,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
 *报告生成时间：2026-10-05 17:21:47*</pre></div>
 </div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-07 10:32:36</div>
+    <div>数据更新时间: 2026-10-07 11:10:09</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分、公告情报</div>
     <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
     <div>推荐部署节奏: 盘前8:50 / 开盘9:35 / 午盘11:25 / 尾盘14:45 / 盘后17:20</div>
