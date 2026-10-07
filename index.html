@@ -322,6 +322,31 @@ body.has-bottom-nav { padding-bottom: 60px; }
 
 /* 复盘日期按钮active统一为品牌色（覆盖专家A的紫色） */
 .review-date-btn.active { background: var(--color-primary); border-color: var(--color-primary); }
+
+/* ============================================================
+   2026-10-07 审计新增：数据来源/日期/单位标注 + 失败告警 + 休市横幅
+   ============================================================ */
+/* 卡片底部元信息小字：来源 | 日期 | 单位 */
+.card-meta {
+  margin-top: 10px; padding-top: 6px; border-top: 1px dashed #eee;
+  font-size: 10px; color: var(--color-text-muted); line-height: 1.4;
+  word-break: break-all;
+}
+.card-meta .meta-unit { color: #999; }
+/* 采集失败告警卡片：红色边框+浅红背景 */
+.card-error {
+  border: 1.5px solid var(--color-danger) !important;
+  background: #fdecea !important;
+}
+.card-error .empty-text, .card-error .error-text { color: var(--color-danger) !important; font-weight: bold; }
+.card-error .error-detail { font-size: 11px; color: #c0392b; margin-top: 4px; }
+/* 休市黄色横幅 */
+.holiday-banner {
+  margin: 8px 0; padding: 10px 12px; background: #fff3cd;
+  border: 1px solid #ffc107; border-radius: 8px; color: #856404;
+  font-size: 13px; font-weight: bold; text-align: center; line-height: 1.5;
+}
+.holiday-banner .holiday-sub { font-size: 11px; font-weight: normal; color: #a37b00; margin-top: 2px; }
 </style>
 </head>
 <body class="has-bottom-nav">
@@ -341,6 +366,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
     <div class="tab-item" data-tab="trades" onclick="showTab('trades',this)"><span class="tab-icon">📚</span>交易复盘</div>
   </div>
   <div class="alert-banner" onclick="showTab('risk', document.querySelector('.tab-item[data-tab=risk]'))">🚨 2只持仓击穿止损 | 纪律评分:9.0分D（不及格） | 违规8次 ▶点击查风控</div>
+  <div class="holiday-banner">⚠️ A股休市中（2026-10-07），以下数据为最近交易日 9月30日（2026-09-30）<br><span class="holiday-sub">实时报价类数据标注"休市"，下一交易日开市后自动刷新</span></div>
   <div id="sec-overview" class="section active"><div class="card card-highlight">
 <div class="title-row"><div class="card-title">📋 今日操作清单</div><span class="card-date-tag">2026-10-07 09:11:43</span></div>
 <div class="row-info"><span class="row-label">环境 / 仓位上限</span><span class="row-val">osc_weak / 25%</span></div>
@@ -432,25 +458,30 @@ body.has-bottom-nav { padding-bottom: 60px; }
 <div class="card-sub">数据日期: 20260930</div>
 </div>
 <div class="card">
-<div class="title-row"><div class="card-title">🌍 隔夜外盘</div><span class="card-date-tag">📅10/07</span><span class="card-date-tag">11:07-11:08</span></div>
-<div class="alert-block alert-block-danger">🚨 [warning] 美股指数：道琼斯获取失败</div>
-<div class="alert-block alert-block-danger">🚨 [warning] 大宗商品：黄金获取失败; 铜获取失败; 白银获取失败</div>
-<div style="padding:6px 10px;background:#99918;border-radius:6px;color:#999;font-weight:bold;margin-bottom:6px;">隔夜影响：中性 <span style="font-weight:normal;opacity:0.8;">(加权总分 0.13)</span></div>
+<div class="title-row"><div class="card-title">🌍 隔夜外盘</div><span class="card-date-tag">📅10/07</span><span class="card-date-tag">11:14-11:14</span></div>
+<div class="alert-block alert-block-danger">🚨 [warning] 美股-道琼斯：腾讯51521.28 vs 新浪46247.29，偏差11.4%&gt;0.5%，以腾讯为准</div>
+<div class="alert-block alert-block-danger">🚨 [warning] 美股-纳斯达克：腾讯27599.89 vs 新浪22484.07，偏差22.8%&gt;0.5%，以腾讯为准</div>
+<div class="alert-block alert-block-danger">🚨 [warning] 美股-标普500：腾讯7818.93 vs 新浪6643.70，偏差17.7%&gt;0.5%，以腾讯为准</div>
+<div style="padding:6px 10px;background:#99918;border-radius:6px;color:#999;font-weight:bold;margin-bottom:6px;">隔夜影响：中性 <span style="font-weight:normal;opacity:0.8;">(加权总分 0.03)</span></div>
 <div class="row-label" style="margin-top:6px;">🇺🇸 美股三大指数</div>
-<div class="row-note" style="color:#e74c3c;font-weight:bold;">🚨 🇺🇸 美股三大指数采集失败：道琼斯获取失败</div>
-<div class="row-note" style="color:#e74c3c;">数据缺失</div>
+<div class="row-info"><span class="row-label">道琼斯<span style="color:#bbb;font-size:10px;margin-left:4px;">11:14</span></span><span><span class="num-hero-sm">51521.28</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.49%</span></span></div>
+<div class="row-info"><span class="row-label">纳斯达克<span style="color:#bbb;font-size:10px;margin-left:4px;">11:14</span></span><span><span class="num-hero-sm">27599.89</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.45%</span></span></div>
+<div class="row-info"><span class="row-label">标普500<span style="color:#bbb;font-size:10px;margin-left:4px;">11:14</span></span><span><span class="num-hero-sm">7818.93</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.58%</span></span></div>
 <div class="row-label" style="margin-top:6px;">🇨🇳 A50期指</div>
-<div class="row-info"><span class="row-label">A50期指<span style="color:#bbb;font-size:10px;margin-left:4px;">11:08</span></span><span><span class="num-hero-sm">13826.0</span> <span style="color:#27ae60;font-weight:bold;margin-left:6px;">-0.22%</span></span></div>
+<div class="row-info"><span class="row-label">A50期指<span style="color:#bbb;font-size:10px;margin-left:4px;">11:14</span></span><span><span class="num-hero-sm">13825.28</span> <span style="color:#27ae60;font-weight:bold;margin-left:6px;">-0.22%</span></span></div>
 <div class="row-label" style="margin-top:6px;">🐉 中概股（金龙指数）</div>
-<div class="row-info"><span class="row-label">金龙中国<span style="color:#bbb;font-size:10px;margin-left:4px;">11:07</span></span><span><span class="num-hero-sm">5631.3198</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.31%</span></span></div>
+<div class="row-info"><span class="row-label">金龙中国<span style="color:#bbb;font-size:10px;margin-left:4px;">11:14</span></span><span><span class="num-hero-sm">5631.32</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.31%</span></span></div>
 <div class="row-label" style="margin-top:6px;">💱 汇率（美元/离岸人民币）</div>
-<div class="row-info"><span class="row-label">美元/离岸人民币<span style="color:#bbb;font-size:10px;margin-left:4px;">11:08</span></span><span><span class="num-hero-sm">6.7042</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.00%</span></span></div>
+<div class="row-info"><span class="row-label">美元/离岸人民币<span style="color:#bbb;font-size:10px;margin-left:4px;">11:14</span></span><span><span class="num-hero-sm">6.7042</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.04%</span></span></div>
 <div class="row-label" style="margin-top:6px;">📦 大宗商品</div>
-<div class="row-note" style="color:#e74c3c;font-weight:bold;">🚨 📦 大宗商品采集失败：黄金获取失败; 铜获取失败; 白银获取失败</div>
-<div class="row-note" style="color:#e74c3c;">数据缺失</div>
-<div class="row-note">• 纳斯达克 +0.44%（得分+0.0×40%=+0.00）</div>
+<div class="row-info"><span class="row-label">WTI原油<span style="color:#bbb;font-size:10px;margin-left:4px;">11:14</span></span><span><span class="num-hero-sm">90.277</span> <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">+0.94%</span></span></div>
+<div class="row-info"><span class="row-label">黄金<span style="color:#bbb;font-size:10px;margin-left:4px;">11:14</span></span><span><span class="num-hero-sm">4165.38</span> <span style="color:#27ae60;font-weight:bold;margin-left:6px;">-0.52%</span></span></div>
+<div class="row-info"><span class="row-label">铜<span style="color:#bbb;font-size:10px;margin-left:4px;">11:14</span></span><span><span class="num-hero-sm">6.62394</span> <span style="color:#27ae60;font-weight:bold;margin-left:6px;">-0.38%</span></span></div>
+<div class="row-info"><span class="row-label">白银<span style="color:#bbb;font-size:10px;margin-left:4px;">11:14</span></span><span><span class="num-hero-sm">61.03</span> <span style="color:#27ae60;font-weight:bold;margin-left:6px;">-0.91%</span></span></div>
+<div class="row-note">• 纳斯达克 +0.45%（得分+0.0×40%=+0.00）</div>
 <div class="row-note">• A50期指 -0.22%（得分+0.0×20%=+0.00）</div>
-<div class="row-note">• 大宗商品(WTI+黄金)综合得分+0.50×20%=+0.10</div>
+<div class="row-note">• 大宗商品(WTI+黄金)综合得分+0.00×20%=+0.00</div>
+<div class="card-meta">来源: 腾讯/新浪隔夜行情 | 日期: 美东20261007 | 单位: <span class='meta-unit'>点/%</span></div>
 </div>
 <div class="card">
 <div class="title-row"><div class="card-title">大盘指数</div><span class="card-date-tag">📅09-30</span></div>
@@ -478,6 +509,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
             <span class="text-down" style="margin-left:8px">-0.23%</span>
           </span>
         </div>
+<div class="card-meta">来源: 腾讯行情(主)/新浪(备) | 日期: 2026-09-30收盘 | 单位: <span class='meta-unit'>点/%</span></div>
 </div>
 <div class="card"><div class="card-title">🌅 竞价逐分钟</div><div class="row-note">暂无竞价逐分钟数据（非竞价时段，仅交易日9:15-9:35采集）</div></div>
 <div class="card"><div class="chart-caption"><span class="chart-title">上证指数分时</span><span class="text-muted-sm">09/30 · 源:新浪HTTP</span></div><div class="mini-chart"><svg viewBox="0 0 440 120" style="width:100%;height:auto;display:block;margin:4px 0;">
@@ -513,6 +545,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
         <span>20260930</span>
       </div>
       <div class="row-note">全市场成交额（两市合计），环比上一交易日20260929，与5环境择时卡片统一数据源</div>
+      <div class="card-meta">来源: market_turnover_daily.csv | 日期: 20260930 | 单位: <span class='meta-unit'>亿元</span></div>
     </div>
 <div class="card">
 <div class="title-row"><div class="card-title">情绪周期</div><span class="card-date-tag">📅09/30</span></div>
@@ -685,6 +718,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
 <div class="row-note" style="color:#e74c3c;">🔻 流出前三: 机械行业 -13.2亿 / 电子器件 -52.2亿 / 电子信息 -53.9亿</div>
 <div class="row-note" style="font-size:10px;color:#999;">📊 新浪48个申万行业资金流汇总（非全市场个股口径）</div>
 <div class="row-info" style="border-top:1px dashed #ddd;margin-top:4px;"><span class="row-label">持仓主力净流入合计</span><span class="num-hero-sm text-down">-1158万</span></div>
+<div class="card-meta">来源: sina_industry_aggregated | 日期: 20260930 | 单位: <span class='meta-unit'>亿元</span> | T-1 | 北向每日净流入2024-08起官方停更</div>
 </div>
 <div class="card">
 <div class="title-row"><div class="card-title">🌙 隔夜要闻解读</div><span class="card-date-tag">📅09/30</span></div>
@@ -749,21 +783,45 @@ body.has-bottom-nav { padding-bottom: 60px; }
     <div class="row-info"><span class="row-label">两市融资余额</span><span class="num-hero-sm">12965.21<span style="font-size:13px;font-weight:normal;color:#999">亿</span></span></div>
     <div class="row-info"><span class="row-label">两市融券余额</span><span>188.93亿</span></div>
     <div class="row-info"><span class="row-label">当日融资买入</span><span class="text-up">620.07亿</span></div>
+<div class="card-meta">来源: DaoShare/交易所 | 日期: 20260930 | 单位: <span class='meta-unit'>亿元</span> | T-1（次交易日披露）</div>
 </div>
 <div class="card">
 <div class="title-row"><div class="card-title">🛢️ 隔夜大宗商品</div><span class="card-date-tag">📅10/07</span></div>
 
             <div class="row-info">
               <span class="row-label">WTI原油</span>
-              <span><span style="font-weight:bold">90.25</span>
-              <span class="text-up" style="margin-left:8px">+0.90%</span></span>
+              <span><span style="font-weight:bold">90.28</span>
+              <span class="text-up" style="margin-left:8px">+0.94%</span></span>
+            </div>
+
+            <div class="row-info">
+              <span class="row-label">黄金</span>
+              <span><span style="font-weight:bold">4165.38</span>
+              <span class="text-down" style="margin-left:8px">-0.52%</span></span>
+            </div>
+
+            <div class="row-info">
+              <span class="row-label">铜</span>
+              <span><span style="font-weight:bold">6.62</span>
+              <span class="text-down" style="margin-left:8px">-0.38%</span></span>
+            </div>
+
+            <div class="row-info">
+              <span class="row-label">白银</span>
+              <span><span style="font-weight:bold">61.03</span>
+              <span class="text-down" style="margin-left:8px">-0.91%</span></span>
             </div>
 <div style="margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0;">
 <div class="row-label" style="margin-bottom:6px;">📊 行业影响解读</div>
 
             <div style="margin-bottom:8px;padding:6px;background:#f8f9fa;border-radius:6px;">
-              <div style="font-size:13px;font-weight:bold;">WTI原油 <span style="color:var(--color-text-muted);font-weight:normal">上涨 +0.90%</span> <span class="badge badge-warn">中影响</span></div>
+              <div style="font-size:13px;font-weight:bold;">WTI原油 <span style="color:var(--color-text-muted);font-weight:normal">上涨 +0.94%</span> <span class="badge badge-warn">中影响</span></div>
               <div style="margin-top:4px;"><span class="badge badge-down" style="margin:2px;">利好·石油开采</span><span class="badge badge-down" style="margin:2px;">利好·煤化工</span><span class="badge badge-up" style="margin:2px;">利空·航空</span><span class="badge badge-up" style="margin:2px;">利空·物流</span></div>
+            </div>
+
+            <div style="margin-bottom:8px;padding:6px;background:#f8f9fa;border-radius:6px;">
+              <div style="font-size:13px;font-weight:bold;">黄金 <span style="color:var(--color-text-muted);font-weight:normal">下跌 -0.52%</span> <span class="badge badge-warn">中影响</span></div>
+              <div style="margin-top:4px;"><span class="badge badge-up" style="margin:2px;">利空·黄金股</span></div>
             </div>
 </div>
 </div>
@@ -773,6 +831,11 @@ body.has-bottom-nav { padding-bottom: 60px; }
         <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;background:#fff5f5;border-left:4px solid #e74c3c;">
           <div style="font-size:14px;font-weight:bold;line-height:1.4;">港股半导体股集体下跌 澜起科技跌近8% <span class="badge badge-up">高影响</span><span class="badge badge-info" style="margin-left:4px;">行业政策-半导体</span></div>
           <div style="margin-top:5px;"><span class="badge badge-down" style="margin:2px;">↑半导体</span><span class="badge badge-down" style="margin:2px;">↑电子</span></div>
+        </div>
+
+        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;">
+          <div style="font-size:14px;font-weight:bold;line-height:1.4;">瘦西湖文旅通过港交所聆讯 <span class="badge">低影响</span><span class="badge badge-info" style="margin-left:4px;">其他</span></div>
+          <div style="margin-top:5px;"></div>
         </div>
 
         <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;background:#fffbf0;border-left:4px solid #f39c12;">
@@ -803,11 +866,6 @@ body.has-bottom-nav { padding-bottom: 60px; }
         <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;background:#fff5f5;border-left:4px solid #e74c3c;">
           <div style="font-size:14px;font-weight:bold;line-height:1.4;">中国央行连续第23个月增持黄金 <span class="badge badge-up">高影响</span><span class="badge badge-info" style="margin-left:4px;">证监会/监管</span></div>
           <div style="margin-top:5px;"><span class="badge badge-down" style="margin:2px;">↑券商</span><span class="badge badge-up" style="margin:2px;">↓问题股</span></div>
-        </div>
-
-        <div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;background:#fffbf0;border-left:4px solid #f39c12;">
-          <div style="font-size:14px;font-weight:bold;line-height:1.4;">港股医药股多数走弱 金斯瑞生物科技跌近14% <span class="badge badge-warn">中影响</span><span class="badge badge-info" style="margin-left:4px;">行业政策-医药</span></div>
-          <div style="margin-top:5px;"><span class="badge badge-down" style="margin:2px;">↑创新药</span><span class="badge badge-up" style="margin:2px;">↓仿制药</span></div>
         </div>
 </div></div>
   <div id="sec-positions" class="section">
@@ -1248,6 +1306,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
           <div class="row-note" style="font-size:11px;color:#bbb">💡 鹏鼎控股技术面中性，底背离，压力83.1/支撑79.45，振幅4.57%</div>
         </div>
 </div>
+<div class="card"><div class="card-meta">来源: 腾讯行情(主)/新浪(备) + DaoShare资金流 | 日期: 2026-09-30 | 单位: <span class='meta-unit'>元/%/股</span></div></div>
 <div class="card">
 <div class="title-row"><div class="card-title">🧩 持仓股筹码分布</div><span class="card-date-tag">📅09/30</span></div>
 
@@ -2141,6 +2200,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
     <div class="row-info"><span class="row-label">两市融资余额</span><span class="num-hero-sm">12965.21<span style="font-size:13px;font-weight:normal;color:#999">亿</span></span></div>
     <div class="row-info"><span class="row-label">两市融券余额</span><span>188.93亿</span></div>
     <div class="row-info"><span class="row-label">当日融资买入</span><span class="text-up">620.07亿</span></div>
+<div class="card-meta">来源: DaoShare/交易所 | 日期: 20260930 | 单位: <span class='meta-unit'>亿元</span> | T-1（次交易日披露）</div>
 </div></div>
   <div id="sec-longhubang" class="section"><div class="card"><div class="title-row"><div class="card-title">🐉 龙虎榜</div><span class="card-date-tag">📅09/30</span></div>
 
@@ -2866,7 +2926,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
 *报告生成时间：2026-10-05 17:21:47*</pre></div>
 </div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-07 11:10:09</div>
+    <div>数据更新时间: 2026-10-07 11:27:26</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分、公告情报</div>
     <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
     <div>推荐部署节奏: 盘前8:50 / 开盘9:35 / 午盘11:25 / 尾盘14:45 / 盘后17:20</div>
