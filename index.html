@@ -366,7 +366,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
     <div class="tab-item" data-tab="trades" onclick="showTab('trades',this)"><span class="tab-icon">📚</span>交易复盘</div>
   </div>
   <div class="alert-banner" onclick="showTab('risk', document.querySelector('.tab-item[data-tab=risk]'))">🚨 2只持仓击穿止损 | 纪律评分:9.0分D（不及格） | 违规8次 ▶点击查风控</div>
-  <div class="holiday-banner">⚠️ A股休市中（2026-10-07），以下数据为最近交易日 9月30日（2026-09-30）<br><span class="holiday-sub">实时报价类数据标注"休市"，下一交易日开市后自动刷新</span></div>
+  
   <div id="sec-overview" class="section active"><div class="card card-highlight">
 <div class="title-row"><div class="card-title">📋 今日操作清单</div><span class="card-date-tag">2026-10-07 14:52:04</span></div>
 <div class="row-info"><span class="row-label">环境 / 仓位上限</span><span class="row-val">震荡偏强 / 70%</span></div>
@@ -433,7 +433,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
     </div></div>
   <div id="sec-market" class="section"><div class="card regime-card card-highlight">
 <div class="card-title">🎯 5环境择时（多指数+宽度+板块联动）</div>
-<div style="background:#e8f4fd;color:#2980b9;border-radius:6px;padding:6px 10px;margin:6px 0;font-size:11px;">📌 休市期间，以下行情数据均为最近交易日 2026-09-30（融资余额为T+1发布的最新可用数据）</div>
+<div style="background:#fff8e1;color:#f39c12;border-radius:6px;padding:6px 10px;margin:6px 0;font-size:11px;">📌 盘前时段，以下行情数据为 2026-09-30（今日9:30开盘后自动切换为实时）</div>
 
         <div style="background:#f1c40f;color:#333;border-radius:8px;padding:14px;text-align:center;margin:8px 0;">
           <div style="font-size:26px;font-weight:bold;">震荡偏强</div>
@@ -441,15 +441,15 @@ body.has-bottom-nav { padding-bottom: 60px; }
         </div>
 <div class="row-info"><span class="row-label">允许战法</span><span style="font-size:14px">S01 / S02 / S04 / S05 / S08</span></div>
 <div class="row-info"><span class="row-label">建议总仓位</span><span class="row-val">70%</span></div>
-<div class="row-info"><span class="row-label">上证/MA20</span><span>3842.2 / 3905.6（20日-2.5%）</span></div>
+<div class="row-info"><span class="row-label">上证/MA20</span><span>3842.2 / 3900.7（20日-2.5%）</span></div>
 <div class="section-sub" style="margin-top:8px;">📐 判定依据</div>
-<div class="row-info"><span class="row-label">多指数确认</span><span style="font-size:12px"><span style="color:#27ae60;font-weight:bold">科创50-2.51%</span> / <span style="color:#e74c3c;font-weight:bold">沪深300+0.29%</span> <span style="color:#f39c12;font-weight:bold">[1/3上涨]</span> <span style="color:#999;font-size:11px;">📌休市，数据为20260930</span></span></div>
+<div class="row-info"><span class="row-label">多指数确认</span><span style="font-size:12px"><span style="color:#27ae60;font-weight:bold">创业板指-0.23%</span> / <span style="color:#27ae60;font-weight:bold">科创50-2.51%</span> / <span style="color:#e74c3c;font-weight:bold">沪深300+0.29%</span> <span style="color:#f39c12;font-weight:bold">[1/4上涨]</span> <span style="color:#999;font-size:11px;">📌盘前，数据为20260930</span></span></div>
 <div class="row-info"><span class="row-label">市场宽度</span><span style="font-size:12px">2470涨/2747跌 涨停72/跌停16 <span style="color:#f39c12;font-weight:bold">[中性]</span></span></div>
 <div class="row-info"><span class="row-label">量能(成交额)</span><span style="font-size:12px">今日14501亿/5日均17488亿 量比0.83 <span style="color:#f39c12;font-weight:bold">[正常]</span></span></div>
 <div class="row-info"><span class="row-label">环境稳定性</span><span style="font-size:12px">已持续1天 / 60天切换0次(低) <span style="color:#999;font-weight:bold">[可信度低]</span></span></div>
 <div class="row-info"><span class="row-label">资金面(两融)</span><span style="font-size:12px">融资余额12965亿(2026-09-30) <span style="color:#999">北向已停更</span></span></div>
 <div class="row-info"><span class="row-label">情绪面(连板)</span><span style="font-size:12px">最高7连板 / 炸板率35.4% <span style="color:#f39c12;font-weight:bold">[中性]</span></span></div>
-<div class="row-info"><span class="row-label">波动率(ATR14)</span><span style="font-size:12px">ATR 1.04% <span style="color:#f39c12;font-weight:bold">[中波动]</span></span></div>
+<div class="row-info"><span class="row-label">波动率(ATR14)</span><span style="font-size:12px">ATR 0.95% <span style="color:#27ae60;font-weight:bold">[低波动]</span></span></div>
 <div class="row-info"><span class="row-label">竞价/收盘评分</span><span>55 / 50</span></div>
 <div class="row-info"><span class="row-label">明日展望</span><span>中性</span></div>
 <div class="row-info"><span class="row-label">明日仓位</span><span>维持原仓位</span></div>
@@ -723,61 +723,8 @@ body.has-bottom-nav { padding-bottom: 60px; }
 <div class="card-meta">来源: sina_industry_aggregated | 日期: 20260930 | 单位: <span class='meta-unit'>亿元</span> | T-1 | 北向每日净流入2024-08起官方停更</div>
 </div>
 <div class="card">
-<div class="title-row"><div class="card-title">🌙 隔夜要闻解读</div><span class="card-date-tag">📅09/30</span></div>
-<div style="padding:8px 10px;background:#eaffea;border-radius:6px;color:#27ae60;font-weight:bold;margin-bottom:8px;">市场展望：偏多</div>
-
-            <div style="padding:8px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="font-size:13px;font-weight:bold;line-height:1.4;">部分首套房10月起享“国家贴息”：100万贷款最高省5万 能否点燃“银十”？</div>
-              <div style="font-size:12px;margin-top:3px;">
-                <span class="tag" style="background:#f0f0f0;color:#666">重要性:高</span>
-                <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">利好</span>
-                <span style="color:#999;margin-left:6px;">影响板块:房地产、建材、家用电器</span>
-              </div>
-              <div style="font-size:12px;color:#666;margin-top:3px;line-height:1.4;">地产政策放松直接利好地产开发、建材家居链条，关注销售数据是否边际改善</div>
-            </div>
-
-            <div style="padding:8px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="font-size:13px;font-weight:bold;line-height:1.4;">央行：PSL降息扩围 加大对“六张网”建设的金融支持</div>
-              <div style="font-size:12px;margin-top:3px;">
-                <span class="tag" style="background:#f0f0f0;color:#666">重要性:高</span>
-                <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">利好</span>
-                <span style="color:#999;margin-left:6px;">影响板块:银行、房地产、债券</span>
-              </div>
-              <div style="font-size:12px;color:#666;margin-top:3px;line-height:1.4;">降息降低实体融资成本，利好高估值成长与地产链，同时压低无风险利率抬升权益估值</div>
-            </div>
-
-            <div style="padding:8px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="font-size:13px;font-weight:bold;line-height:1.4;">盘前速递丨9月30日（周三）9月官方PMI今日公布；*ST元道今日进入退市整理期；力勤资源今日上市</div>
-              <div style="font-size:12px;margin-top:3px;">
-                <span class="tag" style="background:#f0f0f0;color:#666">重要性:高</span>
-                <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">利好</span>
-                <span style="color:#999;margin-left:6px;">影响板块:非银金融、全市场</span>
-              </div>
-              <div style="font-size:12px;color:#666;margin-top:3px;line-height:1.4;">资本市场监管政策动态直接影响券商板块与市场制度预期，关注政策细则落地节奏</div>
-            </div>
-
-            <div style="padding:8px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="font-size:13px;font-weight:bold;line-height:1.4;">新住房销售制度平稳落地</div>
-              <div style="font-size:12px;margin-top:3px;">
-                <span class="tag" style="background:#f0f0f0;color:#666">重要性:高</span>
-                <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">利好</span>
-                <span style="color:#999;margin-left:6px;">影响板块:房地产、建材、家用电器</span>
-              </div>
-              <div style="font-size:12px;color:#666;margin-top:3px;line-height:1.4;">地产政策放松直接利好地产开发、建材家居链条，关注销售数据是否边际改善</div>
-            </div>
-
-            <div style="padding:8px 0;border-bottom:1px solid #f5f5f5;">
-              <div style="font-size:13px;font-weight:bold;line-height:1.4;">早报|国务院国资委：进一步发力人工智能、新材料等重点领域 OpenAI推出全天候自主智能体Dots</div>
-              <div style="font-size:12px;margin-top:3px;">
-                <span class="tag" style="background:#f0f0f0;color:#666">重要性:高</span>
-                <span style="color:#e74c3c;font-weight:bold;margin-left:6px;">利好</span>
-                <span style="color:#999;margin-left:6px;">影响板块:通信设备、计算机、电子</span>
-              </div>
-              <div style="font-size:12px;color:#666;margin-top:3px;line-height:1.4;">AI/算力产业催化持续，利好光模块、服务器、芯片等科技成长方向，注意高位股波动</div>
-            </div>
-<div class="row-info" style="margin-top:6px;"><span class="row-label">重点关注板块</span><span style="font-size:12px;">房地产、建材、家用电器、全市场、食品饮料、社会服务、商业百货、银行</span></div>
-<div class="row-note" style="color:#e67e22;">⚠️ 关注外围市场波动与北向资金流向</div>
-<div class="row-note" style="color:#e67e22;">⚠️ 关注持仓股公告与龙虎榜席位</div>
+<div class="title-row"><div class="card-title">🌙 隔夜要闻解读</div><span class="card-date-tag">📅10/07</span></div>
+<div style="padding:8px 10px;background:#fff3e0;border-radius:6px;color:#e67e22;font-weight:bold;margin-bottom:8px;">市场展望：--</div>
 </div>
 <div class="card">
 <div class="title-row"><div class="card-title">💰 融资融券</div><span class="card-date-tag">📅09/30</span></div>
@@ -2942,7 +2889,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
 *报告生成时间：2026-10-05 17:21:47*</pre></div>
 </div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-07 23:41:40</div>
+    <div>数据更新时间: 2026-10-08 00:12:41</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分、公告情报</div>
     <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
     <div>推荐部署节奏: 盘前8:50 / 开盘9:35 / 午盘11:25 / 尾盘14:45 / 盘后17:20</div>
