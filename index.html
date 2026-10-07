@@ -368,8 +368,8 @@ body.has-bottom-nav { padding-bottom: 60px; }
   <div class="alert-banner" onclick="showTab('risk', document.querySelector('.tab-item[data-tab=risk]'))">🚨 2只持仓击穿止损 | 纪律评分:9.0分D（不及格） | 违规8次 ▶点击查风控</div>
   <div class="holiday-banner">⚠️ A股休市中（2026-10-07），以下数据为最近交易日 9月30日（2026-09-30）<br><span class="holiday-sub">实时报价类数据标注"休市"，下一交易日开市后自动刷新</span></div>
   <div id="sec-overview" class="section active"><div class="card card-highlight">
-<div class="title-row"><div class="card-title">📋 今日操作清单</div><span class="card-date-tag">2026-10-07 09:11:43</span></div>
-<div class="row-info"><span class="row-label">环境 / 仓位上限</span><span class="row-val">osc_weak / 25%</span></div>
+<div class="title-row"><div class="card-title">📋 今日操作清单</div><span class="card-date-tag">2026-10-07 14:52:04</span></div>
+<div class="row-info"><span class="row-label">环境 / 仓位上限</span><span class="row-val">osc_strong / 70%</span></div>
 <div class="row-info"><span class="row-label">可用资金</span><span class="row-val" style="color:var(--color-info)">¥42,892</span></div>
 <div class="section-sub">持仓操作</div>
 <div style="background:#fff5f5;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
@@ -378,9 +378,9 @@ body.has-bottom-nav { padding-bottom: 60px; }
                 <span style="color:var(--color-up);font-weight:bold">止损卖出</span>
               </div>
               <div class="detail-line"><span class="row-label">挂单时点</span><span>竞价挂</span></div>
-              <div class="detail-line"><span class="row-label">挂单价格</span><span>11.629</span></div>
+              <div class="detail-line"><span class="row-label">挂单价格</span><span>11.23</span></div>
               <div class="detail-line"><span class="row-label">数量</span><span>全仓(2800股)</span></div>
-              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价11.46 &lt; 止损价11.629，已破止损-1.45%</span></div>
+              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价11.46 &lt; 止损价11.629（触发条件），已破止损-1.45%；实际挂单价11.23（现价11.46×0.98确保成交，低于止损价11.629）</span></div>
             </div>
 <div style="background:#fff5f5;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
               <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -388,9 +388,9 @@ body.has-bottom-nav { padding-bottom: 60px; }
                 <span style="color:var(--color-up);font-weight:bold">止损卖出</span>
               </div>
               <div class="detail-line"><span class="row-label">挂单时点</span><span>竞价挂</span></div>
-              <div class="detail-line"><span class="row-label">挂单价格</span><span>184.508</span></div>
+              <div class="detail-line"><span class="row-label">挂单价格</span><span>161.58</span></div>
               <div class="detail-line"><span class="row-label">数量</span><span>全仓(200股)</span></div>
-              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价164.88 &lt; 止损价184.508，已破止损-10.64%</span></div>
+              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价164.88 &lt; 止损价184.508（触发条件），已破止损-10.64%；实际挂单价161.58（现价164.88×0.98确保成交，低于止损价184.508）</span></div>
             </div>
 <div style="background:#fff5f5;border-left:3px solid var(--color-up);border-radius:0 6px 6px 0;padding:8px 10px;margin:6px 0;">
               <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -398,16 +398,14 @@ body.has-bottom-nav { padding-bottom: 60px; }
                 <span style="color:var(--color-up);font-weight:bold">止损卖出</span>
               </div>
               <div class="detail-line"><span class="row-label">挂单时点</span><span>竞价挂</span></div>
-              <div class="detail-line"><span class="row-label">挂单价格</span><span>86.112</span></div>
+              <div class="detail-line"><span class="row-label">挂单价格</span><span>77.96</span></div>
               <div class="detail-line"><span class="row-label">数量</span><span>全仓(200股)</span></div>
-              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价79.55 &lt; 止损价86.112，已破止损-7.62%</span></div>
+              <div class="detail-line"><span class="row-label">原因</span><span style="color:#666">当前价79.55 &lt; 止损价86.112（触发条件），已破止损-7.62%；实际挂单价77.96（现价79.55×0.98确保成交，低于止损价86.112）</span></div>
             </div>
 <div class="section-sub">🚫 禁止动作</div>
 <div class="row-note" style="color:var(--color-up);min-height:auto">· 不追高：信号股高开&gt;3%直接放弃买入</div>
-<div class="row-note" style="color:var(--color-up);min-height:auto">· 不满仓：总仓位≤环境上限25%</div>
+<div class="row-note" style="color:var(--color-up);min-height:auto">· 不满仓：总仓位≤环境上限70%</div>
 <div class="row-note" style="color:var(--color-up);min-height:auto">· 不碰ST/*ST/退市风险股，不碰上市不足250天次新股</div>
-<div class="row-note" style="color:var(--color-up);min-height:auto">· 熊市/弱市不加仓摊平，亏损股只止损不补仓</div>
-<div class="row-note" style="color:var(--color-up);min-height:auto">· 🤖 AI VETO: 已跳过（今日无信号股，无需VETO），全部信号视为通过</div>
 </div>
 <div class="card card-highlight">
 <div class="card-title">🌍 大盘环境</div>
@@ -445,7 +443,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
 <div class="row-info"><span class="row-label">建议总仓位</span><span class="row-val">70%</span></div>
 <div class="row-info"><span class="row-label">上证/MA20</span><span>3842.2 / 3905.6（20日-2.5%）</span></div>
 <div class="section-sub" style="margin-top:8px;">📐 判定依据</div>
-<div class="row-info"><span class="row-label">多指数确认</span><span style="font-size:12px"><span style="color:#e74c3c;font-weight:bold">沪深300+0.29%</span> <span style="color:#f39c12;font-weight:bold">[1/1上涨]</span> <span style="color:#999;font-size:11px;">📌休市，数据为20260930</span></span></div>
+<div class="row-info"><span class="row-label">多指数确认</span><span style="font-size:12px"><span style="color:#27ae60;font-weight:bold">创业板指-0.23%</span> / <span style="color:#27ae60;font-weight:bold">科创50-2.51%</span> <span style="color:#f39c12;font-weight:bold">[0/3上涨]</span> <span style="color:#999;font-size:11px;">📌休市，数据为20260930</span></span></div>
 <div class="row-info"><span class="row-label">市场宽度</span><span style="font-size:12px">2470涨/2747跌 涨停72/跌停16 <span style="color:#f39c12;font-weight:bold">[中性]</span></span></div>
 <div class="row-info"><span class="row-label">量能(成交额)</span><span style="font-size:12px">今日14501亿/5日均17488亿 量比0.83 <span style="color:#f39c12;font-weight:bold">[正常]</span></span></div>
 <div class="row-info"><span class="row-label">环境稳定性</span><span style="font-size:12px">已持续1天 / 60天切换0次(低) <span style="color:#999;font-weight:bold">[可信度低]</span></span></div>
@@ -2972,7 +2970,7 @@ body.has-bottom-nav { padding-bottom: 60px; }
 *报告生成时间：2026-10-05 17:21:47*</pre></div>
 </div></div>
   <div class="footer">
-    <div>数据更新时间: 2026-10-07 14:49:03</div>
+    <div>数据更新时间: 2026-10-07 14:54:19</div>
     <div>数据源: 市场环境、大盘指数、量能、情绪周期、涨停溢价、当前持仓、板块强弱、概念板块、风控预警、账户权益、纪律评分、公告情报</div>
     <div>数据日期口径: 指数/量能:2026-09-30 · 持仓:2026-09-30 · 账户:2026-10-02 · 复盘:3篇</div>
     <div>推荐部署节奏: 盘前8:50 / 开盘9:35 / 午盘11:25 / 尾盘14:45 / 盘后17:20</div>
