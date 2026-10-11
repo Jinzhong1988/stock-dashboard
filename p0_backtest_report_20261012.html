@@ -87,7 +87,10 @@ ul.ck li.no:before{content:"✗";color:var(--red)}
       <span class="badge b-info">🚀 实跑 EXIT=0 飞书推送成功</span>
     </div>
     <div class="oneline">
-      <b>一句话总结：</b>三个"只显示不进决策 / 显示与执行不一致 / 闸门空转"的P0级风控漏洞，全部完成回测验证→代码修复→实跑验证闭环；外盘夜盘缺口对A股开盘有中等预测力（R²=0.17），连亏3笔停手显著优于不熔断（累计PnL 2985% vs 336%、最大回撤从-2101%收窄到-741%），fast_bull回撤闸门从"恒传0永远通过"变为读取全A真实回撤分布（当前-2.55%）。
+      <b>一句话总结：</b>三个"只显示不进决策 / 显示与执行不一致 / 闸门空转"的P0级风控漏洞，全部完成回测验证→代码修复→实跑验证闭环；外盘夜盘缺口对A股开盘有中等预测力（R²=0.17），连亏3笔停手显著优于不熔断（累计PnL <b>+29.85下注单位</b> vs +3.36下注单位、最大回撤从−21.01下注单位收窄到−7.41下注单位；若每笔下注1%仓位，则对应总资金收益+29.85%/−7.41%），fast_bull回撤闸门从"恒传0永远通过"变为读取全A真实回撤分布（当前−2.55%）。
+    </div>
+    <div class="call c-yel" style="margin-top:10px">
+      ⚠️ <b>单位说明（务必先读）：</b>本报告回测收益单位为"<b>下注单位</b>"（每笔等权独立下注，1单位=1笔满仓下注的盈亏），<b>不是总资金收益率</b>。若实盘每笔下注1%仓位，+29.85下注单位≈总资金+29.85%。历史回测含过拟合风险，绝对值勿照搬。
     </div>
   </div>
 </div>
@@ -186,27 +189,27 @@ ul.ck li.no:before{content:"✗";color:var(--red)}
 
     <h4>N 值对比表（主样本 8196 笔 · 全样本）</h4>
     <table class="tbl">
-      <tr><th>方案</th><th>累计PnL</th><th>胜率</th><th>PF</th><th>PLR</th><th>最大回撤</th><th>跳过率</th><th>触发</th></tr>
-      <tr><td>基线(不熔断)</td><td class="hl">+336%</td><td>45.7%</td><td>1.02</td><td>1.21</td><td class="down">−2101%</td><td>0%</td><td>0</td></tr>
-      <tr class="best"><td class="hl">N=3 ✅</td><td class="up hl">+2985%</td><td class="up">49.9%</td><td class="up">1.23</td><td>1.24</td><td class="up">−741%</td><td>21.6%</td><td>590</td></tr>
-      <tr><td>N=4</td><td class="up">+2260%</td><td>48.6%</td><td>1.16</td><td>1.23</td><td class="down">−1246%</td><td>14.9%</td><td>407</td></tr>
-      <tr><td>N=5</td><td class="up">+1784%</td><td>47.8%</td><td>1.12</td><td>1.22</td><td class="down">−1389%</td><td>10.5%</td><td>288</td></tr>
-      <tr><td>N=6</td><td class="up">+1367%</td><td>47.1%</td><td>1.09</td><td>1.22</td><td class="down">−1501%</td><td>7.7%</td><td>211</td></tr>
-      <tr><td>N=7</td><td class="up">+1081%</td><td>46.7%</td><td>1.07</td><td>1.22</td><td class="down">−1618%</td><td>5.4%</td><td>148</td></tr>
+      <tr><th>方案</th><th>累计PnL(下注单位)</th><th>胜率</th><th>PF</th><th>PLR</th><th>最大回撤(下注单位)</th><th>跳过率</th><th>触发</th></tr>
+      <tr><td>基线(不熔断)</td><td class="hl">+3.36</td><td>45.7%</td><td>1.02</td><td>1.21</td><td class="down">−21.01</td><td>0%</td><td>0</td></tr>
+      <tr class="best"><td class="hl">N=3 ✅</td><td class="up hl">+29.85</td><td class="up">49.9%</td><td class="up">1.23</td><td>1.24</td><td class="up">−7.41</td><td>21.6%</td><td>590</td></tr>
+      <tr><td>N=4</td><td class="up">+22.60</td><td>48.6%</td><td>1.16</td><td>1.23</td><td class="down">−12.46</td><td>14.9%</td><td>407</td></tr>
+      <tr><td>N=5</td><td class="up">+17.84</td><td>47.8%</td><td>1.12</td><td>1.22</td><td class="down">−13.89</td><td>10.5%</td><td>288</td></tr>
+      <tr><td>N=6</td><td class="up">+13.67</td><td>47.1%</td><td>1.09</td><td>1.22</td><td class="down">−15.01</td><td>7.7%</td><td>211</td></tr>
+      <tr><td>N=7</td><td class="up">+10.81</td><td>46.7%</td><td>1.07</td><td>1.22</td><td class="down">−16.18</td><td>5.4%</td><td>148</td></tr>
     </table>
-    <p class="mut">注：累计PnL为加法口径（单位=满仓下注），最大回撤同理；绝对值受历史回测过拟合影响，方向与排序可信、绝对值勿照搬。</p>
+    <p class="mut">注：累计PnL/最大回撤单位均为"下注单位"（加法口径，1单位=1笔等权独立下注的盈亏，非总资金收益率；若每笔1%仓位则1单位≈1%总资金变动）。绝对值受历史回测过拟合影响，方向与排序可信、绝对值勿照搬。</p>
 
     <h4>三层交叉验证（全部支持 N=3）</h4>
     <div class="metrics">
-      <div class="metric"><div class="v grn">+1116%</div><div class="l">样本外 OOS：N=3 比基线多赚（2622% vs 1506%）</div></div>
-      <div class="metric"><div class="v grn">+372%</div><div class="l">OOS 最大回撤改善（−504% vs −876%）</div></div>
+      <div class="metric"><div class="v grn">+11.16</div><div class="l">OOS多赚(下注单位)：N=3比基线（26.22 vs 15.06）</div></div>
+      <div class="metric"><div class="v grn">+3.72</div><div class="l">OOS回撤改善(下注单位)：−5.04 vs −8.76</div></div>
       <div class="metric"><div class="v pur">27.2</div><div class="l">随机跳过对照：真实熔断 edge（随机仅+2.6）</div></div>
       <div class="metric"><div class="v blu">2.18</div><div class="l">S策略池 N=3 的 PF（基线1.70）</div></div>
     </div>
     <ul class="ck">
       <li><b>样本外验证：</b>前60%训练(n=4917)/后40% OOS(n=3279)，按 Calmar 选 N=3；OOS 上 N=3 同时跑赢基线的收益与回撤（收益+、回撤收窄），无过拟合到训练集迹象</li>
       <li><b>随机跳过对照：</b>N=3 熔断跳过的1770笔，其累计PnL为 −26.49（平均每笔 −1.50%）；而随机跳过同等笔数的期望PnL仅 +2.62（95%区间 −0.41 ~ +5.79）。真实熔断的 edge=27.2，远超随机——证明跳过的是<b>真坏交易</b>，不是运气</li>
-      <li><b>M 值 / 敏感性：</b>M=3 固定下 N 从3到7单调退化；换 S 策略合并池(6623笔) N=3 仍最优（PF 2.18 vs 基线1.70，回撤 −225% vs −489%），结论跨策略稳健</li>
+      <li><b>M 值 / 敏感性：</b>M=3 固定下 N 从3到7单调退化；换 S 策略合并池(6623笔) N=3 仍最优（PF 2.18 vs 基线1.70，回撤 −2.25 vs −4.89下注单位），结论跨策略稳健</li>
     </ul>
 
     <div class="call c-grn">🏆 <b>结论：最优 N=3</b>（连亏3笔停手，M=3笔冷静期）。它在累计PnL、PF、胜率、最大回撤四个维度同时占优，且三层验证全部通过。</div>
@@ -313,7 +316,7 @@ ul.ck li.no:before{content:"✗";color:var(--red)}
     </div>
     <div class="call c-red">
       <b>P0-2 限制（最重要）：</b><br>
-      ① 主样本8196笔的 ret 来自<b>历史回测成交文件</b>，非独立实盘逐笔记录，<b>内含过拟合/未来函数风险</b>——回测里"+2985%"是后视镜数字，实盘不可期望。<br>
+      ① 主样本8196笔的 ret 来自<b>历史回测成交文件</b>，非独立实盘逐笔记录，<b>内含过拟合/未来函数风险</b>——回测里"+29.85下注单位"是后视镜数字，实盘不可期望。<br>
       ② 连亏熔断能大幅改善，<b>方向是可信的</b>（随机跳过对照、OOS、跨策略池三层都支持），但<b>绝对收益与回撤值不要照搬</b>。<br>
       ③ 真实盘前 pick_journal 仅16条可算远期收益、actual_pnl 全空，无法做逐笔已实现盈亏统计。
     </div>
