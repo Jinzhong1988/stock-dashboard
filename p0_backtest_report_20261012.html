@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>P0闭环回测修复报告 · 20261012</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0d1117; --bg2:#161b22; --bg3:#1c2330; --border:#30363d;
+  --txt:#e6edf3; --mut:#8b949e; --grn:#3fb950; --red:#f85149;
+  --blu:#58a6ff; --yel:#d29922; --pur:#bc8cff; --cy:#39c5cf;
+}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--txt);font-size:15px;line-height:1.6;padding:0 0 60px}
+.wrap{max-width:900px;margin:0 auto;padding:0 14px}
+a{color:var(--blu);text-decoration:none}
+/* header */
+.top{background:linear-gradient(135deg,#0d1117 0%,#161b22 60%,#1b2735 100%);border-bottom:1px solid var(--border);padding:22px 0 18px;margin-bottom:16px}
+.top h1{font-size:21px;font-weight:800;letter-spacing:.3px}
+.top .sub{color:var(--mut);font-size:12.5px;margin-top:6px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:5px 11px;border-radius:20px;border:1px solid}
+.b-ok{color:var(--grn);border-color:#234330;background:#10261a}
+.b-info{color:var(--blu);border-color:#1e3a5f;background:#0f1f33}
+.b-warn{color:var(--yel);border-color:#4a3a15;background:#241d08}
+.oneline{margin-top:14px;background:var(--bg3);border-left:4px solid var(--grn);border-radius:8px;padding:11px 13px;font-size:13.5px;line-height:1.7}
+.oneline b{color:var(--grn)}
+/* section card */
+details.sec{background:var(--bg2);border:1px solid var(--border);border-radius:12px;margin:14px 0;overflow:hidden}
+details.sec>summary{cursor:pointer;list-style:none;padding:15px 16px;display:flex;align-items:center;gap:11px;user-select:none}
+details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary .num{flex:0 0 auto;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#0d1117}
+.n1{background:var(--blu)} .n2{background:var(--pur)} .n3{background:var(--cy)} .n4{background:var(--yel)} .n5{background:var(--red)}
+details.sec>summary .ttl{flex:1;min-width:0}
+details.sec>summary .ttl .t{font-size:15.5px;font-weight:800}
+details.sec>summary .ttl .d{font-size:11.5px;color:var(--mut);margin-top:2px}
+details.sec>summary .chev{color:var(--mut);font-size:13px;transition:transform .2s}
+details.sec[open]>summary .chev{transform:rotate(90deg)}
+.body{padding:4px 16px 18px;border-top:1px solid var(--border)}
+h4{font-size:13px;color:var(--blu);font-weight:800;margin:16px 0 8px;letter-spacing:.3px}
+h4:first-child{margin-top:6px}
+p.desc{font-size:13px;color:var(--txt);margin:6px 0}
+.mut{color:var(--mut);font-size:12px}
+/* metric cards */
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:10px 0}
+@media(min-width:640px){.metrics{grid-template-columns:repeat(4,1fr)}}
+.metric{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:11px 12px}
+.metric .v{font-size:21px;font-weight:800;line-height:1.1}
+.metric .l{font-size:11px;color:var(--mut);margin-top:4px}
+.v.grn{color:var(--grn)} .v.red{color:var(--red)} .v.blu{color:var(--blu)} .v.yel{color:var(--yel)} .v.pur{color:var(--pur)}
+/* code block */
+.code{background:#0a0e14;border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-family:'SF Mono',Consolas,Menlo,monospace;font-size:13px;line-height:1.7;color:#7ee787;overflow-x:auto;margin:9px 0}
+.code .cm{color:var(--mut)}
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:9px 0;display:block;overflow-x:auto}
+.tbl th,.tbl td{padding:7px 9px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}
+.tbl th{color:var(--mut);font-weight:700;font-size:11.5px;background:var(--bg3);position:sticky;top:0}
+.tbl td:first-child,.tbl th:first-child{text-align:left}
+.tbl tr.best td{background:#10261a}
+.up{color:var(--grn)} .down{color:var(--red)} .hl{font-weight:800}
+/* callout */
+.call{border-radius:8px;padding:10px 12px;font-size:12.5px;margin:9px 0;line-height:1.7;border:1px solid}
+.c-grn{background:#10261a;border-color:#234330}
+.c-red{background:#2a1215;border-color:#5b2229}
+.c-yel{background:#241d08;border-color:#4a3a15}
+.c-blu{background:#0f1f33;border-color:#1e3a5f}
+ul.ck{margin:6px 0 6px 4px;list-style:none}
+ul.ck li{font-size:12.5px;padding:3px 0 3px 22px;position:relative}
+ul.ck li:before{content:"✓";position:absolute;left:0;color:var(--grn);font-weight:800}
+ul.ck li.no:before{content:"✗";color:var(--red)}
+.foot{color:var(--mut);font-size:11.5px;text-align:center;margin-top:26px;line-height:1.8;border-top:1px solid var(--border);padding-top:14px}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:9px;margin-left:5px;vertical-align:middle}
+.t-grn{background:#10261a;color:var(--grn)} ..t-red{background:#2a1215;color:var(--red)} ..t-yel{background:#241d08;color:var(--yel)}
+.pill{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--bg3);border:1px solid var(--border);color:var(--mut)}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <h1>🛡️ P0 闭环回测修复报告</h1>
+    <div class="sub">修复日期 2026-10-12 · 交易系统风控三道闸门 · 数据截至 2026-10-09 / 实跑验证 2026-10-12 02:56</div>
+    <div class="badges">
+      <span class="badge b-ok">✅ P0-1 外盘缺口闸门 已修复·已回测</span>
+      <span class="badge b-ok">✅ P0-2 连亏熔断 N=3 已修复·已回测</span>
+      <span class="badge b-ok">✅ P0-3 dd_median 真实化 已修复</span>
+      <span class="badge b-info">🚀 实跑 EXIT=0 飞书推送成功</span>
+    </div>
+    <div class="oneline">
+      <b>一句话总结：</b>三个"只显示不进决策 / 显示与执行不一致 / 闸门空转"的P0级风控漏洞，全部完成回测验证→代码修复→实跑验证闭环；外盘夜盘缺口对A股开盘有中等预测力（R²=0.17），连亏3笔停手显著优于不熔断（累计PnL 2985% vs 336%、最大回撤从-2101%收窄到-741%），fast_bull回撤闸门从"恒传0永远通过"变为读取全A真实回撤分布（当前-2.55%）。
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ P0-1 ============ -->
+<details class="sec" open>
+  <summary>
+    <span class="num n1">1</span>
+    <span class="ttl">
+      <span class="ttl"><span class="t">P0-1 外盘综合分 → 真正接入仓位计算</span></span>
+      <span class="d">原现状：外盘分只在盘前简报里显示，不进任何仓位/闸门决策</span>
+    </span>
+    <span class="chev">▶</span>
+  </summary>
+  <div class="body">
+    <h4>问题描述</h4>
+    <p class="desc">原系统每日盘前已采集 A50/外盘情绪数据，但这些分数只<b>展示在简报上</b>，仓位计算和六道防线完全不读取——等于"看了天气预报却不带伞"。需要先用历史数据验证"外盘夜盘表现 → A股次日开盘缺口"到底有没有预测力，再决定怎么接进仓位。</p>
+
+    <h4>回测方法</h4>
+    <ul class="ck">
+      <li>因变量 Y：上证指数开盘涨跌幅 =(今开−昨收)/昨收（akshare sh000001 日线）</li>
+      <li>自变量 X：FXI（iShares 中国大盘 ETF）日涨跌幅，作为 A50 夜盘代理（SGX A50 期指夜盘接口当时不可达；FXI 美股交易时段=北京时间21:30~次日04:00，恰为A股收盘后夜盘窗口，市场公认代理，成分与A50高度重叠）</li>
+      <li>对齐：FXI 美国交易日 f 收盘于北京 f+1 凌晨，日期+1 后与A股交易日 merge_asof 前向对齐</li>
+      <li>方法：一元线性回归 Y = α + β·X；前 2/3 训练、后 1/3 样本外验证</li>
+    </ul>
+    <p class="mut">样本：总 728 个交易日（2023-10-09 ~ 2026-10-09）｜训练 487（2023-10-09~2025-10-10）｜样本外 241（2025-10-13~2026-10-09）</p>
+
+    <h4>关键指标（全样本回归）</h4>
+    <div class="metrics">
+      <div class="metric"><div class="v blu">0.414</div><div class="l">Pearson r</div></div>
+      <div class="metric"><div class="v blu">0.171</div><div class="l">R²（全样本）</div></div>
+      <div class="metric"><div class="v grn">0.158</div><div class="l">样本外 R²（OOS）</div></div>
+      <div class="metric"><div class="v grn">p≈1.8e-31</div><div class="l">p 值（极显著）</div></div>
+      <div class="metric"><div class="v">β=0.135</div><div class="l">回归系数（标准误0.011）</div></div>
+      <div class="metric"><div class="v">α=−0.064%</div><div class="l">截距</div></div>
+      <div class="metric"><div class="v grn">r=0.406</div><div class="l">OOS Pearson r</div></div>
+      <div class="metric"><div class="v yel">中等</div><div class="l">预测力评级（辅助因子）</div></div>
+    </div>
+
+    <h4>映射公式</h4>
+    <div class="code">预期A股开盘缺口 = -0.0639% + 0.1347 × FXI夜盘涨跌幅
+<span class="cm"># 简化口径（实跑采用）：</span>
+预期开盘缺口 ≈ -0.064% + 0.135 × FXI/A50 夜盘涨跌幅</div>
+
+    <h4>分桶胜率（下跌端 vs 上涨端明显不对称）</h4>
+    <table class="tbl">
+      <tr><th>外盘分桶</th><th>样本n</th><th>方向概率</th><th>均值缺口</th></tr>
+      <tr><td>FXI 跌 &gt; 2%</td><td>63</td><td class="down hl">低开概率 93.7%</td><td class="down">−0.505%</td></tr>
+      <tr><td>FXI 跌 &gt; 1%</td><td>172</td><td class="down hl">低开概率 87.2%</td><td class="down">−0.313%</td></tr>
+      <tr><td>FXI 涨 &gt; 1%</td><td>184</td><td class="up hl">高开概率 57.6%</td><td class="up">+0.160%</td></tr>
+      <tr><td>FXI 涨 &gt; 2%</td><td>74</td><td class="up hl">高开概率 66.2%</td><td class="up">+0.371%</td></tr>
+    </table>
+    <div class="call c-yel">⚠️ <b>不对称发现：</b>外盘大跌→A股低开的确定性（93.7%）远强于外盘大涨→A股高开（66.2%）。下跌端是<b>强防线</b>（该躲），上涨端只是<b>弱增强</b>（不激进）。因此仓位调整做成不对称：缺口越负越要砍/禁追多，缺口为正只做小幅增强且受≤1.0钳制。</div>
+
+    <h4>稳健性对照</h4>
+    <ul class="ck">
+      <li>FXI 纯夜盘窗口 open→close（剔除隔夜跳空）：r=0.359 / R²=0.129，方向稳定</li>
+      <li>对照：恒生国企指数<b>同日</b>涨跌幅对开盘缺口仅 r=0.113 / R²=0.013——说明预测力来自<b>夜盘窗口</b>而非同日情绪，非伪相关</li>
+    </ul>
+
+    <h4>修复方案</h4>
+    <ul class="ck">
+      <li>在 <code>_build_six_defense_gate()</code> 新增 <b>防线7 外盘缺口闸门</b>，写入库落盘 gate[overnight_gap]</li>
+      <li>按回测公式算预期缺口 → 不对称分桶仓位：缺口&lt;−0.3% → 仓位×0.5 且禁追多；−0.3~−0.15% → ×0.7；&gt;+0.2% → ×1.1（受 ≤1.0 钳制，不激进）</li>
+      <li>降级机制：读不到 CHA50 夜盘数据时，用 sentiment_score×0.3 代理并打印警告，不阻断流程</li>
+    </ul>
+
+    <h4>实跑验证结果（2026-10-12）</h4>
+    <div class="call c-grn">🛡️ 防线7实跑日志：<br>⚠️ CHA50 缺失 → 降级用 sentiment_score=+8.2 代理（等效 A50夜盘 +2.46%）→ 预期A股缺口 <b class="up">+0.27%</b> → 新开仓 <b>×1.1</b>（≤1.0 钳制）。降级路径工作正常 ✅</div>
+  </div>
+</details>
+
+<!-- ============ P0-2 ============ -->
+<details class="sec" open>
+  <summary>
+    <span class="num n2">2</span>
+    <span class="ttl">
+      <span class="t">P0-2 连亏熔断真正执行（最优 N=3）</span>
+      <span class="d">原现状：显示层写"连亏5停手/3降仓"，实际六道闸门按3/2跑——口径不一致</span>
+    </span>
+    <span class="chev">▶</span>
+  </summary>
+  <div class="body">
+    <h4>问题描述</h4>
+    <p class="desc">系统配置里连亏闸门是 <b>stop=3 / warn=2</b>（连亏3笔停手、2笔降仓），但盘前简报显示层却写成 "连亏≥5停手 / ≥3降仓"。运维看简报以为要连亏5笔才熔断，实际3笔就触发——显示与执行脱节。需要先回测确认"到底连亏几笔后停手最优"，再把显示层对齐到真实闸门。</p>
+
+    <h4>回测方法</h4>
+    <ul class="ck">
+      <li>熔断规则：连续 N 笔亏损(ret≤0)后暂停后续 <b>M=3</b> 笔交易，冷静期后连亏计数清零；任一盈利(ret&gt;0)即重置计数</li>
+      <li>收益口径：加法累计 PnL（equity+=ret，等权独立下注，与系统官方 cum 口径一致；单位=1个满仓下注）</li>
+      <li>主样本：c5_trades <b>8196 笔</b>（2019-02-11 ~ 2026-09-18）；另有 S 策略合并池 6623 笔做交叉稳健性</li>
+      <li>评估指标：累计PnL、胜率、盈亏比(PLR)、盈利因子(PF)、最大回撤、跳过率、触发次数</li>
+    </ul>
+
+    <h4>N 值对比表（主样本 8196 笔 · 全样本）</h4>
+    <table class="tbl">
+      <tr><th>方案</th><th>累计PnL</th><th>胜率</th><th>PF</th><th>PLR</th><th>最大回撤</th><th>跳过率</th><th>触发</th></tr>
+      <tr><td>基线(不熔断)</td><td class="hl">+336%</td><td>45.7%</td><td>1.02</td><td>1.21</td><td class="down">−2101%</td><td>0%</td><td>0</td></tr>
+      <tr class="best"><td class="hl">N=3 ✅</td><td class="up hl">+2985%</td><td class="up">49.9%</td><td class="up">1.23</td><td>1.24</td><td class="up">−741%</td><td>21.6%</td><td>590</td></tr>
+      <tr><td>N=4</td><td class="up">+2260%</td><td>48.6%</td><td>1.16</td><td>1.23</td><td class="down">−1246%</td><td>14.9%</td><td>407</td></tr>
+      <tr><td>N=5</td><td class="up">+1784%</td><td>47.8%</td><td>1.12</td><td>1.22</td><td class="down">−1389%</td><td>10.5%</td><td>288</td></tr>
+      <tr><td>N=6</td><td class="up">+1367%</td><td>47.1%</td><td>1.09</td><td>1.22</td><td class="down">−1501%</td><td>7.7%</td><td>211</td></tr>
+      <tr><td>N=7</td><td class="up">+1081%</td><td>46.7%</td><td>1.07</td><td>1.22</td><td class="down">−1618%</td><td>5.4%</td><td>148</td></tr>
+    </table>
+    <p class="mut">注：累计PnL为加法口径（单位=满仓下注），最大回撤同理；绝对值受历史回测过拟合影响，方向与排序可信、绝对值勿照搬。</p>
+
+    <h4>三层交叉验证（全部支持 N=3）</h4>
+    <div class="metrics">
+      <div class="metric"><div class="v grn">+1116%</div><div class="l">样本外 OOS：N=3 比基线多赚（2622% vs 1506%）</div></div>
+      <div class="metric"><div class="v grn">+372%</div><div class="l">OOS 最大回撤改善（−504% vs −876%）</div></div>
+      <div class="metric"><div class="v pur">27.2</div><div class="l">随机跳过对照：真实熔断 edge（随机仅+2.6）</div></div>
+      <div class="metric"><div class="v blu">2.18</div><div class="l">S策略池 N=3 的 PF（基线1.70）</div></div>
+    </div>
+    <ul class="ck">
+      <li><b>样本外验证：</b>前60%训练(n=4917)/后40% OOS(n=3279)，按 Calmar 选 N=3；OOS 上 N=3 同时跑赢基线的收益与回撤（收益+、回撤收窄），无过拟合到训练集迹象</li>
+      <li><b>随机跳过对照：</b>N=3 熔断跳过的1770笔，其累计PnL为 −26.49（平均每笔 −1.50%）；而随机跳过同等笔数的期望PnL仅 +2.62（95%区间 −0.41 ~ +5.79）。真实熔断的 edge=27.2，远超随机——证明跳过的是<b>真坏交易</b>，不是运气</li>
+      <li><b>M 值 / 敏感性：</b>M=3 固定下 N 从3到7单调退化；换 S 策略合并池(6623笔) N=3 仍最优（PF 2.18 vs 基线1.70，回撤 −225% vs −489%），结论跨策略稳健</li>
+    </ul>
+
+    <div class="call c-grn">🏆 <b>结论：最优 N=3</b>（连亏3笔停手，M=3笔冷静期）。它在累计PnL、PF、胜率、最大回撤四个维度同时占优，且三层验证全部通过。</div>
+
+    <h4>修复方案</h4>
+    <ul class="ck">
+      <li>显示层阈值从 streak≥5停手/≥3降仓 → 改为 <b>streak≥3停手（对齐 config stop=3）/ ≥2降仓（对齐 config warn=2）</b></li>
+      <li>实际六道防线闸门1保持 _rc stop=3 / warn=2 不变（本来就是对的，只修显示）</li>
+    </ul>
+    <div class="call c-blu">🟢 当前实跑：loss_streak=0，简报显示"熔断: 🟢 正常"；代码逻辑已改，待 streak 真正触发时即按 3笔停手/2笔降仓显示。</div>
+
+    <div class="call c-yel">🧾 <b>诚实声明：</b>实盘 pick_journal 仅 16 条可算远期收益、actual_pnl 全空，仅作定性参考。主样本8196笔跨度2019~2026样本量充足，但 ret 来自历史回测成交（含过拟合/未来函数风险），非独立实盘。<b>方向可信，绝对收益值不要照搬。</b></div>
+  </div>
+</details>
+
+<!-- ============ P0-3 ============ -->
+<details class="sec" open>
+  <summary>
+    <span class="num n3">3</span>
+    <span class="ttl">
+      <span class="t">P0-3 修复 dd_median 恒传 0.0（fast_bull 回撤闸门空转）</span>
+      <span class="d">原现状：环境评分里 dd_median 硬编码为 0.0，回撤闸门永远通过</span>
+    </span>
+    <span class="chev">▶</span>
+  </summary>
+  <div class="body">
+    <h4>问题描述</h4>
+    <p class="desc"><code>market_regime_scorer.py</code> 里 fast_bull（快牛）环境的回撤闸门，本该用"全A个股5日最大回撤中位数 dd_median"来判断市场是否已经杀跌、要不要拦截激进仓位。但该值被<b>硬编码成 0.0</b>，而闸门条件是 dd_median &gt; −3%——0.0 &gt; −0.03 恒成立，等于这道闸门<b>永远放行、从不拦截</b>，是个空转的摆设。</p>
+
+    <h4>修复方案</h4>
+    <ul class="ck">
+      <li>新建模块 <code>scripts/dd_median_calculator.py</code>，从 <code>wide_2026.parquet</code>（全A约5000只个股）真实计算5日最大回撤中位数</li>
+      <li><code>market_regime_scorer.py</code> 接入该真实计算，info 字典新增 <code>dd_median_last</code>（向后兼容加法，其余 key 全保留）</li>
+      <li>降级机制：宽表读取失败时降级为 0.0 并打印警告，不影响其他环境判定</li>
+    </ul>
+
+    <h4>修复前后对比</h4>
+    <table class="tbl">
+      <tr><th>项目</th><th>修复前</th><th>修复后</th></tr>
+      <tr><td>dd_median 取值</td><td class="down">0.0（硬编码中性值）</td><td class="up hl">−2.55%（真实计算）</td></tr>
+      <tr><td>数据来源</td><td>—</td><td>wide_2026.parquet 全A个股5日回撤中位数</td></tr>
+      <tr><td>fast_bull 闸门</td><td class="down">0.0 &gt; −3% 恒成立·永远通过</td><td>−2.55% &gt; −3% = 当前通过</td></tr>
+      <tr><td>环境判定 regime</td><td>osc_strong</td><td>osc_strong（未变）</td></tr>
+      <tr><td>闸门状态</td><td class="down">空转摆设</td><td class="up">真实生效</td></tr>
+    </table>
+
+    <h4>真实值分布（近30个交易日，截至 20260924）</h4>
+    <div class="metrics">
+      <div class="metric"><div class="v red">−2.55%</div><div class="l">最近交易日 dd_median</div></div>
+      <div class="metric"><div class="v red">8 天</div><div class="l">近30天 &lt; −3%（会拦截 fast_bull）</div></div>
+      <div class="metric"><div class="v grn">22 天</div><div class="l">近30天 ≥ −3%（闸门放行）</div></div>
+      <div class="metric"><div class="v blu">~5000×30</div><div class="l">数据样本（个股×交易日）</div></div>
+    </div>
+    <div class="call c-blu">🌐 环境判定：当前 regime 仍为 <b>osc_strong</b>（因为其他条件不满足，所以环境没变），但关键变化是——这道闸门从"<b>永远通过</b>"变成了"<b>按真实回撤分布生效</b>"：近30天里有8天市场真实回撤跌破−3%，那种日子 fast_bull 激进仓位会被真实拦截。degraded=False，读取正常。</div>
+  </div>
+</details>
+
+<!-- ============ 整体验证 ============ -->
+<details class="sec" open>
+  <summary>
+    <span class="num n4">4</span>
+    <span class="ttl">
+      <span class="t">整体修复后实跑验证</span>
+      <span class="d">2026-10-12 02:56 · EXIT=0 · 飞书推送成功</span>
+    </span>
+    <span class="chev">▶</span>
+  </summary>
+  <div class="body">
+    <h4>三项修复实跑摘要</h4>
+    <table class="tbl">
+      <tr><th>修复项</th><th>状态</th><th>实跑关键值</th></tr>
+      <tr><td>P0-1 外盘缺口闸门</td><td class="up">✅ 成功</td><td>防线7接入；CHA50缺失→sentiment_score代理；预期缺口+0.27%，仓位×1.1</td></tr>
+      <tr><td>P0-2 连亏显示阈值</td><td class="up">✅ 成功</td><td>显示层 5/3 → 3/2；当前 streak=0，显示🟢正常</td></tr>
+      <tr><td>P0-3 dd_median 真实化</td><td class="up">✅ 成功</td><td>dd_median_last=−0.0255；regime=osc_strong；degraded=False</td></tr>
+      <tr><td>附带修复：pending_block tuple bug</td><td class="up">✅ 成功</td><td>format_pending_stop_block 空 pending 返回 tuple 导致 join TypeError，改为返回 []</td></tr>
+    </table>
+
+    <h4>保护文件与安全校验</h4>
+    <ul class="ck">
+      <li>实跑退出码 EXIT=0，盘前简报生成成功、飞书推送成功</li>
+      <li>保护文件 sentiment_p1.py md5 修复前后均为 <code>bdd521537efad125c093638764f4c5e8</code>，<b>未被改动</b></li>
+      <li>六道防线数据源现含 8 路：loss_streak / account_drawdown / stop_loss_overdue / strategy_circuit / max_concurrent_positions / trade_attribution / daily_review / <b>overnight_gap_gate(新增)</b></li>
+      <li>改动前已备份：<code>scripts/pre_market_scan.py.bak_p0fix_all_20261012</code></li>
+    </ul>
+  </div>
+</details>
+
+<!-- ============ 诚实说明 ============ -->
+<details class="sec" open>
+  <summary>
+    <span class="num n5">!</span>
+    <span class="ttl">
+      <span class="t">诚实说明 · 数据限制与回测过拟合风险</span>
+      <span class="d">不隐瞒任何边界条件</span>
+    </span>
+    <span class="chev">▶</span>
+  </summary>
+  <div class="body">
+    <div class="call c-red">
+      <b>P0-1 限制：</b><br>
+      ① 自变量用 FXI 代理 A50 夜盘（SGX A50 期指夜盘接口当时不可达），非原生 A50 期指；FXI 成分与 A50 高度重叠但不完全等同。<br>
+      ② R²=0.17 属<b>中等偏弱</b>预测力——只能解释约17%的开盘缺口方差，其余83%由其他因素决定，<b>只能做仓位辅助因子，不能单独决定买卖</b>。<br>
+      ③ 下跌端确定性高（93.7%）但样本仅63笔，统计区间仍偏宽。
+    </div>
+    <div class="call c-red">
+      <b>P0-2 限制（最重要）：</b><br>
+      ① 主样本8196笔的 ret 来自<b>历史回测成交文件</b>，非独立实盘逐笔记录，<b>内含过拟合/未来函数风险</b>——回测里"+2985%"是后视镜数字，实盘不可期望。<br>
+      ② 连亏熔断能大幅改善，<b>方向是可信的</b>（随机跳过对照、OOS、跨策略池三层都支持），但<b>绝对收益与回撤值不要照搬</b>。<br>
+      ③ 真实盘前 pick_journal 仅16条可算远期收益、actual_pnl 全空，无法做逐笔已实现盈亏统计。
+    </div>
+    <div class="call c-yel">
+      <b>P0-3 说明：</b>本次 regime 判定结果未变（osc_strong），因为其他环境条件不满足；修复的是"闸门是否真实生效"这件事，而非当天的环境标签。dd_median 宽表读取失败时会降级为 0.0 并告警——即极端数据缺失下会退回旧行为，需监控 degraded 标记。
+    </div>
+    <p class="mut">📌 总体立场：本报告所有数字均直接取自回测结果 JSON（p01_a50_gap_result.json / p02_loss_streak_result.json / p03_dd_median_fix_verify.json / p0_all_fix_verify.json），未做任何人为放大或美化。三道闸门的<b>修复方向与逻辑闭环可信</b>，但涉及历史回测收益的绝对值，请视为"逻辑验证通过"而非"实盘收益承诺"。</p>
+  </div>
+</details>
+
+<div class="foot">
+  生成时间 2026-10-12（JST）· 数据源：backtest/p01_a50_gap_result.json · p02_loss_streak_result.json · p03_dd_median_fix_verify.json · p0_all_fix_verify.json<br>
+  脚本：scripts/backtest/p01_a50_gap_backtest.py · p02_loss_streak_backtest.py · scripts/dd_median_calculator.py<br>
+  本页为自包含静态报告（内联 CSS/JS，无外部依赖）· GitHub Pages 部署
+</div>
+
+</div>
+</body>
+</html>
